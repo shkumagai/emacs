@@ -1,0 +1,2 @@
+;; Anything
+(require 'anything-startup)
