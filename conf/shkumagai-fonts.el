@@ -8,16 +8,16 @@
                       :height 140)
   ;; Whole Japanese Characters
   ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Hiragino_Kaku_Gothic_ProN"))
-  (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Moon_font"))
+  ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Moon_font"))
   ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Sea_font"))
-  ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty"))
+  (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty"))
   ;; Only 'かな' and 'カナ'
   ;; U+3000-303F CJKの記号および句読点
   ;; U+3040-309F ひらがな
   ;; U+30A0-30FF カタカナ
-  (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Moon_font"))
+  ;; (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Moon_font"))
   ;; (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Sea_font"))
-  ;; (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Ricty"))
+  (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Ricty"))
 
   ;; Aspect Ratio
   (setq face-font-rescale-alist
