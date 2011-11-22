@@ -5,26 +5,26 @@
   (set-face-attribute 'default nil
                       :family "Ricty"
                       ;; 14pt
-                      :height 140)
+                      :height 180)
   ;; Whole Japanese Characters
   ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Hiragino_Kaku_Gothic_ProN"))
-  ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Moon_font"))
+  (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Moon_font"))
   ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Sea_font"))
-  (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty"))
+  ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty"))
   ;; Only 'かな' and 'カナ'
   ;; U+3000-303F CJKの記号および句読点
   ;; U+3040-309F ひらがな
   ;; U+30A0-30FF カタカナ
-  ;; (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Moon_font"))
+  (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Moon_font"))
   ;; (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Sea_font"))
-  (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Ricty"))
+  ;; (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Ricty"))
 
   ;; Aspect Ratio
   (setq face-font-rescale-alist
  '((".*Ricty.*" . 1.0)
-   ;; (".*Hiragino_Kaku_Gothic_ProN.*" . 1.2)
-   (".*Moon_font.*" . 1.2)
-   ;; (".*Sea_font.*" . 1.2)
+   ;; (".*Hiragino_Kaku_Gothic_ProN.*" . 1.0)
+   (".*Moon_font.*" . 1.0)
+   ;; (".*Sea_font.*" . 1.0)
    )))
 
 ;; Windows
