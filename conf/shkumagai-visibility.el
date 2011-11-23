@@ -30,3 +30,5 @@
 (set-face-background 'region "darkgreen")
 (setq frame-background-mode 'dark)
 
+;; frame transparency
+(set-frame-parameter (selected-frame) 'alpha '(85 50))
