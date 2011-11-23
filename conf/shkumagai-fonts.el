@@ -2,30 +2,30 @@
 
 (when (eq window-system 'ns)
   ;; set default font
-  (set-face-attribute 'default nil
-                      :family "Ricty"
-                      ;; 14pt
-                      :height 140)
-  ;; Whole Japanese Characters
-  ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Hiragino_Kaku_Gothic_ProN"))
-  ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Moon_font"))
-  ;; (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Sea_font"))
-  (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty"))
-  ;; Only 'かな' and 'カナ'
-  ;; U+3000-303F CJKの記号および句読点
-  ;; U+3040-309F ひらがな
-  ;; U+30A0-30FF カタカナ
-  ;; (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Moon_font"))
-  ;; (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Sea_font"))
-  (set-fontset-font nil '( #x3040 . #x30ff) (font-spec :family "Ricty"))
+  (let* ((size 14) ; ASCII font size
+         (asciifont "Menlo") ; ASCII font
+         ;; (jpfont "Hiragino Maru Gothic ProN") ; Japanese font
+         ;; (jpfont "Ricty")
+         (jpfont "Moon font")
+         ;; (jpfont "Sea font")
+         (h (* size 10))
+         (fontspec (font-spec :family asciifont))
+         (jp-fontspec (font-spec :family jpfont)))
+    (set-face-attribute 'default nil :family asciifont :height h)
+    (set-fontset-font nil 'japanese-jisx0213.2004-1 jp-fontspec)
+    (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
+    (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
+    (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン 
+    (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
+    )
 
-  ;; Aspect Ratio
-  (setq face-font-rescale-alist
- '((".*Ricty.*" . 1.0)
-   ;; (".*Hiragino_Kaku_Gothic_ProN.*" . 1.2)
-   (".*Moon_font.*" . 1.2)
-   ;; (".*Sea_font.*" . 1.2)
-   )))
+  ;; フォントサイズの比を設定
+  (dolist (elt '(("^-apple-hiragino.*" . 1.2)
+                 (".*Ricty.*" . 1.2)
+                 (".*Moon_font.*" . 1.2)
+                 (".*Sea_font.*" . 1.2)
+                 ))
+    (add-to-list 'face-font-rescale-alist elt)))
 
 ;; Windows
 (when (eq window-system 'w32)
