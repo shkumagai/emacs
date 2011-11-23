@@ -19,7 +19,7 @@
     (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
     )
 
-  ;; フォントサイズの比を設定
+  ;; define aspect ratio
   (dolist (elt '(("^-apple-hiragino.*" . 1.2)
                  (".*Ricty.*" . 1.2)
                  (".*Moon_font.*" . 1.2)
