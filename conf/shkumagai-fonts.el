@@ -1,3 +1,5 @@
+;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
 ;; Font Settings
 
 (when (eq window-system 'ns)
