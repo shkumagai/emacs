@@ -1,5 +1,17 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
+;; How to setting up on MacOSX
+;; ---------------------------
+;;
+;; .. note::
+;;    This extention requires cmigemo executable. So, you need to install
+;;    C/Migemo if you want to use.
+;; 
+;; Install C/Migemo into your environment according to installation procedure
+;; of this article.
+;;
+;; Refer to: http://wun.jp/emacs/cmigemo/
+
 ;; Migemo: incremental search of Roman script
 (when (and (executable-find "cmigemo")
 	   (require 'migemo nil t))

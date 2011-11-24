@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
-;; How to seting up on MacOSX
+;; How to setting up on MacOSX
 
 ;; Install YASnippet package in your own environment according to installation
 ;; direction in the document.
