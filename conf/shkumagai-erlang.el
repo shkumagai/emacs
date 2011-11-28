@@ -10,7 +10,6 @@
 (add-to-list 'load-path "/opt/local/lib/erlang/lib/tools-2.6.6.5/emacs")
 (setq erlang-root-dir "/opt/local/lib/erlang")
 (add-to-list 'exec-path "/opt/local/lib/erlang/bin")
-(setq erlang-root-dir "/opt/local/lib/erlang")
 (require 'erlang-start)
 
 ;; Install Distel
