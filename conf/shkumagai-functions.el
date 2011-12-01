@@ -13,6 +13,7 @@
 
 (add-hook 'emacs-lisp-mode-hook 'lisp-mode-hooks)
 (add-hook 'lisp-interaction-mode-hook 'lisp-mode-hooks)
+(add-hook 'ielm-mode-hook 'lisp-mode-hooks)
 
 ;; smartchr: sycle snippet
 (when (require 'smartchr nil t)
