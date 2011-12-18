@@ -31,4 +31,4 @@
 (setq frame-background-mode 'dark)
 
 ;; frame transparency
-(set-frame-parameter (selected-frame) 'alpha '(85 50))
+(set-frame-parameter (selected-frame) 'alpha '(95 50))
