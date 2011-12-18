@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
-;; How to seting up on MacOSX
+;; How to setting up on MacOSX
 ;;
 ;; Install Erlang
 ;;    I use Erlang executable which built from source.
