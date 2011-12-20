@@ -7,8 +7,8 @@
   (let* ((size 14) ; ASCII font size
          (asciifont "Menlo") ; ASCII font
          ;; (jpfont "Hiragino Maru Gothic ProN") ; Japanese font
-         ;; (jpfont "Ricty")
-         (jpfont "Moon font")
+         (jpfont "Ricty")
+         ;; (jpfont "Moon font")
          ;; (jpfont "Sea font")
          (h (* size 10))
          (fontspec (font-spec :family asciifont))
