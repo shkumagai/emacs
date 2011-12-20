@@ -2,6 +2,7 @@
 
 ;; global
 (setq-default indent-tabs-mode nil)
+(setq tab-width 2)
 
 ;; lisp-mode-hook
 (defun lisp-mode-hooks ()
