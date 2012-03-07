@@ -32,3 +32,22 @@
 
 ;; frame transparency
 (set-frame-parameter (selected-frame) 'alpha '(95 50))
+
+;; whitespace-mode
+(when (require 'whitespace nil t)
+  (setq whitespace-style '(face tabs tab-mark spaces space-mark))
+  (setq whitespace-display-mappings
+        '((space-mark ?\u3000 [?\u25a1])))
+  (setq whitespace-space-regexp "\\( +\\|\u3000+\\)")
+  ;; face settings
+  (set-face-foreground 'whitespace-tab "#262626")
+  (set-face-background 'whitespace-tab 'nil)
+  (set-face-underline 'whitespace-tab t)
+  (set-face-foreground 'whitespace-space "#585858")
+  (set-face-background 'whitespace-space 'nil)
+
+  (set-face-bold-p 'whitespace-space t)
+  (global-whitespace-mode 1)
+  (global-set-key (kbd "C-x w") 'global-whitespace-mode))
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
