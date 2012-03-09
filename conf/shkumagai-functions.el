@@ -42,7 +42,7 @@ Note the weekly scope of the command's precision.")
   "insert current date and time into current buffer.
 Uses `current-date-time-format' for the formatting the date/time."
   (interactive)
-  (insert "==========\n")
+  ;; (insert "==========\n")
   (insert (format-time-string current-date-time-format (current-time)))
   )
 
