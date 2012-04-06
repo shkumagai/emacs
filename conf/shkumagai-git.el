@@ -29,3 +29,4 @@
 ;;    you need to pass --prefix option to the make command.
 
 (when (require 'magit nil t))
+(global-set-key (kbd "C-c C-g") 'magit-status)
