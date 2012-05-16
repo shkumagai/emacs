@@ -51,3 +51,6 @@
   (global-set-key (kbd "C-x w") 'global-whitespace-mode))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; toggle fullscreen mode
+(define-key global-map (kbd "M-RET") 'ns-toggle-fullscreen)
