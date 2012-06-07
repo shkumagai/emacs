@@ -10,7 +10,7 @@
 (display-time)
 (column-number-mode 1)
 (setq default-frame-alist
-      '((width . 160)
+      '((width . 208)
         (height . 60)
         (top . 10)
         (left . 0)
