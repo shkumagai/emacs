@@ -23,9 +23,10 @@
 
 ;; Erlang mode
 (add-to-list 'load-path
-             "/opt/local/erlang/R15B/lib/erlang/lib/tools-2.6.6.6/emacs")
-(setq erlang-root-dir "/opt/local/erlang/R15B")
-(add-to-list 'exec-path "/opt/local/erlang/R15B/bin")
+             ;; "/opt/local/erlang/R15B/lib/erlang/lib/tools-2.6.6.6/emacs")
+             "/opt/local/erlang/R15B01/lib/erlang/lib/tools-2.6.7/emacs")
+(setq erlang-root-dir "/opt/local/erlang/R15B01")
+(add-to-list 'exec-path "/opt/local/erlang/R15B01/bin")
 (require 'erlang-start)
 
 ;; Install Distel
@@ -40,48 +41,48 @@
 
 ;; For more informations, refer to these blogs.
 ;;
-;; http://
+;; http://bc.tech.coop/blog/070528.html
 
-;; distel
-(add-to-list 'load-path "/usr/local/share/distel/elisp")
-(require 'distel)
-(distel-setup)
+;; ;; distel
+;; (add-to-list 'load-path "/usr/local/share/distel/elisp")
+;; (require 'distel)
+;; (distel-setup)
 
-(add-hook 'erlang-mode-hook
-          (lambda ()
-            ;; when starting an Erlang shell in Emacs,
-            ;; default in the node name
-            (setq inferior-erlang-machine-options '("-sname" "emacs"))
-            ;; add Erlang functions to an imenu menu
-            (imenu-add-to-menubar "imenu")
-            ))
+;; (add-hook 'erlang-mode-hook
+;;           (lambda ()
+;;             ;; when starting an Erlang shell in Emacs,
+;;             ;; default in the node name
+;;             (setq inferior-erlang-machine-options '("-sname" "emacs"))
+;;             ;; add Erlang functions to an imenu menu
+;;             (imenu-add-to-menubar "imenu")
+;;             ))
 
-;; tel distel to default to that node
-(setq erl-nodename-cache
-      (make-symbol
-       (concat
-        "emacs@"
-        ;; Mac OS X uses "name.local" instead of "name",
-        ;; this should work pretty much anywhere without having
-        ;; to muck with NetInfo
-        ;; ... but I only it on Mac OS X.
-        (car (split-string
-              (shell-command-to-string "hostname"))))))
+;; ;; tel distel to default to that node
+;; (setq erl-nodename-cache
+;;       (make-symbol
+;;        (concat
+;;         "emacs@"
+;;         ;; Mac OS X uses "name.local" instead of "name",
+;;         ;; this should work pretty much anywhere without having
+;;         ;; to muck with NetInfo
+;;         ;; ... but I only it on Mac OS X.
+;;         (car (split-string
+;;               (shell-command-to-string "hostname"))))))
 
-;; In additional
-;; ;; A number of the erlang-extended-mode key bindings are useful
-;; ;; in the shell too
-(defconst distel-shell-keys
-  '(("\C-\M-i"   erl-complete)
-    ("\M-?"      erl-complete)
-    ("\M-."      erl-find-source-under-point)
-    ("\M-,"      erl-find-source-unwind)
-    ("\M-*"      erl-find-source-unwind)
-    )
-  "Additional keys to bind when in Erlang shell.")
+;; ;; In additional
+;; ;; ;; A number of the erlang-extended-mode key bindings are useful
+;; ;; ;; in the shell too
+;; (defconst distel-shell-keys
+;;   '(("\C-\M-i"   erl-complete)
+;;     ("\M-?"      erl-complete)
+;;     ("\M-."      erl-find-source-under-point)
+;;     ("\M-,"      erl-find-source-unwind)
+;;     ("\M-*"      erl-find-source-unwind)
+;;     )
+;;   "Additional keys to bind when in Erlang shell.")
 
-(add-hook 'erlang-shell-mode-hook
-	  (lambda ()
-	    ;; add some Distel bindings to the Erlang shell
-	    (dolist (spec distel-shell-keys)
-	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
+;; (add-hook 'erlang-shell-mode-hook
+;; 	  (lambda ()
+;; 	    ;; add some Distel bindings to the Erlang shell
+;; 	    (dolist (spec distel-shell-keys)
+;; 	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
