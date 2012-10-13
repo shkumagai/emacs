@@ -1,3 +1,0 @@
-[submodule "elisp/git-emacs"]
-	path = elisp/git-emacs
-	url = git://github.com/mhayashi1120/git-emacs.git
