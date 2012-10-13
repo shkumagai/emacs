@@ -22,11 +22,17 @@
 ;;       $ sudo make install
 
 ;; Erlang mode
-(add-to-list 'load-path
-             ;; "/opt/local/erlang/R15B/lib/erlang/lib/tools-2.6.6.6/emacs")
-             "/opt/local/erlang/R15B01/lib/erlang/lib/tools-2.6.7/emacs")
-(setq erlang-root-dir "/opt/local/erlang/R15B01")
-(add-to-list 'exec-path "/opt/local/erlang/R15B01/bin")
+;; R15B
+;; (setq erlang-root-dir "/opt/local/erlang/R15B")
+;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.6.6/emacs"))
+;; R15B01
+;; (setq erlang-root-dir "/opt/local/erlang/R15B01")
+;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.7/emacs"))
+;; R15B02
+(setq erlang-root-dir "/opt/local/erlang/R15B02")
+(add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.8/emacs"))
+
+(add-to-list 'exec-path (concat erlang-root-dir "/bin"))
 (require 'erlang-start)
 
 ;; Install Distel
