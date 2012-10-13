@@ -28,5 +28,11 @@
 ;;    If you want to install libraries into where you specified,
 ;;    you need to pass --prefix option to the make command.
 
-(when (require 'magit nil t))
+;; Add 2012-10-13:
+;;   Delegate magit package management to the package.el.
+;;   Here is only for keybind definition.
+;;
+;; (when (require 'magit nil t))
+
+;; custom key-map
 (global-set-key (kbd "C-c C-g") 'magit-status)
