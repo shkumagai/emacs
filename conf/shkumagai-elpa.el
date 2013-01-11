@@ -1,3 +1,5 @@
+;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
 ;; elap (package.el)
 (when (require 'package nil t)
   (add-to-list 'package-archives

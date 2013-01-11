@@ -1,4 +1,10 @@
-;; Exuberant ctags
+;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;; How to setting up on Mac OSX
+;;
+;; Install Exuberant ctags
+;;    $ sudo port install ctags
+;;
 (when (require 'ctags nil t)
   (setq tags-revert-without-query t)
   ;; Command-line to call `ctags'.

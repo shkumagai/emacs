@@ -1,4 +1,5 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
 ;; sdic w/z Eijiro ver.5.0
 
 ;;; http://d.hatena.ne.jp/zqwell-ss/20091205/1260037903
