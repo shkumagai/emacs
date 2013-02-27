@@ -31,6 +31,15 @@
 ;; R15B02
 (setq erlang-root-dir "/opt/local/erlang/R15B02")
 (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.8/emacs"))
+;; R15B03-1
+;; (setq erlang-root-dir "/opt/local/erlang/R15B03-1")
+;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.8/emacs"))
+;; R16A
+;; (setq erlang-root-dir "/opt/local/erlang/R16A")
+;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-X.X.X/emacs"))
+;; R16B
+;; (setq erlang-root-dir "/opt/local/erlang/R16B")
+;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.10/emacs"))
 
 (add-to-list 'exec-path (concat erlang-root-dir "/bin"))
 (require 'erlang-start)
