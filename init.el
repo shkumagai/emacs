@@ -61,6 +61,7 @@
 (load-library "shkumagai-wdired")
 (load-library "shkumagai-timestamp")
 (load-library "shkumagai-create-temp-buf")
+(load-library "shkumagai-text-translator")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Fonts
