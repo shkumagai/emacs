@@ -1,0 +1,14 @@
+;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;; Install list:
+
+;; * auto-complete
+;;   * popup
+;; * ctags         (melpa)
+;; * gist
+;;   * gh
+;;   * logito
+;;   * pcache
+;; * magit
+;; * undo-tree
+;; * yasnippet

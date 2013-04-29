@@ -3,7 +3,6 @@ undohist/
 url/
 ac-comphist.dat
 anything-c-adaptive-history
-archive-contents
 Makefile
-.*.gpg
 var/pcache/
+elpa/*
