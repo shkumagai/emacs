@@ -13,10 +13,13 @@
 
 ;; Yet another snippet
 (require 'yasnippet)
+(setq yas-installed-dir (installed-dir "yasnippet"))
 (setq yas-snippet-dirs
-      '("~/.emacs.d/snippets"
-        "~/.emacs.d/elpa/yasnippet-0.8.0/snippets"
-        ))
+      (let (dirs)
+        (dolist (d '(yas-installed-dir))
+          (setq dirs (cons (concat (symbol-value d) "/snippets") dirs)))
+        dirs)
+      )
 (yas-global-mode 1)
 
 ;; Yet another snippet configuration
