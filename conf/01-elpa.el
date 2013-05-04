@@ -1,10 +1,11 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
 (when (require 'package nil t)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (if (file-directory-p (concat user-emacs-directory "elpa/archives"))
-      nil
+  (add-to-list
+   'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list
+   'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+  (unless (file-directory-p (concat user-emacs-directory "elpa/archives"))
     (package-list-packages))
   (package-initialize))
 
