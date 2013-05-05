@@ -39,7 +39,7 @@ byte-compile elisp
 To be faster to load all elisp files, you can do byte-compiling them.
 It's easy ::
 
-  C-0 M-x byte-compile-directory
+  C-0 M-x byte-recompile-directory
   Directory: /path/to/.emacs/elisp
 
 .. END
