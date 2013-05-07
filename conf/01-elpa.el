@@ -20,6 +20,7 @@
    gist
    magit
    undo-tree
+   yaml-mode
    yasnippet
    ))
 
