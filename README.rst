@@ -11,7 +11,7 @@ setup
 1. git clone to local ::
 
      $ cd <somewhere>
-     $ git clone git@github.com:shkumagai/emacs
+     $ git clone git@github.com:shkumagai/emacs.git
 
 2. move to 'emacs' directory, then run setup.sh ::
 
@@ -23,14 +23,7 @@ setup
    ``setup.sh`` will remove current ``~/.emacs.d`` director, if exists.
    So, if you won't to do it, you should move it to other place.
 
-3. Run emacs, and then you exec command as below ::
-
-     M-x package-list-packcages
-
-   All packages that needed marked ``I`` for install.
-   Then, hit ``X`` key to execute installation.
-
-   Required package names are listed in elpa/.packages file.
+3. run emacs.
 
 
 byte-compile elisp
