@@ -1,5 +1,9 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
+;; custom keybindings
+(define-key global-map (kbd "C-x C-h") 'help)
+(define-key global-map (kbd "C-h") 'describe-bindings)
+
 ;; insert timestamp
 (defvar current-date-time-format "%c"
   "Format of date to insert `insert-current-date-time' function
