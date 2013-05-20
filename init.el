@@ -37,13 +37,14 @@
 (load-library "23-yasnippet")       ; YASnippet
 (load-library "24-git")             ; Git on Emacs (using magit)
 (load-library "25-migemo")          ; Migemo
-(load-library "26-ctags")          ; Ctags
+(load-library "26-ctags")           ; Ctags
 
 ;; for programming languages
 (load-library "51-perl")            ; perl
 (load-library "52-python")          ; python, rst
 (load-library "53-erlang")          ; erlang
 (load-library "54-go")              ; go
+(load-library "55-css")             ; css
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.

@@ -3,7 +3,7 @@
 ;; Perl
 (defalias 'perl-mode 'cperl-mode)
 (setq auto-mode-alist
-      (cons '("\\.t$" . cperl-mode) auto-mode-alist))
+      (cons '("\\.t\\'" . cperl-mode) auto-mode-alist))
 (setq cperl-auto-newline nil)
 (setq cperl-indent-parens-as-block t)
 (setq cperl-close-paren-offset -4)
@@ -65,4 +65,3 @@
                 minor-mode-alist)))
 (eval-after-load "cperl-mode"
   '(add-hook 'cperl-mode-hook 'perltidy-mode))
-  
