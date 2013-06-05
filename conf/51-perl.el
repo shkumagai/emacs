@@ -13,11 +13,11 @@
 (setq cperl-highlight-variables-indiscriminaly t)
 (add-hook 'cperl-mode-hook
       (lambda ()
-	(set-face-italic-p 'cperl-hash-face nil)))
+        (set-face-italic-p 'cperl-hash-face nil)))
 (add-hook 'cperl-mode-hook
       '(lambda ()
-	 (define-key cperl-mode-map (kbd "C-c c") 'cperl-check-syntax)
-	 (setq indent-tabs-mode nil)))
+         (define-key cperl-mode-map (kbd "C-c c") 'cperl-check-syntax)
+         (setq indent-tabs-mode nil)))
 
 ;; perltidy
 (defmacro mark-active ()
