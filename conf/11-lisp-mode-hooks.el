@@ -1,9 +1,5 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
-;; global
-(setq-default indent-tabs-mode nil)
-(setq tab-width 4)
-
 ;; lisp-mode-hook
 (defun lisp-mode-hooks ()
   "lisp-mode-hooks"

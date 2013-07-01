@@ -55,3 +55,16 @@
 
 ;; Toggle fullscreen mode
 (define-key global-map (kbd "M-RET") 'ns-toggle-fullscreen)
+
+;; Tab stops
+(defun gen-tab-stop (&optional width max)
+  "Return a sequence suitable for `tab-stop-list'."
+  (let* ((max-column (or max 200))
+         (tab-width (or width tab-width))
+         (count (/ max-column tab-width)))
+    (number-sequence tab-width (* tab-width count) tab-width)))
+
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq default-tab-width 4)
+(setq tab-stop-list (gen-tab-stop))
