@@ -38,7 +38,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   (interactive)
   (switch-to-buffer (generate-new-buffer "*temp*"))
   (setq buffer-offer-save nil))
-(global-set-key (kbd "C-c t") 'create-temporary-buffer)
+(global-set-key (kbd "C-c C-c t") 'create-temporary-buffer)
 
 
 ;; point-undo: undo a cursor position
