@@ -2,4 +2,5 @@
 
 ;; Go
 (add-to-list 'load-path "/opt/local/go/misc/emacs" t)
-(require 'go-mode-load)
+(when (require 'go-mode-load nil t)
+  (add-hook 'before-save-hook 'gofmt-before-save))
