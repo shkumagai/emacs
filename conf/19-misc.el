@@ -68,18 +68,18 @@ Uses `current-date-time-format' for the formatting the date/time."
 (when (require 'smartchr nil t)
   ;; define hooks
   (defun my-smartchr-hooks ()
-    (local-set-key (kbd "=") (smartchr '("=" " = " " == " " := ")))
-    (local-set-key (kbd "+") (smartchr '("+" " + " " += " " += ")))
-    (local-set-key (kbd "-") (smartchr '("-" " - " " -= " " -= ")))
+    ;; (local-set-key (kbd "=") (smartchr '("=" " = " " == " " := ")))
+    ;; (local-set-key (kbd "+") (smartchr '("+" " + " " += " " += ")))
+    ;; (local-set-key (kbd "-") (smartchr '("-" " - " " -= " " -= ")))
 
     (local-set-key (kbd ":") (smartchr '(":" ": ")))
     (local-set-key (kbd ",") (smartchr '("," ", ")))
 
-    (local-set-key (kbd ">") (smartchr '(">" " > " " >= " ">>" "->")))
-    (local-set-key (kbd "<") (smartchr '("<" " < " " <= " "<<" )))
+    ;; (local-set-key (kbd ">") (smartchr '(">" " > " " >= " ">>" "->")))
+    ;; (local-set-key (kbd "<") (smartchr '("<" " < " " <= " "<<" )))
 
-    (local-set-key (kbd "\"") (smartchr '("\"" "\"`!!'\"" "\"\"\"`!!'\"\"\"")))
-    (local-set-key (kbd "'") (smartchr '("'" "'`!!''")))
+    ;; (local-set-key (kbd "\"") (smartchr '("\"" "\"`!!'\"" "\"\"\"`!!'\"\"\"")))
+    ;; (local-set-key (kbd "'") (smartchr '("'" "'`!!''")))
 
     (local-set-key (kbd "(") (smartchr '("(" "(`!!')")))
     (local-set-key (kbd "{") (smartchr '("{" "{`!!'}")))
