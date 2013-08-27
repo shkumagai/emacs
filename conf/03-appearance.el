@@ -68,3 +68,37 @@
 (setq-default tab-width 4)
 (setq default-tab-width 4)
 (setq tab-stop-list (gen-tab-stop))
+
+;;; linum-mode
+(setq linum-format "%4d")
+(global-set-key [f9] 'linum-mode)
+
+;; spec by major/minor-mode
+(defvar my-linum-hook-name nil)
+(setq my-linum-hook-name '(emacs-lisp-mode-hook
+                           sh-mode-hook
+                           text-mode-hook
+                           erlang-mode-hook
+                           perl-mode-hook
+                           python-mode-hook
+                           ruby-mode-hook
+                           go-mode-hook
+                           yaml-mode-hook
+                           css-mode-hook))
+(mapc (lambda (hook-name)
+        (add-hook hook-name (lambda () (linum-mode t))))
+      my-linum-hook-name)
+
+;; spec by file name
+(defvar my-linum-file nil)
+(defun my-linum-file-name ()
+  (when (member (buffer-name) my-linum-file)
+    (linum-mode t)))
+(add-hook 'find-file-hook 'my-linum-file-name)
+
+;; spec by extension
+(defvar my-linum-file-extensions nil)
+(defun my-linum-file-extension ()
+  (when (member (file-name-extension (buffer-file-name)) my-linum-file-extension)
+    (linum-mode t)))
+(add-hook 'find-file-mode 'my-linum-file-extension)
