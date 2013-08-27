@@ -3,21 +3,29 @@
 ;; Perl
 (defalias 'perl-mode 'cperl-mode)
 (setq auto-mode-alist
-      (cons '("\\.t\\'" . cperl-mode) auto-mode-alist))
-(setq cperl-auto-newline nil)
-(setq cperl-indent-parens-as-block t)
-(setq cperl-close-paren-offset -4)
-(setq cperl-indent-level 4)
-(setq cperl-level-offset -4)
-(setq cperl-continuted-statement-offset 4)
-(setq cperl-highlight-variables-indiscriminaly t)
+      (cons '("\\.t$" . cperl-mode) auto-mode-alist))
+(setq cperl-indent-level 4
+      cperl-continuted-statement-offset 4
+      cperl-close-paren-offset -4
+      cperl-level-offset -4
+      cperl-comment-column 40
+      cperl-highlight-variables-indiscriminaly t
+      cperl-indent-parens-as-block t
+      cperl-tab-always-indent nil
+      cperl-font-lock t)
 (add-hook 'cperl-mode-hook
-      (lambda ()
-        (set-face-italic-p 'cperl-hash-face nil)))
-(add-hook 'cperl-mode-hook
-      '(lambda ()
-         (define-key cperl-mode-map (kbd "C-c c") 'cperl-check-syntax)
-         (setq indent-tabs-mode nil)))
+          '(lambda ()
+             (progn
+               (setq indent-tabs-mode nil)
+               (setq tab-width nil)
+               (cperl-set-style "PerlStyle")
+
+               ;; perl completion
+               (require 'auto-completion)
+               (require 'perl-completion)
+               (add-to-list 'ac-source 'ac-source-perl-completion)
+               (perl-completion-mode t)
+               )))
 
 ;; perltidy
 (defmacro mark-active ()
