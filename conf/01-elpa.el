@@ -19,6 +19,7 @@
    ctags
    gist
    magit
+   tabbar
    undo-tree
    yaml-mode
    yasnippet
