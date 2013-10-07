@@ -39,6 +39,7 @@
 (load-library "25-migemo")          ; Migemo
 (load-library "26-ctags")           ; Ctags
 (load-library "27-tabbar")          ; Tabbar
+(load-library "28-po")              ; PO
 
 ;; for programming languages
 (load-library "51-perl")            ; perl
