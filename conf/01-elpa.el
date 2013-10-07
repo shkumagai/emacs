@@ -15,7 +15,8 @@
  (lambda (package)
    (or (package-installed-p package)
        (package-install package)))
- '(auto-complete
+ '(ag
+   auto-complete
    ctags
    gist
    magit
