@@ -34,7 +34,7 @@
 ;; additional settings
 (load-library "21-anything")        ; Anything
 (load-library "22-auto-complete")   ; auto-complete
-(load-library "23-yasnippet")       ; YASnippet
+;; (load-library "23-yasnippet")       ; YASnippet
 (load-library "24-git")             ; Git on Emacs (using magit)
 (load-library "25-migemo")          ; Migemo
 (load-library "26-ctags")           ; Ctags

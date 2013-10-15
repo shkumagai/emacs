@@ -23,7 +23,7 @@
    tabbar
    undo-tree
    yaml-mode
-   yasnippet
+   ;; yasnippet
    ))
 
 ;; delete buffer if it opened
