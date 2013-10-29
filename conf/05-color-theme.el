@@ -16,4 +16,4 @@
 ;;      ))
 
 ;; for Emacs 24 or higher
-(load-theme 'misterioso t)
+(load-theme 'solarized-dark t)

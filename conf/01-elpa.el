@@ -17,6 +17,7 @@
        (package-install package)))
  '(ag
    auto-complete
+   color-theme-solarized
    ctags
    gist
    magit
