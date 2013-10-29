@@ -62,6 +62,6 @@
         (cons cur-buf tabs))))
   (setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
 
-  (global-set-key (kbd "s-}") 'tabbar-forward-tab)
-  (global-set-key (kbd "s-{") 'tabbar-backward-tab)
+  (global-set-key (kbd "C-x n") 'tabbar-forward-tab)
+  (global-set-key (kbd "C-x p") 'tabbar-backward-tab)
   )
