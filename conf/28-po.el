@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tags-mode: nil -*-
+;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
 ;; How to setting up on Mac OSX
 ;; ----------------------------
