@@ -70,7 +70,7 @@
 (setq tab-stop-list (gen-tab-stop))
 
 ;;; linum-mode
-(setq linum-format "%4d")
+(setq linum-format "%4d ")
 (global-set-key [f9] 'linum-mode)
 
 ;; spec by major/minor-mode
