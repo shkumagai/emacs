@@ -48,8 +48,8 @@
 ;; Linux
 (when (eq window-system 'x)
   (let* ((size 10)
-         (asciifont "Liberation Mono")
-         (jpfont "Takao Gothic")
+         (asciifont "Monospace")
+         (jpfont "Ricty")
          (h (* size 10))
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
@@ -62,8 +62,8 @@
     )
 
   ;; define aspect ratio
-  (dolist (elt '((".*Liberation Mono.*" . 1.0)
-                 (".*Takao Gothic.*" . 1.2)
+  (dolist (elt '((".*Monospace.*" . 0.8)
+                 (".*Ricty.*" . 1.2)
                  ))
     (add-to-list 'face-font-rescale-alist elt)
     ))
