@@ -15,7 +15,7 @@
 
 (when (eq window-system 'w32)
   ;; Windows
-  (setq file-name-coding-system 'sjis)
+  (setq file-name-coding-system 'utf-8)
   (setq locale-coding-system 'utf-8))
 
 (when (eq window-system 'x) 
