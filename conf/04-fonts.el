@@ -33,7 +33,7 @@
 (when (eq window-system 'w32)
   (let* ((size 11)
          (asciifont "Consolas")
-         (jpfont "Meiryo")
+         (jpfont "Takao Gothic")
          (h (* size 10))
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
@@ -43,7 +43,12 @@
     (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
     (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン
     (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
-    ))
+    )
+  ;; define aspect ratio
+  (dolist (elt '((".*Consolas.*" . 1.0)
+                 (".*Takao Gothic.*" . 1.2)
+                 ))
+    (add-to-list 'face-font-rescale-alist elt)))
 
 ;; Linux
 (when (eq window-system 'x)
