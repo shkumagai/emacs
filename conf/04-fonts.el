@@ -67,8 +67,8 @@
     )
 
   ;; define aspect ratio
-  (dolist (elt '((".*Monospace.*" . 0.8)
-                 (".*Ricty.*" . 1.2)
+  (dolist (elt '((".*Monospace.*" . 1.0)
+                 (".*Ricty.*" . 1.25)
                  ))
     (add-to-list 'face-font-rescale-alist elt)
     ))
