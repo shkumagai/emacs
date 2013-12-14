@@ -10,10 +10,17 @@
 (column-number-mode 1)
 (setq default-frame-alist
       '((width . 200)
-        (height . 57)
-        (top . 10)
+        (height . 56)
+        (top . 0)
         (left . 0)
         ))
+(when (string= system-name "Physalis.local")
+  (setq default-frame-alist
+        '((width . 168)
+          (height . 40)
+          (top . 10)
+          (left . 0)
+          )))
 
 ;; Show absolute path on title bar
 (setq frame-title-format
