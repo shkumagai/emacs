@@ -20,6 +20,7 @@
    color-theme-solarized
    ctags
    gist
+   js2-mode
    magit
    tabbar
    undo-tree

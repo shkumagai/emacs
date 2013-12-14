@@ -47,6 +47,7 @@
 (load-library "53-erlang")          ; erlang
 (load-library "54-go")              ; go
 (load-library "55-css")             ; css
+(load-library "56-js")              ; js
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
