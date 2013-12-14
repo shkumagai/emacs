@@ -44,20 +44,20 @@
 ;; for programming languages
 (load-library "51-perl")            ; perl
 (load-library "52-python")          ; python, rst
-(load-library "53-erlang")          ; erlang
-(load-library "54-go")              ; go
+;; (load-library "53-erlang")          ; erlang
+;; (load-library "54-go")              ; go
 (load-library "55-css")             ; css
 (load-library "56-js")              ; js
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain onle one such instance.
-  ;; If there is more than one, the won't work right.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(safe-local-variable-values (quote ((syntax . elisp)))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain onle one such instance.
-  ;; If there is more than one, the won't work right.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
 )

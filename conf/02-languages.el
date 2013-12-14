@@ -15,10 +15,17 @@
 
 (when (eq window-system 'w32)
   ;; Windows
-  (setq file-name-coding-system 'sjis)
+  (setq default-input-method "W32-IME")
+
+  (setq-default w32-ime-mode-line-state-indicator "[--]")
+  (setq w32-ime-mode-line-state-indicator-list '("[--]" "[あ]" "[--]"))
+  (w32-ime-initialize)
+  (global-set-key [M-kanji] 'ignore)
+
+  (setq file-name-coding-system 'utf-8)
   (setq locale-coding-system 'utf-8))
 
-(when (eq window-system 'x) 
+(when (eq window-system 'x)
   ;; Linux, etc
   (setq file-name-coding-system 'utf-8)
   (setq locale-coding-system 'utf-8))
