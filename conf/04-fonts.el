@@ -52,13 +52,13 @@
 
 ;; Linux
 (when (eq window-system 'x)
-  (let* ((size 10)
-         (asciifont "Monospace")
+  (let* ((size 11)
+         (asciifont "Inconsolata")
          (jpfont "Ricty")
          (h (* size 10))
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
-    (set-face-attribute 'default nil :family asciifont :height 100)
+    (set-face-attribute 'default nil :family asciifont :height h)
     (set-fontset-font nil 'japanese-jisx0213.2004-1 jp-fontspec)
     (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
     (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
@@ -67,8 +67,7 @@
     )
 
   ;; define aspect ratio
-  (dolist (elt '((".*Monospace.*" . 1.0)
-                 (".*Ricty.*" . 1.25)
+  (dolist (elt '((".*Inconsolata.*" . 1.0)
+                 (".*Ricty.*" . 1.0)
                  ))
-    (add-to-list 'face-font-rescale-alist elt)
-    ))
+    (add-to-list 'face-font-rescale-alist elt)))
