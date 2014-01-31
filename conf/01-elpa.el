@@ -22,6 +22,7 @@
    gist
    js2-mode
    magit
+   monky
    tabbar
    undo-tree
    yaml-mode
