@@ -27,5 +27,9 @@
 
 (when (eq window-system 'x)
   ;; Linux, etc
+  (require 'mozc)
+  (setq default-input-method "japanese-mozc")
+  (setq mozc-candidate-style 'echo-area)
+
   (setq file-name-coding-system 'utf-8)
   (setq locale-coding-system 'utf-8))
