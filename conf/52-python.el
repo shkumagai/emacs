@@ -10,3 +10,9 @@
   (setq auto-mode-alist
         (cons '("\\.re?st$" . rst-mode) auto-mode-alist))
   (add-hook 'rst-mode-hook '(lambda() (setq indent-tabs-mode nil))))
+
+;; flymake-python-pyflakes
+(when (require 'flymake-python-pyflakes nil t)
+  (setq flymake-python-pyflakes-executable
+        (concat (getenv "HOME") "/.virtualenvs/sbcl_kvs/bin/flake8"))
+  (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
