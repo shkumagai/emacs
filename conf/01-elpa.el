@@ -19,13 +19,13 @@
    auto-complete
    color-theme-solarized
    ctags
-   gist
    js2-mode
    magit
    monky
    tabbar
    undo-tree
    yaml-mode
+   ;; gist
    ;; yasnippet
    ))
 
