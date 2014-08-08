@@ -17,7 +17,7 @@
 
   (set-face-attribute
    'tabbar-default nil
-   :family "Menlo"
+   :family "Ricty"
    :background "black"
    :foreground "gray72"
    :height 1.0)
