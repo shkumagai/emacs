@@ -68,6 +68,6 @@
 
   ;; define aspect ratio
   (dolist (elt '((".*Inconsolata.*" . 1.0)
-                 (".*Ricty.*" . 1.0)
+                 (".*Ricty.*" . 1.1)
                  ))
     (add-to-list 'face-font-rescale-alist elt)))
