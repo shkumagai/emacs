@@ -90,3 +90,8 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;   (add-hook 'erlang-mode-hook 'my-smartchr-hooks)
 ;;   (add-hook 'go-mode-hook 'my-smartchr-hooks)
 ;;   )
+
+;; check dropbox
+(defvar my:check-dropbox (file-exists-p (concat (getenv "HOME") "/Dropbox")))
+
+(if my:check-dropbox (defvar my:dropbox (concat (getenv "HOME") "/Dropbox/")))
