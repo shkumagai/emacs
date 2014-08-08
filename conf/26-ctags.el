@@ -10,6 +10,6 @@
   ;; Command-line to call `ctags'.
   ;; (setq ctags-command "/opt/local/bin/ctags -R -e ")
   ;; Comment out when anything-exuberant-ctags.el not in use.
-  (setq ctags-command "/opt/local/bin/ctags -R --fields=\"+afikKlmnsSzt\" ")
+  (setq ctags-command "/usr/bin/ctags -R --fields=\"+afikKlmnsSzt\" ")
   (global-set-key (kbd "<f5>") 'ctags-create-or-update-tags-table)
   )

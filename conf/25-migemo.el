@@ -24,7 +24,7 @@
   ;; command line options
   (setq migemo-options '("-q" "--emacs" "-i" "\a"))
   ;; path to dictionary
-  (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
+  (setq migemo-dictionary "/usr/share/migemo/migemo-dict")
   ;; required setting in cmigemo
   (setq migemo-user-dictionary nil)
   (setq migemo-regex-dictionary nil)
