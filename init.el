@@ -40,6 +40,7 @@
 (load-library "26-ctags")           ; Ctags
 (load-library "27-tabbar")          ; Tabbar
 (load-library "28-po")              ; PO
+(load-library "29-slime")           ; SLIME (Superior Lisp Interaction Mode for Emacs)
 
 ;; for programming languages
 (load-library "51-perl")            ; perl
