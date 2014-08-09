@@ -24,10 +24,14 @@
 ;; Erlang mode
 ;;
 ;; $ find /usr/lib /usr/lib64 /opt/local/lib -type d -name "erlang"
-(setq erlang-root-dir "/usr/lib64/erlang")
+(when (eq window-system 'ns)
+  (setq erlang-root-dir "/opt/local/lib/erlang"))
+
+(when (eq window-system 'x)
+  (setq erlang-root-dir "/usr/lib64/erlang"))
 
 ;; $ find /usr/lib /usr/lib64 /opt/local/lib -type d -name "emacs"
-(add-to-list 'load-path (concat erlang-root-dir "/lib/tools-2.6.8/emacs"))
+(add-to-list 'load-path (concat erlang-root-dir "/lib/tools-2.6.15/emacs"))
 
 (add-to-list 'exec-path (concat erlang-root-dir "/bin"))
 (require 'erlang-start)
