@@ -22,25 +22,11 @@
 ;;       $ sudo make install
 
 ;; Erlang mode
-;; R15B
-;; (setq erlang-root-dir "/opt/local/erlang/R15B")
-;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.6.6/emacs"))
-;; R15B01
-;; (setq erlang-root-dir "/opt/local/erlang/R15B01")
-;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.7/emacs"))
-;; R15B02
-;; (setq erlang-root-dir "/opt/local/erlang/R15B02")
-;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.8/emacs"))
-;; R15B03-1
-;; (setq erlang-root-dir "/opt/local/erlang/R15B03-1")
-;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.8/emacs"))
-;; R16A
-;; (setq erlang-root-dir "/opt/local/erlang/R16A")
-;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.9/emacs"))
-;; R16B
-;; (setq erlang-root-dir "/opt/local/erlang/R16B")
-;; (add-to-list 'load-path (concat erlang-root-dir "/lib/erlang/lib/tools-2.6.10/emacs"))
+;;
+;; $ find /usr/lib /usr/lib64 /opt/local/lib -type d -name "erlang"
 (setq erlang-root-dir "/usr/lib64/erlang")
+
+;; $ find /usr/lib /usr/lib64 /opt/local/lib -type d -name "emacs"
 (add-to-list 'load-path (concat erlang-root-dir "/lib/tools-2.6.8/emacs"))
 
 (add-to-list 'exec-path (concat erlang-root-dir "/bin"))

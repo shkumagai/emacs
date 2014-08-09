@@ -2,4 +2,4 @@
 
 ;; (add-to-list 'load-path "~/.emacs.d/elisp/slime")
 (require 'slime-autoloads)
-(setq inferior-lisp-program "/usr/bin/sbcl")
+(setq inferior-lisp-program "sbcl")
