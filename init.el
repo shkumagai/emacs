@@ -45,7 +45,7 @@
 ;; for programming languages
 (load-library "51-perl")            ; perl
 (load-library "52-python")          ; python, rst
-;; (load-library "53-erlang")          ; erlang
+(load-library "53-erlang")          ; erlang
 (load-library "54-go")              ; go
 (load-library "55-css")             ; css
 (load-library "56-js")              ; js
