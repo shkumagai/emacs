@@ -52,7 +52,7 @@
 
 ;; Linux
 (when (eq window-system 'x)
-  (let* ((size 11)
+  (let* ((size 10)
          (asciifont "Inconsolata")
          (jpfont "Ricty")
          (h (* size 10))
@@ -68,6 +68,6 @@
 
   ;; define aspect ratio
   (dolist (elt '((".*Inconsolata.*" . 1.0)
-                 (".*Ricty.*" . 1.1)
+                 (".*Ricty.*" . 1.0)
                  ))
     (add-to-list 'face-font-rescale-alist elt)))
