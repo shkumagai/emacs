@@ -14,5 +14,5 @@
 ;; flymake-python-pyflakes
 (when (require 'flymake-python-pyflakes nil t)
   (setq flymake-python-pyflakes-executable
-        (concat (getenv "HOME") "/.virtualenvs/sbcl_kvs/bin/flake8"))
+        (replace-regexp-in-string "\n+$" "" (shell-command-to-string "which flake8")))
   (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
