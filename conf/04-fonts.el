@@ -4,13 +4,13 @@
 
 (when (eq window-system 'ns)
   ;; set default font
-  (let* ((size 14) ; ASCII font size
+  (let* ((size 10) ; ASCII font size
          (asciifont "Menlo") ; ASCII font
          ;; (jpfont "Hiragino Maru Gothic ProN") ; Japanese font
          (jpfont "Ricty")
          ;; (jpfont "Moon font")
          ;; (jpfont "Sea font")
-         (h (* size 10))
+         (h (* size 11))
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
     (set-face-attribute 'default nil :family asciifont :height h)
