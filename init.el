@@ -49,6 +49,7 @@
 (load-library "54-go")              ; go
 (load-library "55-css")             ; css
 (load-library "56-js")              ; js
+(load-library "57-groovy")          ; groovy
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
