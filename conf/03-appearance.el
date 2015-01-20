@@ -41,20 +41,42 @@
 
 ;; Whitespace mode
 (when (require 'whitespace nil t)
-  (setq whitespace-style '(face tabs tab-mark spaces space-mark))
-  (setq whitespace-display-mappings
-        '((space-mark ?\u3000 [?\u25a1])))
-  (setq whitespace-space-regexp "\\( +\\|\u3000+\\)")
-  ;; Face settings
-  (set-face-foreground 'whitespace-tab "#262626")
-  (set-face-background 'whitespace-tab 'nil)
-  (set-face-underline 'whitespace-tab t)
-  (set-face-foreground 'whitespace-space "#585858")
-  (set-face-background 'whitespace-space 'nil)
+  (setq whitespace-style '(face
+                           trailing
+                           tabs
+                           spaces
+                           empty
+                           tab-mark
+                           space-mark
+                           ))
 
-  (set-face-bold-p 'whitespace-space t)
+  (setq whitespace-display-mappings
+        '((space-mark ?\u3000 [?\u25a1])
+          (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])))
+
+  (setq whitespace-space-regexp "\\( +\\|\u3000+\\)")
+
+  ;; (set-face-bold-p 'whitespace-space t)
   (global-whitespace-mode 1)
-  (global-set-key (kbd "C-x w") 'global-whitespace-mode))
+  (global-set-key (kbd "C-x w") 'global-whitespace-mode)
+
+  (defvar my/bg-color "#2d3743")
+  (set-face-attribute 'whitespace-trailing nil
+                      :background my/bg-color
+                      :foreground "DeepPink"
+                      :underline t)
+  (set-face-attribute 'whitespace-tab nil
+                      :background my/bg-color
+                      :foreground "LightSkyBlue"
+                      :underline t)
+  (set-face-attribute 'whitespace-space nil
+                      :background my/bg-color
+                      :foreground "GreenYellow"
+                      :weight 'bold)
+  (set-face-attribute 'whitespace-empty nil
+                      :background my/bg-color
+                      ))
+
 
 ;; Remove trailing whitespace on save file
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
