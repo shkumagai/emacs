@@ -25,6 +25,7 @@
    tabbar
    undo-tree
    yaml-mode
+   groovy-mode
    ;; gist
    ;; yasnippet
    ))
