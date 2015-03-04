@@ -50,6 +50,8 @@
 (load-library "55-css")             ; css
 (load-library "56-js")              ; js
 (load-library "57-groovy")          ; groovy
+(load-library "58-web-mode")        ; web-mode
+;; (load-library "58-multi-web-mode")  ; multi-web-mode
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
