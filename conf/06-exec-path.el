@@ -1,11 +1,7 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
 ;; Exec Paths
-(when (eq window-system 'ns)
-  (add-to-list 'exec-path "/opt/local/sbin")
-  (add-to-list 'exec-path "/opt/local/bin")
-  )
-
-(add-to-list 'exec-path "/usr/local/sbin")
-(add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path "~/bin")
+(when (require 'exec-path-from-shell nil t)
+  (exec-path-from-shell-initialize)
+  (let ((envs '("PATH" "GOPATH")))
+    (exec-path-from-shell-copy-envs envs)))

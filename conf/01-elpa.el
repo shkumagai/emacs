@@ -19,6 +19,7 @@
    auto-complete
    color-theme-solarized
    ctags
+   exec-path-from-shell
    js2-mode
    magit
    monky
