@@ -20,13 +20,15 @@
    color-theme-solarized
    ctags
    exec-path-from-shell
+   go-autocomplete
+   go-mode
+   groovy-mode
    js2-mode
    magit
    monky
    tabbar
    undo-tree
    yaml-mode
-   groovy-mode
    ;; gist
    ;; yasnippet
    ))
