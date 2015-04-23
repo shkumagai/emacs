@@ -21,6 +21,8 @@
    ctags
    exec-path-from-shell
    go-autocomplete
+   go-direx
+   go-eldoc
    go-mode
    groovy-mode
    js2-mode
