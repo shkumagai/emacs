@@ -20,6 +20,7 @@
    color-theme-solarized
    ctags
    exec-path-from-shell
+   gist
    go-autocomplete
    go-direx
    go-eldoc
@@ -31,7 +32,6 @@
    tabbar
    undo-tree
    yaml-mode
-   ;; gist
    ;; yasnippet
    ))
 
