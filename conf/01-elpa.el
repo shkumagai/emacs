@@ -31,7 +31,7 @@
    tabbar
    undo-tree
    yaml-mode
-   ;; gist
+   gist
    ;; yasnippet
    ))
 
