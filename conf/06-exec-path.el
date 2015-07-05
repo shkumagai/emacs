@@ -2,6 +2,6 @@
 
 ;; Exec Paths
 (when (require 'exec-path-from-shell nil t)
-  (exec-path-from-shell-initialize)
-  (let ((envs '("PATH" "GOPATH")))
-    (exec-path-from-shell-copy-envs envs)))
+  (exec-path-from-shell-initialize))
+  ;; (let ((envs '("PATH" "GOPATH")))
+  ;;   (exec-path-from-shell-copy-envs envs)))
