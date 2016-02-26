@@ -46,11 +46,11 @@
 ;; for programming languages
 (load-library "51-perl")            ; perl
 (load-library "52-python")          ; python, rst
-(load-library "53-erlang")          ; erlang
+;; (load-library "53-erlang")          ; erlang
 (load-library "54-go")              ; go
 (load-library "55-css")             ; css
 (load-library "56-js")              ; js
-(load-library "57-groovy")          ; groovy
+;; (load-library "57-groovy")          ; groovy
 (load-library "58-web-mode")        ; web-mode
 ;; (load-library "58-multi-web-mode")  ; multi-web-mode
 
