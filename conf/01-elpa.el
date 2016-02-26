@@ -18,6 +18,9 @@
  '(ag
    auto-complete
    color-theme-solarized
+   company
+   company-jedi
+   company-go
    ctags
    exec-path-from-shell
    flycheck

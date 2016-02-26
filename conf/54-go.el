@@ -1,15 +1,21 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
 ;; Go
-
-;; need to install godef
-;; % go get -u code.google.com/p/rog-go/exp/cmd/godef
-(when (require 'go-mode-load nil t)
-  (add-hook 'before-save-hook 'gofmt-before-save))
-
-;; need to install gocode
-;; % go get -u github.com/nsf/gocode
-(when (require 'go-autocomplete nil t))
+(when (require 'go-mode nil t)
+  ;; need to install godef
+  ;; % go get -u github.com/rogpeppe/godef
+  ;; % go get -u github.com/nsf/gocode
+  (add-hook 'go-mode-hook '(lambda ()
+                             (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
+  (add-hook 'go-mode-hook '(lambda ()
+                             (local-set-key (kbd "C-c C-i") 'go-goto-imports)))
+  (add-hook 'go-mode-hook '(lambda ()
+                             (local-set-key (kbd "C-c C-f") 'gofmt)))
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'go-mode-hook 'company-mode)
+  (add-hook 'go-mode-hook '(lambda ()
+                             (set (make-local-variable 'company-backends) '(company-go))
+                             (company-mode))))
 
 (when (require 'go-eldoc nil t)
   (add-hook 'go-mode-hook 'go-eldoc-setup)
