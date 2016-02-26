@@ -20,6 +20,7 @@
    color-theme-solarized
    ctags
    exec-path-from-shell
+   flycheck
    gist
    go-autocomplete
    go-direx
@@ -32,7 +33,6 @@
    tabbar
    undo-tree
    yaml-mode
-   ;; yasnippet
    ))
 
 ;; delete buffer if it opened

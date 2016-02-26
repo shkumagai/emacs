@@ -95,3 +95,6 @@ Uses `current-date-time-format' for the formatting the date/time."
 (defvar my:check-dropbox (file-exists-p (concat (getenv "HOME") "/Dropbox")))
 
 (if my:check-dropbox (defvar my:dropbox (concat (getenv "HOME") "/Dropbox/")))
+
+;; flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
