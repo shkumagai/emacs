@@ -8,3 +8,4 @@ Makefile
 var/pcache/
 elpa/*
 elisp/slime
+.python-environments/
