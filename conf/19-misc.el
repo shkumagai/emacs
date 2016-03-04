@@ -5,11 +5,12 @@
 (define-key global-map (kbd "C-h") 'describe-bindings)
 
 ;; insert timestamp
-(defvar current-date-time-format "%c"
+(setq system-time-locale "C")
+(defvar current-date-time-format "%b %d, %Y %a %T"
   "Format of date to insert `insert-current-date-time' function
 See help of `format-time-string' for possible replacement")
 
-(defvar current-time-format "%a %T"
+(defvar current-time-format "%T"
   "Format of date to insert with `insert-current-time' func.
 Note the weekly scope of the command's precision.")
 
