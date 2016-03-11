@@ -16,6 +16,7 @@
    (or (package-installed-p package)
        (package-install package)))
  '(ag
+   anzu
    auto-complete
    color-theme-solarized
    company

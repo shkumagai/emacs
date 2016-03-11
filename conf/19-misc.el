@@ -99,3 +99,11 @@ Uses `current-date-time-format' for the formatting the date/time."
 
 ;; flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; anzu
+(global-anzu-mode +1)
+(custom-set-variables
+ '(anzu-mode-lighter "")
+ '(anzu-deactivate-region t)
+ '(anzu-search-threashold 1000)
+ '(anzu-use-migemo t))
