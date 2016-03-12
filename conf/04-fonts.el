@@ -12,7 +12,7 @@
          ;; (jpfont "Moon font")
          ;; (jpfont "Sea font")
          ;;(h (* size 9))
-         (h (* size 11))
+         (h (* size 12))
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
     (set-face-attribute 'default nil :family asciifont :height h)
