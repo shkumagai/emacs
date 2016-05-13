@@ -11,8 +11,8 @@
 (setq default-frame-alist
       '((width . 120)
         (height . 54)
-        (top . 0)
-        (left . 0)
+        ;; (top . 0)
+        ;; (left . 0)
         ))
 
 ;; Show absolute path on title bar
@@ -21,7 +21,7 @@
 ;; Parenthesis
 (setq show-paren-delay 0)
 (show-paren-mode t)
-(setq show-parem-styel 'parenthesis)
+(setq show-paren-style 'parenthesis)
 (set-face-background 'show-paren-match-face nil)
 (set-face-underline-p 'show-paren-match-face "yellow")
 
