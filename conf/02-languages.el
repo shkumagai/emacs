@@ -22,8 +22,9 @@
   (w32-ime-initialize)
   (global-set-key [M-kanji] 'ignore)
 
-  (setq file-name-coding-system 'utf-8)
-  (setq locale-coding-system 'utf-8))
+  (setq file-name-coding-system 'cp932)
+  (setq keyboard-coding-system 'cp932)
+  (setq locale-coding-system 'cp932))
 
 (when (eq window-system 'x)
   ;; Linux, etc

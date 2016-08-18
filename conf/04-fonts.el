@@ -35,7 +35,8 @@
 (when (eq window-system 'w32)
   (let* ((size 11)
          (asciifont "Consolas")
-         (jpfont "Takao Gothic")
+         (jpfont "MeiryoKe_Console")
+         ;; (jpfont "Takao Gothic")
          (h (* size 10))
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
@@ -48,7 +49,8 @@
     )
   ;; define aspect ratio
   (dolist (elt '((".*Consolas.*" . 1.0)
-                 (".*Takao Gothic.*" . 1.2)
+                 (".*MeiryoKe_Console.*" . 1.0)
+                 ;; (".*Takao Gothic.*" . 1.2)
                  ))
     (add-to-list 'face-font-rescale-alist elt)))
 
