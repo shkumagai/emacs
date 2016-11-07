@@ -10,7 +10,7 @@
 (column-number-mode 1)
 (setq default-frame-alist
       '((width . 120)
-        (height . 54)
+        (height . 51)
         ;; (top . 0)
         ;; (left . 0)
         ))
