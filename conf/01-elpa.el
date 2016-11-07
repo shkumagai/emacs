@@ -18,6 +18,7 @@
  '(ag
    anzu
    auto-complete
+   coffee-mode
    color-theme-solarized
    company
    company-jedi
