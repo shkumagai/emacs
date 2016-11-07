@@ -50,6 +50,7 @@
 (load-library "54-go")              ; go
 (load-library "55-css")             ; css
 (load-library "56-js")              ; js
+(load-library "56-coffee")          ; coffee script
 ;; (load-library "57-groovy")          ; groovy
 (load-library "58-web-mode")        ; web-mode
 ;; (load-library "58-multi-web-mode")  ; multi-web-mode
