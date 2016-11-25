@@ -35,6 +35,8 @@
    js2-mode
    magit
    monky
+   slime
+   slime-company
    tabbar
    undo-tree
    yaml-mode
