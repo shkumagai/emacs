@@ -22,10 +22,10 @@
 ;; basic settings
 (load-library "01-elpa")            ; Package Management
 (load-library "02-languages")       ; Language Settings
-(load-library "03-appearance")      ; Appearance
+(load-library "03-exec-path")       ; Exec Path
 (load-library "04-fonts")           ; Fonts
 (load-library "05-color-theme")     ; Color Theme
-(load-library "06-exec-path")       ; Exec Path
+(load-library "06-appearance")      ; Appearance
 
 (load-library "11-lisp-mode-hooks") ; lisp-mode-hook setting
 (load-library "12-auto-install")    ; auto-install.el (only for Anything)
@@ -33,25 +33,31 @@
 
 ;; additional settings
 (load-library "21-anything")        ; Anything
-(load-library "22-company")         ; company
-(load-library "23-yasnippet")       ; YASnippet
-(load-library "24-git")             ; Git on Emacs (using magit)
-(load-library "25-migemo")          ; Migemo
-(load-library "26-ctags")           ; Ctags
-(load-library "27-tabbar")          ; Tabbar
-(load-library "28-po")              ; PO
-(load-library "29-slime")           ; SLIME (Superior Lisp Interaction Mode for Emacs)
+(load-library "22-ctags")           ; Ctags
+(load-library "23-migemo")          ; Migemo
+(load-library "24-tabbar")          ; Tabbar
+(load-library "25-git")             ; Git on Emacs (using magit)
+(load-library "28-yasnippet")       ; YASnippet
+(load-library "29-company")         ; company
 
 ;; for programming languages
 (load-library "51-perl")            ; perl
-(load-library "52-python")          ; python, rst
-;; (load-library "53-erlang")          ; erlang
+(load-library "52-python")          ; python (jedi)
+(load-library "53-erlang")          ; erlang
 (load-library "54-go")              ; go
-(load-library "55-css")             ; css
-(load-library "56-js")              ; js
+(load-library "55-groovy")          ; groovy
 (load-library "56-coffee")          ; coffee script
-;; (load-library "57-groovy")          ; groovy
-(load-library "58-web-mode")        ; web-mode
+(load-library "56-js")              ; js
+(load-library "57-commonlisp")      ; common-lisp (SLIME)
+
+;; for markup languages
+(load-library "71-web-mode")        ; web-mode
+(load-library "72-css")             ; css
+(load-library "73-yaml")            ; YAML
+
+;; for domain specified format
+(load-library "91-ansible")         ; Ansible
+(load-library "92-po")              ; PO
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
