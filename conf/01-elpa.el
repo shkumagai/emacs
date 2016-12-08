@@ -16,14 +16,9 @@
    (or (package-installed-p package)
        (package-install package)))
  '(ag
-   ansible
-   anzu
-   auto-complete
    coffee-mode
    color-theme-solarized
    company
-   company-jedi
-   company-go
    ctags
    exec-path-from-shell
    flycheck
@@ -32,7 +27,10 @@
    go-direx
    go-eldoc
    go-mode
+   company-go
    groovy-mode
+   jedi-core
+   company-jedi
    js2-mode
    magit
    monky
@@ -42,6 +40,8 @@
    undo-tree
    use-package
    yaml-mode
+   ansible
+   anzu
    ))
 
 ;; delete buffer if it opened
