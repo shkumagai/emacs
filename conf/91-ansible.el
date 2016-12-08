@@ -3,4 +3,6 @@
 (use-package ansible
   :config
   (add-hook 'yaml-mode-hook '(lambda () (ansible)))
+  (eval-after-load 'yasnippet
+    '(ansible::snippets-initialize))
   )
