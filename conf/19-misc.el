@@ -41,27 +41,24 @@ Uses `current-date-time-format' for the formatting the date/time."
   (setq buffer-offer-save nil))
 (global-set-key (kbd "C-c C-c t") 'create-temporary-buffer)
 
-
-;; point-undo: undo a cursor position
-;; M-x install-elisp http://www.emacswiki.org/cgi-bin/wiki/download/point-undo.el
-(when (require 'point-undo nil t)
-  (define-key global-map (kbd "M-[") 'point-undo)
-  (define-key global-map (kbd "M-]") 'point-redo))
-
 ;; undo-tree: visualize undo branches
 ;; M-x package-install undo-tree
-(when (require 'undo-tree nil t)
+(use-package undo-tree
+  :config
   (global-undo-tree-mode))
 
 ;; undohist: enable undo on closed buffer
 ;; download from: http://cx4a.org/pub/undohist.el
-(when (require 'undohist nil t)
+(use-package undohist
+  :config
   (undohist-initialize))
 
 
 ;; wdired: enable file name edit directly in wdired
-(require 'wdired)
-(define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
+(use-package wdired
+  :bind (:map dired-mode-map
+              ("r" . wdired-change-to-wdired-mode))
+  )
 
 
 ;; ;; smartchr: cycle snippet

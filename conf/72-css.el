@@ -1,6 +1,7 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
 ;; CSS
-(when (require 'css-mode nil t)
+(use-package css-mode
+  :config
   (add-to-list 'auto-mode-alist '("\\.css\\(_t\\)\\'" . css-mode))
   )

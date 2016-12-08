@@ -1,7 +1,8 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
 ;; Go
-(when (require 'go-mode nil t)
+(use-package go-mode
+  :config
   ;; need to install godef
   ;; % go get -u github.com/rogpeppe/godef
   ;; % go get -u github.com/nsf/gocode
@@ -17,13 +18,16 @@
                              (set (make-local-variable 'company-backends) '(company-go))
                              (company-mode))))
 
-(when (require 'go-eldoc nil t)
+(use-package go-eldoc
+  :config
   (add-hook 'go-mode-hook 'go-eldoc-setup)
   (set-face-attribute 'eldoc-highlight-function-argument nil
                       :underline t :foreground "green"
                       :weight 'bold))
 
-;; need to install gotags
-;; % go get -u github.com/jstemmer/gotags
-(when (require 'go-direx nil t)
-  (define-key go-mode-map (kbd "C-c C-j") 'go-direx-pop-to-buffer))
+(use-package go-direx
+  ;; need to install gotags
+  ;; % go get -u github.com/jstemmer/gotags
+  :bind (:map go-mode-map
+              ("C-c C-j" . go-direx-pop-to-buffer))
+  )

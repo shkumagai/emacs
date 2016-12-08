@@ -28,7 +28,7 @@
 
 (when (eq window-system 'x)
   ;; Linux, etc
-  (require 'mozc)
+  (use-package mozc)
   (setq default-input-method "japanese-mozc")
   (setq mozc-candidate-style 'echo-area)
 

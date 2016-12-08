@@ -1,18 +1,7 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
-;; How to setting up on MacOSX
-
-;; Install YASnippet package in your own environment according to installation
-;; direction in the document.
-;;
-;; Project site: http://capitaomorte.github.com/yasnippet/
-;;
-;; And then, add elisp snippet as below to your .emacs or init.el.
-;;
-;; Currently, yasnippets.el is able to install with package.el.
-
-;; Yet another snippet
-(when (require 'yasnippet nil t)
+(use-package yasnippet
+  :config
   (setq yas-installed-dir (installed-dir "yasnippet"))
   (setq yas-snippet-dirs
         (let (dirs)

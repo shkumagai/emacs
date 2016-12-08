@@ -21,8 +21,8 @@
                (cperl-set-style "PerlStyle")
 
                ;; perl completion
-               (require 'auto-completion)
-               (require 'perl-completion)
+               (use-package auto-completion)
+               (use-package perl-completion)
                (add-to-list 'ac-source 'ac-source-perl-completion)
                (perl-completion-mode t)
                )))

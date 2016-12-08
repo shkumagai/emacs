@@ -1,13 +1,13 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
-(when (require 'package nil t)
-  (add-to-list
-   'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (add-to-list
-   'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (unless (file-directory-p (concat user-emacs-directory "elpa/archives"))
-    (package-list-packages))
-  (package-initialize))
+(require 'package)
+(add-to-list
+ 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list
+ 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(unless (file-directory-p (concat user-emacs-directory "elpa/archives"))
+  (package-list-packages))
+(package-initialize)
 
 ;; install packages automatically by package.el
 ;; refer to: http://blog.64p.org/entry/2013/05/01/233306
@@ -16,6 +16,7 @@
    (or (package-installed-p package)
        (package-install package)))
  '(ag
+   ansible
    anzu
    auto-complete
    coffee-mode
@@ -39,6 +40,7 @@
    slime-company
    tabbar
    undo-tree
+   use-package
    yaml-mode
    ))
 

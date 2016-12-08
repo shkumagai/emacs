@@ -1,6 +1,9 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
-(when (require 'tabbar nil t)
+(use-package tabbar
+  :bind (("C-x n" . tabbar-forward-tab)
+         ("C-x p" . tabbar-backward-tab))
+  :config
   (tabbar-mode 1)
   (tabbar-mwheel-mode -1)
   (setq tabbar-buffer-groups-function nil)
@@ -61,7 +64,4 @@
           tabs
         (cons cur-buf tabs))))
   (setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
-
-  (global-set-key (kbd "C-x n") 'tabbar-forward-tab)
-  (global-set-key (kbd "C-x p") 'tabbar-backward-tab)
   )

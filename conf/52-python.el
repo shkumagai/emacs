@@ -6,14 +6,9 @@
                                    interpreter-mode-alist))
 
 ;; jedi
-(when (require 'jedi-core nil t)
+(use-package jedi-core
+  :config
   (setq jedi:complete-on-dot t)
   (setq jedi:use-shortcuts t)
   (add-to-list 'company-backends 'company-jedi)
   (add-hook 'python-mode-hook 'jedi:setup))
-
-;; ;; reStructuredText
-;; (when (require 'rst nil t)
-;;   (setq auto-mode-alist
-;;         (cons '("\\.re?st$" . rst-mode) auto-mode-alist))
-;;   (add-hook 'rst-mode-hook '(lambda() (setq indent-tabs-mode nil))))

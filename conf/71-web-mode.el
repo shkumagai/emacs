@@ -1,4 +1,7 @@
-(when (require 'web-mode nil t)
+;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+(use-package web-mode
+  :config
   (when (< emacs-major-version 24)
     (defalias 'prog-mode 'fundamental-mode))
 

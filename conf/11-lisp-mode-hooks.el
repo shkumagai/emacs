@@ -3,10 +3,11 @@
 ;; lisp-mode-hook
 (defun lisp-mode-hooks ()
   "lisp-mode-hooks"
-  (require 'eldoc)
-  (setq eldoc-idle-delay 0.2)
-  (setq eldoc-echo-area-use-multiline-p t)
-  (turn-on-eldoc-mode))
+  (use-package eldoc
+    :config
+    (setq eldoc-idle-delay 0.2)
+    (setq eldoc-echo-area-use-multiline-p t)
+    (turn-on-eldoc-mode)))
 
 (add-hook 'emacs-lisp-mode-hook 'lisp-mode-hooks)
 (add-hook 'lisp-interaction-mode-hook 'lisp-mode-hooks)

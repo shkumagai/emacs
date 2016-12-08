@@ -33,7 +33,9 @@
 (set-frame-parameter (selected-frame) 'alpha '(95 80))
 
 ;; Whitespace mode
-(when (require 'whitespace nil t)
+(use-package whitespace
+  :bind (("C-x w" . global-whitespace-mode))
+  :config
   (setq whitespace-style '(face
                            trailing
                            tabs
@@ -46,12 +48,8 @@
   (setq whitespace-display-mappings
         '((space-mark ?\u3000 [?\u25a1])
           (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])))
-
   (setq whitespace-space-regexp "\\( +\\|\u3000+\\)")
-
-  ;; (set-face-bold-p 'whitespace-space t)
   (global-whitespace-mode 1)
-  (global-set-key (kbd "C-x w") 'global-whitespace-mode)
 
   (defvar my/bg-color "#2d3743")
   (set-face-attribute 'whitespace-trailing nil
