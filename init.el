@@ -33,7 +33,6 @@
 
 ;; additional settings
 (load-library "21-anything")        ; Anything
-;; (load-library "22-auto-complete")   ; auto-complete
 (load-library "22-company")         ; company
 ;; (load-library "23-yasnippet")       ; YASnippet
 (load-library "24-git")             ; Git on Emacs (using magit)
@@ -53,7 +52,6 @@
 (load-library "56-coffee")          ; coffee script
 ;; (load-library "57-groovy")          ; groovy
 (load-library "58-web-mode")        ; web-mode
-;; (load-library "58-multi-web-mode")  ; multi-web-mode
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
