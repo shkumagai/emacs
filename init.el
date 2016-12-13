@@ -24,8 +24,8 @@
 (load-library "02-languages")       ; Language Settings
 (load-library "03-exec-path")       ; Exec Path
 (load-library "04-fonts")           ; Fonts
-(load-library "05-color-theme")     ; Color Theme
 (load-library "06-appearance")      ; Appearance
+(load-library "05-color-theme")     ; Color Theme
 
 (load-library "11-lisp-mode-hooks") ; lisp-mode-hook setting
 (load-library "12-auto-install")    ; auto-install.el (only for Anything)
