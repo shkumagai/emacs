@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pytest_parametrize
+# key: pytparam
+# --
+@pytest.mark.parametrize(($0), [$1])

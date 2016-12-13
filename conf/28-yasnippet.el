@@ -5,7 +5,8 @@
   (setq yas-installed-dir (installed-dir "yasnippet"))
   (setq yas-snippet-dirs
         (let (dirs)
-          (dolist (d '(yas-installed-dir))
+          (dolist (d '(yas-installed-dir
+                       user-emacs-directory))
             (setq dirs (cons (concat (symbol-value d) "/snippets") dirs)))
           dirs)
         )

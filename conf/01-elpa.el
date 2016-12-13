@@ -43,6 +43,7 @@
    ansible
    anzu
    multiple-cursors
+   yasnippet
    ))
 
 ;; delete buffer if it opened

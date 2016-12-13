@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: mock_patch
+# key: patch
+# --
+@patch($0)
