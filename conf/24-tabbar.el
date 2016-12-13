@@ -1,14 +1,14 @@
 ;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
 
 (use-package tabbar
-  :bind (("C-x n" . tabbar-forward-tab)
-         ("C-x p" . tabbar-backward-tab))
+  :bind (("M-]" . tabbar-forward-tab)
+         ("M-[" . tabbar-backward-tab))
   :config
   (tabbar-mode 1)
   (tabbar-mwheel-mode -1)
   (setq tabbar-buffer-groups-function nil)
 
-  ;; disabling buttons
+  ;;; disabling buttons
   (dolist (btn '(tabbar-buffer-home-button
                  tabbar-scroll-left-button
                  tabbar-scroll-right-button))
@@ -44,11 +44,12 @@
   (defvar my-tabbar-displayed-buffers
     '("*scratch*" "*Messages*" "*Backtrace*" "*Colors*" "*Faces*" "*vc-")
     "*Regexps matches buffer name always included tabs.")
+
   (defun my-tabbar-buffer-list ()
     "Return the list of buffers to show in tab.
-  Exclude buffers whose name starts with a space or an asterisk.
-  The current buffer and buffers match `my-tabbar-displayed-buffers'
-  are always included."
+Exclude buffers whose name starts with a space or an asterisk.
+The current buffer and buffers match `my-tabbar-displayed-buffers'
+are always included."
     (let* ((hides (list ?\  ?\*))
            (re (regexp-opt my-tabbar-displayed-buffers))
            (cur-buf (current-buffer))
