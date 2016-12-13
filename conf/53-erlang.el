@@ -20,5 +20,6 @@
 ;; $ find /usr/lib /usr/lib64 /opt/local/lib -type d -name "emacs"
 (add-to-list 'load-path (get-emacs-ext-dir))
 
-(add-to-list 'exec-path (concat erlang-root-dir "/bin"))
-(use-package erlang-start)
+(when (boundp 'erlang-root-dir)
+  (add-to-list 'exec-path (concat erlang-root-dir "/bin"))
+  (use-package erlang-start))
