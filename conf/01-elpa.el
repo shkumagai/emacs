@@ -42,6 +42,7 @@
    yaml-mode
    ansible
    anzu
+   multiple-cursors
    ))
 
 ;; delete buffer if it opened
