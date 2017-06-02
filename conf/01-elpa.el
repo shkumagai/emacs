@@ -33,6 +33,7 @@
    company-jedi
    js2-mode
    magit
+   migemo
    monky
    slime
    slime-company
