@@ -3,16 +3,10 @@
 ;; Font Settings
 
 (when (eq window-system 'ns)
-  ;; set default font
-  ;;(let* ((size 11) ; ASCII font size
-  (let* ((size 10) ; ASCII font size
-         (asciifont "Menlo") ; ASCII font
-         ;; (jpfont "Hiragino Maru Gothic ProN") ; Japanese font
-         (jpfont "Ricty")
-         ;; (jpfont "Moon font")
-         ;; (jpfont "Sea font")
-         ;;(h (* size 9))
-         (h (* size 12))
+  (let* ((size 12)
+         (h (* size 10))
+         (asciifont "Menlo")
+         (jpfont "Hiragino Maru Gothic ProN")
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
     (set-face-attribute 'default nil :family asciifont :height h)
@@ -24,20 +18,16 @@
     )
 
   ;; define aspect ratio
-  (dolist (elt '(("^-apple-hiragino.*" . 1.2)
-                 (".*Ricty.*" . 1.2)
-                 (".*Moon_font.*" . 1.2)
-                 (".*Sea_font.*" . 1.2)
+  (dolist (elt '((".*Hiragino Maru Gothic ProN.*" . 1.2)
                  ))
     (add-to-list 'face-font-rescale-alist elt)))
 
 ;; Windows
 (when (eq window-system 'w32)
   (let* ((size 11)
+         (h (* size 10))
          (asciifont "Consolas")
          (jpfont "MeiryoKe_Console")
-         ;; (jpfont "Takao Gothic")
-         (h (* size 10))
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
     (set-face-attribute 'default nil :family asciifont :height h)
@@ -50,16 +40,15 @@
   ;; define aspect ratio
   (dolist (elt '((".*Consolas.*" . 1.0)
                  (".*MeiryoKe_Console.*" . 1.0)
-                 ;; (".*Takao Gothic.*" . 1.2)
                  ))
     (add-to-list 'face-font-rescale-alist elt)))
 
 ;; Linux
 (when (eq window-system 'x)
   (let* ((size 10)
+         (h (* size 10))
          (asciifont "MigMix1M")
          (jpfont "Ricty")
-         (h (* size 10))
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
     (set-face-attribute 'default nil :family asciifont :height h)
