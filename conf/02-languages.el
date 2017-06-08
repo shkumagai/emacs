@@ -2,6 +2,7 @@
 
 ;; Languages
 ;; global
+(define-coding-system-alias 'UTF-8 'utf-8-unix)
 (set-language-environment "Japanese")
 (prefer-coding-system 'utf-8-unix)
 (set-default-coding-systems 'utf-8-unix)
