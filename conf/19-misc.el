@@ -61,34 +61,6 @@ Uses `current-date-time-format' for the formatting the date/time."
   )
 
 
-;; ;; smartchr: cycle snippet
-;; ;; emacs-smartchr: https://raw.github.com/imakado/emacs-smartchr/master/smartchr.el
-;; (when (require 'smartchr nil t)
-;;   ;; define hooks
-;;   (defun my-smartchr-hooks ()
-;;     ;; (local-set-key (kbd "=") (smartchr '("=" " = " " == " " := ")))
-;;     ;; (local-set-key (kbd "+") (smartchr '("+" " + " " += " " += ")))
-;;     ;; (local-set-key (kbd "-") (smartchr '("-" " - " " -= " " -= ")))
-
-;;     ;; (local-set-key (kbd ":") (smartchr '(":" ": ")))
-;;     ;; (local-set-key (kbd ",") (smartchr '("," ", ")))
-
-;;     ;; (local-set-key (kbd ">") (smartchr '(">" " > " " >= " ">>" "->")))
-;;     ;; (local-set-key (kbd "<") (smartchr '("<" " < " " <= " "<<" )))
-
-;;     ;; (local-set-key (kbd "\"") (smartchr '("\"" "\"`!!'\"" "\"\"\"`!!'\"\"\"")))
-;;     ;; (local-set-key (kbd "'") (smartchr '("'" "'`!!''")))
-
-;;     ;; (local-set-key (kbd "(") (smartchr '("(" "(`!!')")))
-;;     ;; (local-set-key (kbd "{") (smartchr '("{" "{`!!'}")))
-;;     ;; (local-set-key (kbd "[") (smartchr '("[" "[`!!']"))))
-
-;;   ;; add to each language mode
-;;   (add-hook 'python-mode-hook 'my-smartchr-hooks)
-;;   (add-hook 'erlang-mode-hook 'my-smartchr-hooks)
-;;   (add-hook 'go-mode-hook 'my-smartchr-hooks)
-;;   )
-
 ;; check dropbox
 (defvar my:check-dropbox (file-exists-p (concat (getenv "HOME") "/Dropbox")))
 

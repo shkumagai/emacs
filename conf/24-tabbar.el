@@ -20,7 +20,6 @@
 
   (set-face-attribute
    'tabbar-default nil
-   :family "Ricty"
    :background "black"
    :foreground "gray72"
    :height 1.0)
