@@ -7,6 +7,7 @@
  'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (unless (file-directory-p (concat user-emacs-directory "elpa/archives"))
   (package-list-packages))
+(package-initialize)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
