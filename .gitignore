@@ -9,3 +9,4 @@ var/pcache/
 elpa/*
 elisp/slime
 .python-environments/
+network-security.data
