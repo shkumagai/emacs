@@ -2,27 +2,17 @@
 
 ### local functions
 
-function is_exists ()
-{
-    res=$(which ${1})
-    if [[ "${res}" = "" ]]; then
-        echo 0
-    else
-        echo 1
-    fi
-}
-
 function comment_out ()
 {
     conf=${1}
-    sed -i.orig -e "s/\(^.* \".*-${1}\".*$\)/;; \1/g" init.el
+    sed -i.orig -e "s/\(^(load-library \".*-${1}\".*$\)/;; \1/g" init.el
 }
 
 function auto_config ()
 {
     name=${1}
-    path=${2}
-    if [[ 0 -eq $(is_exists "${path}") ]]; then
+    echo "name: ${name}"
+    if [ ! -x "/usr/local/bin/${name}" -a ! -x "/opt/local/bin/${name}" ]; then
         comment_out ${1}
     fi
 }
@@ -30,9 +20,9 @@ function auto_config ()
 ### main
 
 ## automatic configuration for init.el
-auto_config migemo "/usr/local/bin/cmigemo"
-auto_config ctags "/opt/local/bin/ctags"
-auto_config go "/opt/local/bin/go"
+auto_config cmigemo
+auto_config ctags
+auto_config go
 
 ## If already exists `~/.emacs.d' directory, remove it.
 [[ -d "$HOME/.emacs.d" ]] && rm -rf "$HOME/.emacs.d"
