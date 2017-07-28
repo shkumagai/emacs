@@ -84,3 +84,8 @@ Uses `current-date-time-format' for the formatting the date/time."
          ("C-<" . mc/mark-previous-like-this)
          ("C-c C-<" . mc/skip-all-like-this))
   )
+
+
+;; patch
+(setq max-specpdl-size 10000)
+(setq max-lisp-eval-depth 10000)
