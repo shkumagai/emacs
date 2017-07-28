@@ -35,6 +35,7 @@
    groovy-mode
    jedi-core
    company-jedi
+   jinja2-mode
    js2-mode
    magit
    migemo
@@ -48,6 +49,8 @@
    ansible
    anzu
    multiple-cursors
+   web-mode
+   rjsx-mode
    yasnippet
    ))
 

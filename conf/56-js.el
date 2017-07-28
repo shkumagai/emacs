@@ -5,3 +5,8 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.js\\(_t\\)\\'" . js2-mode))
   )
+
+(use-package rjsx-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
+  )
