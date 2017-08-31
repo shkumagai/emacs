@@ -7,5 +7,5 @@
   ;; Command-line to call `ctags'.
   ;; (setq ctags-command "/opt/local/bin/ctags -R -e ")
   ;; Comment out when anything-exuberant-ctags.el not in use.
-  (setq ctags-command "ctags -R --fields=\"+afikKlmnsSzt\" ")
+  (setq ctags-command "ctags -e -R --fields=\"+afikKlmnsSzt\" ")
   )
