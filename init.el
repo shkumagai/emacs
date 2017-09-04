@@ -39,7 +39,8 @@
 (load-library "19-misc")            ; miscellaneous settings
 
 ;; additional settings
-(load-library "21-anything")        ; Anything
+;; (load-library "21-anything")        ; Anything
+(load-library "21-helm")        ; Helm (replace of Anything)
 (load-library "22-ctags")           ; Ctags
 (load-library "23-migemo")          ; Migemo
 (load-library "24-tabbar")          ; Tabbar

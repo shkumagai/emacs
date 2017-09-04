@@ -54,12 +54,13 @@ Uses `current-date-time-format' for the formatting the date/time."
   (undohist-initialize))
 
 
-;; wdired: enable file name edit directly in wdired
-(use-package wdired
-  :bind (:map dired-mode-map
-              ("r" . wdired-change-to-wdired-mode))
-  )
-
+;; ;; wdired: enable file name edit directly in wdired
+;; (use-package wdired
+;;   :bind (:map dired-mode-map
+;;               ("r" . wdired-change-to-wdired-mode))
+;;   )
+(use-package direx)
+(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
 
 ;; check dropbox
 (defvar my:check-dropbox (file-exists-p (concat (getenv "HOME") "/Dropbox")))
