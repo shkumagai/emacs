@@ -30,7 +30,8 @@
 (defun installed-dir (package)
   "Return directory path where package with PACKAGE name is installed."
   (let ((dname
-        (car (loop for p in (directory-files package-user-dir)
-                   when (string-match (concat package "-*") p) collect p))))
+         (car (loop for p in (directory-files package-user-dir)
+                    when (string-match (concat package "-*") p)
+                    collect p))))
     (concat package-user-dir "/" dname))
   )
