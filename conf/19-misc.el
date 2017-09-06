@@ -7,7 +7,7 @@
 ;; insert timestamp
 (setq system-time-locale "C")
 (defvar current-date-time-format "%b %d, %Y %a %T"
-  "Format of date to insert `insert-current-date-time' function
+  "Format of date to insert `insert-current-date-time' function.
 See help of `format-time-string' for possible replacement")
 
 (defvar current-time-format "%T"
@@ -15,7 +15,7 @@ See help of `format-time-string' for possible replacement")
 Note the weekly scope of the command's precision.")
 
 (defun insert-current-date-time ()
-  "insert current date and time into current buffer.
+  "Insert current date and time into current buffer.
 Uses `current-date-time-format' for the formatting the date/time."
   (interactive)
   ;; (insert "==========\n")
@@ -23,7 +23,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   )
 
 (defun insert-current-time ()
-  "insert current time (1-week scope) into the current buffer."
+  "Insert current time (1-week scope) into the current buffer."
   (interactive)
   (insert (format-time-string current-time-format (current-time))))
 
@@ -35,7 +35,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;; reference url:
 ;; - http://d.hatena.ne.jp/noqisofon/20101102/1288647885
 (defun create-temporary-buffer ()
-  "create and show new temporary buffer."
+  "Create and show new temporary buffer."
   (interactive)
   (switch-to-buffer (generate-new-buffer "*temp*"))
   (setq buffer-offer-save nil))
