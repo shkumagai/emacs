@@ -11,7 +11,7 @@
  '(max-specpdl-size 20000)
  '(package-selected-packages
    (quote
-    (popwin direx virtualenvwrapper rainbow-mode jinja2-mode rjsx-mode web-mode yasnippet yaml-mode use-package undo-tree tabbar slime-company multiple-cursors monky migemo markdown-mode magit js2-mode groovy-mode go-eldoc go-direx go-autocomplete gist flycheck exec-path-from-shell ctags company-jedi company-go color-theme-solarized coffee-mode anzu ansible ag)))
+    (helm helm-ag popwin direx virtualenvwrapper rainbow-mode jinja2-mode rjsx-mode web-mode yasnippet yaml-mode use-package undo-tree tabbar slime-company multiple-cursors monky migemo markdown-mode magit js2-mode groovy-mode go-eldoc go-direx go-autocomplete gist flycheck exec-path-from-shell ctags company-jedi company-go color-theme-solarized coffee-mode anzu ansible ag)))
  '(safe-local-variable-values (quote ((syntax . elisp)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
