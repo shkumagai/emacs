@@ -71,6 +71,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(max-specpdl-size 20000)
+ '(max-lisp-eval-depth 20000)
  '(anzu-deactivate-region t)
  '(anzu-mode-lighter "")
  '(anzu-search-threashold 1000)
