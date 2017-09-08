@@ -35,16 +35,18 @@
 (load-library "05-color-theme")     ; Color Theme
 
 (load-library "11-lisp-mode-hooks") ; lisp-mode-hook setting
-(load-library "12-auto-install")    ; auto-install.el (only for Anything)
-(load-library "19-misc")            ; miscellaneous settings
+(load-library "13-history")         ; Undohist, HistTree
+(load-library "14-multiplecursors") ; multiple-cursors
+(load-library "15-flycheck")        ; flycheck
+(load-library "16-anzu")            ; anzu
 
 ;; additional settings
-;; (load-library "21-anything")        ; Anything
-(load-library "21-helm")        ; Helm (replace of Anything)
+(load-library "21-helm")            ; Helm
 (load-library "22-ctags")           ; Ctags
 (load-library "23-migemo")          ; Migemo
 (load-library "24-tabbar")          ; Tabbar
 (load-library "25-git")             ; Git on Emacs (using magit)
+(load-library "27-direx")           ; Direx and popwin
 (load-library "28-yasnippet")       ; YASnippet
 (load-library "29-company")         ; company
 
@@ -67,11 +69,16 @@
 (load-library "91-ansible")         ; Ansible
 (load-library "92-po")              ; PO
 
+;; for miscellaneous settings
+(load-library "99-misc")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(max-specpdl-size 20000)
+ '(max-lisp-eval-depth 20000)
  '(anzu-deactivate-region t)
  '(anzu-mode-lighter "")
  '(anzu-search-threashold 1000)

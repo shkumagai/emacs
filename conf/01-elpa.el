@@ -19,40 +19,7 @@
  (lambda (package)
    (or (package-installed-p package)
        (package-install package)))
- '(ag
-   coffee-mode
-   color-theme-solarized
-   company
-   ctags
-   exec-path-from-shell
-   flycheck
-   gist
-   go-autocomplete
-   go-direx
-   go-eldoc
-   go-mode
-   company-go
-   groovy-mode
-   jedi-core
-   company-jedi
-   jinja2-mode
-   js2-mode
-   magit
-   migemo
-   monky
-   slime
-   slime-company
-   tabbar
-   undo-tree
-   use-package
-   yaml-mode
-   ansible
-   anzu
-   multiple-cursors
-   web-mode
-   rjsx-mode
-   yasnippet
-   ))
+   package-selected-packages)
 
 ;; delete buffer if it opened
 (dolist (buf '("*Packages*" "*Compile-Log*"))
@@ -61,8 +28,10 @@
 
 ;; private function
 (defun installed-dir (package)
-  "Return directory path where package with specified name is installed."
+  "Return directory path where package with PACKAGE name is installed."
   (let ((dname
-        (car (loop for p in (directory-files package-user-dir)
-                   when (string-match (concat package "-*") p) collect p))))
-  (concat package-user-dir "/" dname)))
+         (car (loop for p in (directory-files package-user-dir)
+                    when (string-match (concat package "-*") p)
+                    collect p))))
+    (concat package-user-dir "/" dname))
+  )
