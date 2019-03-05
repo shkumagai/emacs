@@ -1,10 +1,12 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 23-migemo.el ---  -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
 
 ;; How to setting up on MacOSX
 ;; ---------------------------
 ;;
 ;; .. note::
-;;    This extention requires cmigemo executable. So, you need to install
+;;    This extention requires cmigemo executable.  So, you need to install
 ;;    C/Migemo if you want to use.
 ;;
 ;; Install C/Migemo into your environment according to installation procedure
@@ -15,6 +17,8 @@
 ;; Install migemo.el from gist.
 ;;
 ;; gist: http://gist.github.com/457761
+
+;;; Code:
 
 ;; Migemo: incremental search of Roman script
 (use-package migemo
@@ -41,3 +45,5 @@
 
   (migemo-init)
   )
+
+;;; 23-migemo.el ends here

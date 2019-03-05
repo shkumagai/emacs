@@ -1,7 +1,9 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 04-fonts.el --- -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
+;;; Code:
 
 ;; Font Settings
-
 (when (eq window-system 'ns)
   (let* ((size 12)
          (h (* size 10))
@@ -64,3 +66,5 @@
                  (".*Ricty.*" . 1.1)
                  ))
     (add-to-list 'face-font-rescale-alist elt)))
+
+;;; 04-fonts.el ends here

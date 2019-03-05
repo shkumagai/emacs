@@ -1,12 +1,10 @@
 *.elc
 *.orig
 undohist/
-url/
-ac-comphist.dat
-anything-c-adaptive-history
 Makefile
-var/pcache/
 elpa/*
+elisp/*
 elisp/slime
 .python-environments/
 network-security.data
+recentf

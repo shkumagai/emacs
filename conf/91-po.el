@@ -1,4 +1,6 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 91-po.el --- -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
 
 ;; How to setting up on Mac OSX
 ;; ----------------------------
@@ -11,7 +13,12 @@
 ;;   "Major mode for translators to edit PO files" t)
 ;; (setq auto-mode-alist (cons '("\\.po\\'\\|\\.po\\." . po-mode)
 ;;                             auto-mode-alist))
+
+;;; Code:
+
 (use-package po-mode
   :config
   (setq auto-mode-alist (cons '("\\.po\\'\\|\\.po\\." . po-mode) auto-mode-alist))
   )
+
+;;; 91-po.el ends here

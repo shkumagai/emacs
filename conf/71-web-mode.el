@@ -1,4 +1,7 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 71-web-mode.el --- -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
+;;; Code:
 
 (use-package web-mode
   :config
@@ -19,3 +22,5 @@
     (setq web-mode-css-indent-offset    2)
     (setq web-mode-code-indent-offset   4))
   (add-hook 'web-mode-hook 'web-mode-hook))
+
+;;; 71-web-mode.el ends here

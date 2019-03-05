@@ -1,4 +1,8 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 09-misc.el --- Miscellneous setting file -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
+
+;;; Code:
 
 ;; custom keybindings
 (define-key global-map (kbd "C-x C-h") 'help)
@@ -43,3 +47,5 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;; check dropbox
 (defvar my:check-dropbox (file-exists-p (concat (getenv "HOME") "/Dropbox")))
 (if my:check-dropbox (defvar my:dropbox (concat (getenv "HOME") "/Dropbox/")))
+
+;;; 09-misc.el ends here

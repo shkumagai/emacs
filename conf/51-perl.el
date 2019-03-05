@@ -1,4 +1,7 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 51-perl.el --- -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
+;;; Code:
 
 ;; Perl
 (defalias 'perl-mode 'cperl-mode)
@@ -29,7 +32,7 @@
 
 ;; perltidy
 (defmacro mark-active ()
-  "xemacs/emacs compatibility macro"
+  "XEmacs/Emacs compatibility macro."
   (if (boundp 'mark-active)
       'mark-active
     '(mark)))
@@ -57,7 +60,7 @@
         (not (perltidy)))
     nil))
 (defun perltidy-mode (&optional arg)
-  "Perltidy minor mode."
+  "Perltidy minor mode with ARG."
   (interactive "P")
   (setq perltidy-mode
         (if (null arg)
@@ -73,3 +76,5 @@
                 minor-mode-alist)))
 (eval-after-load "cperl-mode"
   '(add-hook 'cperl-mode-hook 'perltidy-mode))
+
+;;; 51-perl.el ends here

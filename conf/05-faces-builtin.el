@@ -1,4 +1,7 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 05-faces-buildin.el --- -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
+;;; Code:
 
 ;; Visibility
 (setq inhibit-startup-screen t)
@@ -18,12 +21,13 @@
 ;; Show absolute path on title bar
 (setq frame-title-format
       (format "%%f - Emacs@%s" (system-name)))
+
 ;; Parenthesis
-(setq show-paren-delay 0)
-(show-paren-mode t)
-(setq show-paren-style 'parenthesis)
-(set-face-background 'show-paren-match-face nil)
-(set-face-underline-p 'show-paren-match-face "yellow")
+;; (setq show-paren-delay 0)
+;; (show-paren-mode t)
+;; (setq show-paren-style 'parenthesis)
+;; (set-face-background 'show-paren-match-face nil)
+;; (set-face-underline-p 'show-paren-match-face "yellow")
 
 ;; Change background color in region
 (set-face-background 'region "darkgreen")
@@ -77,7 +81,7 @@
 
 ;; Tab stops
 (defun gen-tab-stop (&optional width max)
-  "Return a sequence suitable for `tab-stop-list'."
+  "Return a sequence suitable for `tab-stop-list' based on WIDTH and MAX."
   (let* ((max-column (or max 200))
          (tab-width (or width tab-width))
          (count (/ max-column tab-width)))
@@ -108,16 +112,18 @@
         (add-hook hook-name (lambda () (linum-mode t))))
       my-linum-hook-name)
 
-;; spec by file name
 (defvar my-linum-file nil)
 (defun my-linum-file-name ()
+  "Spec by file name."
   (when (member (buffer-name) my-linum-file)
     (linum-mode t)))
 (add-hook 'find-file-hook 'my-linum-file-name)
 
-;; spec by extension
 (defvar my-linum-file-extensions nil)
 (defun my-linum-file-extension ()
+  "Spec by file extension."
   (when (member (file-name-extension (buffer-file-name)) my-linum-file-extension)
     (linum-mode t)))
 (add-hook 'find-file-mode 'my-linum-file-extension)
+
+;;; 05-faces-builtin.el ends here

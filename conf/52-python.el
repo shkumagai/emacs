@@ -1,4 +1,7 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 52-python.el --- -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
+;;; Code:
 
 ;; Python
 (setq auto-mode-alist (cons '("\\.py\\'" . python-mode) auto-mode-alist))
@@ -20,3 +23,5 @@
   :config
   (setq venv-location "~/.virtualenvs")
   )
+
+;;; 52-python.el ends here

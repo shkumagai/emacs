@@ -1,8 +1,11 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 11-lisp-mode-hooks.el ---  -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
+;;; Code:
 
 ;; lisp-mode-hook
 (defun lisp-mode-hooks ()
-  "lisp-mode-hooks"
+  "'lisp-mode-hooks'."
   (use-package eldoc
     :config
     (setq eldoc-idle-delay 0.2)
@@ -12,3 +15,5 @@
 (add-hook 'emacs-lisp-mode-hook 'lisp-mode-hooks)
 (add-hook 'lisp-interaction-mode-hook 'lisp-mode-hooks)
 (add-hook 'ielm-mode-hook 'lisp-mode-hooks)
+
+;;; 11-lisp-mode-hooks.el ends here

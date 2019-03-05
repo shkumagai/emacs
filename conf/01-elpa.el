@@ -1,10 +1,14 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 01-elpa.el --- -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (require 'package)
 (add-to-list
  'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list
- 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; (add-to-list
+;;  'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (unless (file-directory-p (concat user-emacs-directory "elpa/archives"))
   (package-list-packages))
 (package-initialize)
@@ -35,3 +39,5 @@
                     collect p))))
     (concat package-user-dir "/" dname))
   )
+
+;;; 01-elpa.el ends here

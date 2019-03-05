@@ -1,4 +1,8 @@
-;; -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+;;; 02-languages.el --- -*- mode: emacs-lisp; coding: utf-8-unix; indent-tabs-mode: nil -*-
+
+;;; Commentary:
+
+;;; Code:
 
 ;; Languages
 ;; global
@@ -35,3 +39,5 @@
 
   (setq file-name-coding-system 'utf-8)
   (setq locale-coding-system 'utf-8))
+
+;;; 02-languages.el ends here
