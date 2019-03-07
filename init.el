@@ -95,7 +95,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;;;; package
 (require 'package)
 (add-to-list
- 'package-archives '("melpa" . "http://melpa.milkbox.net/packages") t)
+ 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 ;; (add-to-list
 ;;  'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (unless (file-directory-p (concat user-emacs-directory "elpa/archives"))
