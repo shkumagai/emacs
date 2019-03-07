@@ -457,6 +457,13 @@ Uses `current-date-time-format' for the formatting the date/time."
   (setq company-minimum-prefix-length 3)  ; default: 4
   (setq company-selection-wrap-around t)
   (setq completion-ignore-case t)
+
+  (global-set-key (kbd "C-M-i") 'company-complete)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key company-active-map (kbd "C-s") 'company-filter-candidates)  ;; filter by C-s
+  (define-key company-active-map (kbd "C-i") 'company-complete-selection)
+  (define-key company-active-map [tab] 'company-complete-selection)
   )
 
 ;;;; Migemo: Japanese increment search with 'Romanization of Japanese'(ローマ字).
@@ -493,7 +500,9 @@ Uses `current-date-time-format' for the formatting the date/time."
   (setq neo-theme 'ascii)
   (setq neo-persist-show t)
   (setq neo-smart-open t)
-  (global-set-key "\C-o" 'neotree-toggle))
+  (setq neo-window-width 45)
+  (global-set-key "\C-o" 'neotree-toggle)
+  )
 
 ;;;; Magit: an interface to the version control system Git.
 ;; https://github.com/magit/magit
