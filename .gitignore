@@ -8,3 +8,5 @@ elisp/slime
 .python-environments/
 network-security.data
 recentf
+transient/
+url/
