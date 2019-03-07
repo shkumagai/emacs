@@ -17,7 +17,7 @@
  '(max-specpdl-size 20000)
  '(package-selected-packages
    (quote
-    (yaml-mode web-mode virtualenvwrapper use-package undohist undo-tree typescript-mode tabbar rjsx-mode multiple-cursors neotree migemo markdown-mode magit js2-mode flycheck exec-path-from-shell css-mode counsel company-jedi company anzu)))
+    (yaml-mode web-mode virtualenvwrapper use-package undohist undo-tree typescript-mode tabbar rjsx-mode multiple-cursors neotree migemo markdown-mode magit js2-mode flycheck exec-path-from-shell dumb-jump css-mode counsel company-jedi company anzu)))
  '(safe-local-variable-values (quote ((syntax . elisp)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

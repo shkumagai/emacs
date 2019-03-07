@@ -448,6 +448,18 @@ Uses `current-date-time-format' for the formatting the date/time."
   (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
   )
 
+;;;; dumb-jump: jump to definition for multiple languages without configuration.
+;; https://github.com/jacktasia/dumb-jump
+(use-package dumb-jump
+  :config
+  (setq dumb-jump-mode t)
+  (setq dumb-jump-selector 'ivy)
+  (setq dumb-jump-use-visible-window nil)
+
+  (define-key global-map [(super d)] 'dumb-jump-go)  ;; go-to-definition
+  (define-key global-map [(super shift d)] 'dumb-jump-back)
+  )
+
 ;;;; Company: Modular in-buffer completion framework for Emacs
 ;; https://company-mode.github.io/
 (use-package company
