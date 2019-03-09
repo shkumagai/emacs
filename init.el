@@ -317,40 +317,9 @@ Uses `current-date-time-format' for the formatting the date/time."
 (setq default-tab-width 4)
 (setq tab-stop-list (gen-tab-stop))
 
-;;;;; linum-mode
-(defvar linum-format "")
-(setq linum-format "%4d ")
-(global-set-key [f9] 'linum-mode)
-
-;; spec by major/minor-mode
-(defvar my-linum-hook-name nil)
-(setq my-linum-hook-name '(emacs-lisp-mode-hook
-                           sh-mode-hook
-                           text-mode-hook
-                           erlang-mode-hook
-                           perl-mode-hook
-                           python-mode-hook
-                           ruby-mode-hook
-                           go-mode-hook
-                           yaml-mode-hook
-                           css-mode-hook))
-(mapc (lambda (hook-name)
-        (add-hook hook-name (lambda () (linum-mode t))))
-      my-linum-hook-name)
-
-(defvar my-linum-file nil)
-(defun my-linum-file-name ()
-  "Spec by file name."
-  (when (member (buffer-name) my-linum-file)
-    (linum-mode t)))
-(add-hook 'find-file-hook 'my-linum-file-name)
-
-(defvar my-linum-file-extensions nil)
-(defun my-linum-file-extension ()
-  "Spec by file extension."
-  (when (member (file-name-extension (buffer-file-name)) my-linum-file-extension)
-    (linum-mode t)))
-(add-hook 'find-file-mode 'my-linum-file-extension)
+;;;;; Line numbers
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode))
 
 ;;;;; Whitespace mode
 (use-package whitespace
@@ -406,9 +375,9 @@ Uses `current-date-time-format' for the formatting the date/time."
 (use-package doom-modeline
   :custom
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (doom-modeline-icon t)
-  (doom-modeline-major-mode-icon nil)
-  (doom-modeline-minor-modes nil)
+  (doom-modeline-icon t)             ; Show 'all-the-icons' or not
+  (doom-modeline-major-mode-icon t)  ; Display color icon for 'major-mode'
+  (doom-modeline-minor-modes nil)    ; Don't display minor-mode
   :hook
   (after-init . doom-modeline-mode)
   :config
@@ -502,6 +471,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;   Counsel, a collection of Ivy-enhanced versions of common Emacs commands.
 ;;   Swiper, an Ivy-enhanced alternative to isearch.
 (use-package counsel
+  :ensure t
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
@@ -516,12 +486,18 @@ Uses `current-date-time-format' for the formatting the date/time."
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   (global-set-key (kbd "<f6>") 'ivy-resume)
   (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (global-set-key (kbd "C-c f") 'counsel-recentf)
   (global-set-key (kbd "C-c g") 'counsel-git)
   (global-set-key (kbd "C-c j") 'counsel-git-grep)
   (global-set-key (kbd "C-c k") 'counsel-ag)
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
   )
+
+;;;; ivy-rich
+(use-package ivy-rich
+  :after ivy
+  :config (ivy-rich-mode 1))
 
 ;;;; dumb-jump: jump to definition for multiple languages without configuration.
 ;; https://github.com/jacktasia/dumb-jump
@@ -584,16 +560,19 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;;; Neotree: A emacs tree plugin like NERD tree for Vim.
 ;; https://github.com/jaypei/emacs-neotree
 (use-package neotree
+  :bind
+  ("<f8>" . neotree-toggle)
   :defines
   neo-persist-show
   :config
-  (setq neo-theme 'icons)
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrows))
   (setq neo-persist-show t)
-  ;; (setq neo-show-hidden-files t)
   (setq neo-mode-line-type 'none)
   (setq neo-smart-open t)
   (setq neo-window-width 45)
-  (global-set-key [f8] 'neotree-toggle)
+  ;; Disable line numbers minor mode for neotree
+  (add-hook 'neo-after-create-hook
+            (lambda (&rest _) (display-line-numbers-mode -1)))
   )
 
 ;;;; Magit: an interface to the version control system Git.
