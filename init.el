@@ -235,7 +235,7 @@ Uses `current-date-time-format' for the formatting the date/time."
                  ))
     (add-to-list 'face-font-rescale-alist elt)))
 
-;;;; Appearances
+;;;; Faces
 
 ;;;;; Visibility
 (setq inhibit-startup-screen t)
@@ -257,11 +257,36 @@ Uses `current-date-time-format' for the formatting the date/time."
       (format "%%f - Emacs@%s" (system-name)))
 
 ;;;;; Parenthesis
-;; (setq show-paren-delay 0)
-;; (show-paren-mode t)
-;; (setq show-paren-style 'parenthesis)
-;; (set-face-background 'show-paren-match-face nil)
-;; (set-face-underline-p 'show-paren-match-face "yellow")
+(use-package paren
+  :ensure nil
+  :hook
+  (after-init . show-paren-mode)
+  :custom-face
+  (show-paren-mode ((nil (:background "#44475a" :foreground "#f1fa8c"))))
+  :custom
+  (show-paren-style 'mixed)
+  (show-paren-when-point-inside-paren t)
+  (show-paren-when-point-in-periphery t))
+
+;;;;; Beacon
+;; https://github.com/Malabarba/beacon
+(use-package beacon
+  :custom
+  (beacon-size 60)
+  (beacon-color "yellow")
+  (beacon-blink-delay 0.5)
+  (beacon-blink-dulation 0.5)
+  :config (beacon-mode 1))
+
+;;;;; Indent highlighting
+;; https://github.com/DarthFennec/highlight-indent-guides
+(use-package highlight-indent-guides
+  :diminish
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :custom
+  (highlight-indent-guides-auto-enable t)
+  (highlight-indent-guides-responsive t)
+  (highlight-indent-guides-method 'character))  ; column
 
 ;;;;; Change background color in region
 (set-face-background 'region "darkgreen")
@@ -360,8 +385,54 @@ Uses `current-date-time-format' for the formatting the date/time."
                       ))
 
 ;;;; Color-Theme
+;;;;; doom-themes
+(use-package doom-themes
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
+  :custom-face
+  (doom-modeline-bar ((t (:background "#6272a4"))))
+  :config
+  (load-theme 'doom-dracula t)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config))
 
-(load-theme 'misterioso t)
+;;;; Modeline
+;;;;; doom-modeline
+(use-package doom-modeline
+  :custom
+  (doom-modeline-buffer-file-name-style 'truncate-with-project)
+  (doom-modeline-icon t)
+  (doom-modeline-major-mode-icon nil)
+  (doom-modeline-minor-modes nil)
+  :hook
+  (after-init . doom-modeline-mode)
+  :config
+  (line-number-mode 0)
+  (column-number-mode 0)
+  (doom-modeline-def-modeline 'main
+    '(bar workspace-number window-number evil-state god-state ryo-modal xah-fly-keys matches buffer-info remote-host buffer-position parrot selection-info)
+    '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker)
+    )
+  )
+
+;;;; LSP -- language server protorol mode
+;;;;; lsp-mode
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  :hook (prog-major-mode . lsp-prog-major-mode-enable))
+
+;;;;; lsp-ui
+(use-package lsp-ui
+  :after lsp-mode
+  :config
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+;;;;; company-lsp
+(use-package company-lsp
+  :after (lsp-mode company)
+  :commands company-lsp)
 
 ;;;; Miscellaneous settings
 
@@ -431,10 +502,10 @@ Uses `current-date-time-format' for the formatting the date/time."
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
-  (setq ivy-height 30)  ;; extends minibuffer size
+  (setq ivy-height 30)  ;; extends minibuffer size (important!)
   (setq ivy-extra-directories nil)
   (setq ivy-re-builders-alist
-        '((t . ivy--regex-fuzzy)))
+        '((t . ivy--regex-plus)))
 
   (counsel-mode 1)
   (global-set-key "\C-s" 'swiper)
@@ -469,6 +540,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   (setq company-minimum-prefix-length 3)  ; default: 4
   (setq company-selection-wrap-around t)
   (setq completion-ignore-case t)
+  (push 'company-lsp company-backends)  ; add company-lsp as backend
 
   (global-set-key (kbd "C-M-i") 'company-complete)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
@@ -508,12 +580,16 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;;; Neotree: A emacs tree plugin like NERD tree for Vim.
 ;; https://github.com/jaypei/emacs-neotree
 (use-package neotree
+  :defines
+  neo-persist-show
   :config
-  (setq neo-theme 'ascii)
+  (setq neo-theme 'icons)
   (setq neo-persist-show t)
+  ;; (setq neo-show-hidden-files t)
+  (setq neo-mode-line-type 'none)
   (setq neo-smart-open t)
   (setq neo-window-width 45)
-  (global-set-key "\C-o" 'neotree-toggle)
+  (global-set-key [f8] 'neotree-toggle)
   )
 
 ;;;; Magit: an interface to the version control system Git.
@@ -522,6 +598,17 @@ Uses `current-date-time-format' for the formatting the date/time."
   :bind (("C-c C-g" . magit-status))
   )
 
+(use-package git-gutter
+  :custom
+  (git-gutter:modified-sign "~")
+  (git-gutter:added-sign "+")
+  (git-gutter:deleted-sign "-")
+  :custom-face
+  (git-gutter:modified ((t (:background "#f1fa8c"))))
+  (git-gutter:added    ((t (:background "#50fa7b"))))
+  (git-gutter:deleted  ((t (:background "#ff79c6"))))
+  :config
+  (global-git-gutter-mode +1))
 
 ;;;; Perl
 ;;;;; custumizing cperl-mode
@@ -599,19 +686,21 @@ Uses `current-date-time-format' for the formatting the date/time."
   '(add-hook 'cperl-mode-hook 'perltidy-mode))
 
 ;;;; Python
+;;;;; Base settings
 (setq auto-mode-alist (cons '("\\.py\\'" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
                                    interpreter-mode-alist))
+(add-hook 'python-mode-hook #'lsp)
 
-;;;;; jedi
-;; https://github.com/tkf/emacs-jedi
-(use-package jedi-core
-  :config
-  (setq jedi:complete-on-dot t)
-  (setq jedi:use-shortcuts t)
-  (defun my/python-mode-hook ()
-    (add-to-list 'company-backends 'company-jedi))
-  (add-hook 'python-mode-hook 'my/python-mode-hook))
+;; ;;;;; jedi
+;; ;; https://github.com/tkf/emacs-jedi
+;; (use-package jedi-core
+;;   :config
+;;   (setq jedi:complete-on-dot t)
+;;   (setq jedi:use-shortcuts t)
+;;   (defun my/python-mode-hook ()
+;;     (add-to-list 'company-backends 'company-jedi))
+;;   (add-hook 'python-mode-hook 'my/python-mode-hook))
 
 ;;;;; virtualenvwrapper
 ;; https://github.com/porterjamesj/virtualenvwrapper.el
