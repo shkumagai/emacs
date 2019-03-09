@@ -139,6 +139,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 
 ;;;;; Windows
 (when (eq window-system 'w32)
+  (defvar w32-ime-mode-line-state-indicator-list nil)
   (setq default-input-method "W32-IME")
 
   (setq-default w32-ime-mode-line-state-indicator "[--]")
@@ -152,6 +153,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 
 ;;;;; Linux and Other XWindow System (ex. xBSD)
 (when (eq window-system 'x)
+  (defvar mozc-candidate-style nil)
   (use-package mozc)
   (setq default-input-method "japanese-mozc")
   (setq mozc-candidate-style 'echo-area)
@@ -302,6 +304,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 (define-key global-map (kbd "M-RET") 'ns-toggle-fullscreen)
 
 ;;;;; Tab stops
+(defvar default-tab-width nil)
 (defun gen-tab-stop (&optional width max)
   "Return a sequence suitable for `tab-stop-list' based on WIDTH and MAX."
   (let* ((max-column (or max 200))
@@ -315,6 +318,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 (setq tab-stop-list (gen-tab-stop))
 
 ;;;;; linum-mode
+(defvar linum-format "")
 (setq linum-format "%4d ")
 (global-set-key [f9] 'linum-mode)
 
@@ -615,15 +619,15 @@ Uses `current-date-time-format' for the formatting the date/time."
 (defalias 'perl-mode 'cperl-mode)
 (setq auto-mode-alist
       (cons '("\\.t$" . cperl-mode) auto-mode-alist))
-(setq cperl-indent-level 4
-      cperl-continuted-statement-offset 4
-      cperl-close-paren-offset -4
-      cperl-level-offset -4
-      cperl-comment-column 40
-      cperl-highlight-variables-indiscriminaly t
-      cperl-indent-parens-as-block t
-      cperl-tab-always-indent nil
-      cperl-font-lock t)
+(custom-set-variables '(cperl-indent-level 4)
+                      '(cperl-continuted-statement-offset 4)
+                      '(cperl-close-paren-offset -4)
+                      '(cperl-level-offset -4)
+                      '(cperl-comment-column 40)
+                      '(cperl-highlight-variables-indiscriminaly t)
+                      '(cperl-indent-parens-as-block t)
+                      '(cperl-tab-always-indent nil)
+                      '(cperl-font-lock t))
 (add-hook 'cperl-mode-hook
           '(lambda ()
              (progn
