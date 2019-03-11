@@ -6,6 +6,7 @@ elpa/*
 elisp/*
 elisp/slime
 .python-environments/
+.lsp-session*
 network-security.data
 recentf
 transient/
