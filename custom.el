@@ -35,7 +35,7 @@
  '(max-specpdl-size 20000)
  '(package-selected-packages
    (quote
-    (ivy-rich git-gutter highlight-indent-guides beacon company-lsp lsp-mode lsp-ui doom-modeline doom-themes yaml-mode web-mode virtualenvwrapper use-package undohist undo-tree typescript-mode tabbar rjsx-mode multiple-cursors neotree migemo markdown-mode magit js2-mode flycheck exec-path-from-shell dumb-jump css-mode counsel company-jedi company anzu)))
+    (company-box all-the-icons-ivy ivy-rich git-gutter highlight-indent-guides beacon company-lsp lsp-mode lsp-ui doom-modeline doom-themes yaml-mode web-mode virtualenvwrapper use-package undohist undo-tree typescript-mode tabbar rjsx-mode multiple-cursors neotree migemo markdown-mode magit js2-mode flycheck exec-path-from-shell dumb-jump css-mode counsel company-jedi company anzu)))
  '(safe-local-variable-values (quote ((syntax . elisp))))
  '(show-paren-style (quote mixed))
  '(show-paren-when-point-in-periphery t)

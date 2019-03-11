@@ -389,23 +389,23 @@ Uses `current-date-time-format' for the formatting the date/time."
     )
   )
 
-;;;; LSP -- language server protorol mode
-;;;;; lsp-mode
-(use-package lsp-mode
-  :ensure t
-  :commands lsp
-  :hook (prog-major-mode . lsp-prog-major-mode-enable))
-
-;;;;; lsp-ui
-(use-package lsp-ui
-  :after lsp-mode
+;;;; Neotree: A emacs tree plugin like NERD tree for Vim.
+;; https://github.com/jaypei/emacs-neotree
+(use-package neotree
+  :bind
+  ("<f8>" . neotree-toggle)
+  :defines
+  neo-persist-show
   :config
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
-
-;;;;; company-lsp
-(use-package company-lsp
-  :after (lsp-mode company)
-  :commands company-lsp)
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrows))
+  (setq neo-persist-show t)
+  (setq neo-mode-line-type 'none)
+  (setq neo-smart-open t)
+  (setq neo-window-width 45)
+  ;; Disable line numbers minor mode for neotree
+  (add-hook 'neo-after-create-hook
+            (lambda (&rest _) (display-line-numbers-mode -1)))
+  )
 
 ;;;; Miscellaneous settings
 
@@ -464,6 +464,63 @@ Uses `current-date-time-format' for the formatting the date/time."
   (global-anzu-mode +1)
   )
 
+;;;; LSP -- language server protorol mode
+;;;;; lsp-mode
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  :hook (prog-major-mode . lsp-prog-major-mode-enable))
+
+;;;;; lsp-ui
+(use-package lsp-ui
+  :after lsp-mode
+  :custom
+  (lsp-ui-peek-enable t)
+  (lsp-ui-peek-peek-height 20)
+  (lsp-ui-peek-list-width 50)
+  (lsp-ui-peek-fontify 'on-demand)  ;; never, on-demand, or always
+  :bind
+  (:map lsp-mode-map
+        ("C-c C-r" . lsp-io-peek-find-reference)
+        ("C-c C-j" . lsp-ui-peek-find-definitions)
+        ("C-c i" . lsp-ui-peed-find-implementation)
+        ("C-c m" . lsp-ui-imenu)
+        ("C-c s" . lsp-ui-sideline-mode))
+  :hook
+  (lsp-mode . lsp-ui-mode))
+
+;;;;; company-lsp
+(use-package company-lsp
+  :after (lsp-mode company)
+  :commands company-lsp
+  :custom
+  (company-lsp-cache-candidates t)  ;; always using cache
+  (company-lsp-async t)
+  (company-lsp-enable-recompletion nil))
+
+;;;; Company: Modular in-buffer completion framework for Emacs
+;; https://company-mode.github.io/
+(use-package company
+  :config
+  (global-company-mode)
+  (setq company-idle-delay 0)  ; default: 0.5
+  (setq company-minimum-prefix-length 3)  ; default: 4
+  (setq company-selection-wrap-around t)
+  (setq completion-ignore-case t)
+  (push 'company-lsp company-backends)  ; add company-lsp as backend
+
+  (global-set-key (kbd "C-M-i") 'company-complete)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key company-active-map (kbd "C-s") 'company-filter-candidates)  ;; filter by C-s
+  (define-key company-active-map (kbd "C-i") 'company-complete-selection)
+  (define-key company-active-map [tab] 'company-complete-selection)
+  )
+
+;;;;; company-box
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
 ;;;; Ivy/Counsel/Swiper
 ;; https://github.com/abo-abo/swiper
 ;;   This repository contains:
@@ -499,6 +556,11 @@ Uses `current-date-time-format' for the formatting the date/time."
   :after ivy
   :config (ivy-rich-mode 1))
 
+;;;; all-the-icons-ivy
+(use-package all-the-icons-ivy
+  :ensure t
+  :config (all-the-icons-ivy-setup))
+
 ;;;; dumb-jump: jump to definition for multiple languages without configuration.
 ;; https://github.com/jacktasia/dumb-jump
 (use-package dumb-jump
@@ -509,25 +571,6 @@ Uses `current-date-time-format' for the formatting the date/time."
 
   (define-key global-map [(super d)] 'dumb-jump-go)  ;; go-to-definition
   (define-key global-map [(super shift d)] 'dumb-jump-back)
-  )
-
-;;;; Company: Modular in-buffer completion framework for Emacs
-;; https://company-mode.github.io/
-(use-package company
-  :config
-  (global-company-mode)
-  (setq company-idle-delay 0)  ; default: 0.5
-  (setq company-minimum-prefix-length 3)  ; default: 4
-  (setq company-selection-wrap-around t)
-  (setq completion-ignore-case t)
-  (push 'company-lsp company-backends)  ; add company-lsp as backend
-
-  (global-set-key (kbd "C-M-i") 'company-complete)
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  (define-key company-active-map (kbd "C-s") 'company-filter-candidates)  ;; filter by C-s
-  (define-key company-active-map (kbd "C-i") 'company-complete-selection)
-  (define-key company-active-map [tab] 'company-complete-selection)
   )
 
 ;;;; Migemo: Japanese increment search with 'Romanization of Japanese'(ローマ字).
@@ -555,24 +598,6 @@ Uses `current-date-time-format' for the formatting the date/time."
     ))
 
   (migemo-init)
-  )
-
-;;;; Neotree: A emacs tree plugin like NERD tree for Vim.
-;; https://github.com/jaypei/emacs-neotree
-(use-package neotree
-  :bind
-  ("<f8>" . neotree-toggle)
-  :defines
-  neo-persist-show
-  :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrows))
-  (setq neo-persist-show t)
-  (setq neo-mode-line-type 'none)
-  (setq neo-smart-open t)
-  (setq neo-window-width 45)
-  ;; Disable line numbers minor mode for neotree
-  (add-hook 'neo-after-create-hook
-            (lambda (&rest _) (display-line-numbers-mode -1)))
   )
 
 ;;;; Magit: an interface to the version control system Git.
