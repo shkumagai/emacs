@@ -413,6 +413,11 @@ Uses `current-date-time-format' for the formatting the date/time."
 (define-key global-map (kbd "C-x C-h") 'help)
 (define-key global-map (kbd "C-h") 'describe-bindings)
 
+;;;;; which-key
+(use-package which-key
+  :diminish which-key-mode
+  :hook (after-init . which-key-mode))
+
 ;;;;; Check Dropbox
 (defvar my:check-dropbox (file-exists-p (concat (getenv "HOME") "/Dropbox")))
 (if my:check-dropbox (defvar my:dropbox (concat (getenv "HOME") "/Dropbox/")))
@@ -469,19 +474,41 @@ Uses `current-date-time-format' for the formatting the date/time."
 (use-package lsp-mode
   :ensure t
   :commands lsp
+  :custom
+  ;; debug
+  (lsp-print-io nil)
+  (lsp-trace nil)
+  (lsp-print-performance nil)
+  ;; general
+  (lsp-auto-guess-root t)
+  (lsp-response-timeout 5)
+  (lsp-prefer-flymake 'flymake)
   :hook (prog-major-mode . lsp-prog-major-mode-enable))
 
 ;;;;; lsp-ui
 (use-package lsp-ui
   :after lsp-mode
   :custom
+  ;; lsp-ui-flycheck
+  (lsp-ui-flycheck-enable nil)
+  ;; lsp-ui-sideline
+  (lsp-ui-sideline-enable nil)
+  (lsp-ui-sideline-ignore-duplicate t)
+  (lsp-ui-sideline-show-symbol t)
+  (lsp-ui-sideline-show-hover t)
+  (lsp-ui-sideline-show-diagnostics nil)
+  (lsp-ui-sideline-show-code-actions nil)
+  ;; lsp-ui-imenu
+  (lsp-ui-imenu-enable nil)
+  (lsp-ui-imenu-kind-position 'top)
+  ;; lsp-ui-peek
   (lsp-ui-peek-enable t)
   (lsp-ui-peek-peek-height 20)
   (lsp-ui-peek-list-width 50)
   (lsp-ui-peek-fontify 'on-demand)  ;; never, on-demand, or always
   :bind
   (:map lsp-mode-map
-        ("C-c C-r" . lsp-io-peek-find-reference)
+        ("C-c C-r" . lsp-ui-peek-find-references)
         ("C-c C-j" . lsp-ui-peek-find-definitions)
         ("C-c i" . lsp-ui-peed-find-implementation)
         ("C-c m" . lsp-ui-imenu)
