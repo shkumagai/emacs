@@ -179,8 +179,8 @@ Uses `current-date-time-format' for the formatting the date/time."
 (when (eq window-system 'ns)
   (let* ((size 12)
          (h (* size 10))
-         (asciifont "Menlo")
-         (jpfont "Hiragino Maru Gothic ProN")
+         (asciifont "Noto Sans Mono CJK JP")
+         (jpfont "Noto Sans Mono CJK JP")
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
     (set-face-attribute 'default nil :family asciifont :height h)
@@ -191,7 +191,7 @@ Uses `current-date-time-format' for the formatting the date/time."
     (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
     )
   ;; define aspect ratio
-  (dolist (elt '((".*Hiragino Maru Gothic ProN.*" . 1.2)
+  (dolist (elt '((".*Noto Sans Mono CJK JP.*" . 1.0)
                  ))
     (add-to-list 'face-font-rescale-alist elt)))
 
