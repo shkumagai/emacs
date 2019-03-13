@@ -457,6 +457,40 @@ Uses `current-date-time-format' for the formatting the date/time."
          ("C-c C-<" . mc/skip-all-like-this))
   )
 
+;;;; Org-mode
+(use-package org
+  :ensure t
+  :defines org-capture-templates
+  :custom
+  ; general
+  (org-directory "~/Dropbox/Org")
+  (org-todo-keywords
+   '((sequence "TODO(t)" "WAIT(w)" "REMIND(r)" "|" "DONE(d)" "BACKLOG(b)")))
+  (org-log-done 'time)
+  (org-tag-alist '(("meeting" . ?m) ("office" . ?o) ("document" . ?d) ("study" . ?s) ("travel" . ?t)))
+  ; capture
+  (org-capture-templates
+   '(("t" "Todo" entry (file+headline "~/Dropbox/Org/todos.org" "Todos")
+      "* TODO %?\n  Added on %U\n %i")
+     ("n" "Note" entry (file+headline "~/Dropbox/Org/notes.org" "Notes")
+      "* %?\n  Added on %U")))
+  ; agenda
+  (org-agenda-files (list org-directory))
+  (hl-line-face 'underline)
+  (calendar-holidays nil)  ; 標準の祝日を利用しない
+  :custom-face
+  (org-link ((t (:foreground "#ebe087" :underline t))))
+  (org-list-dt ((t (:foreground "#bd93f9"))))
+  (org-special-keyword ((t (:foreground "#6272a4"))))
+  (org-todo ((t (:background "#272934" :foreground "#51fa7b" :weight bold))))
+  (org-document-title ((t (:foreground "#f1fa8c" :weight bold))))
+  (org-done ((t (:background "#373844" :foreground "#216933" :strike-through nil :weight bold))))
+  (org-footnote ((t (:foreground "#76e0f3"))))
+  :config
+  (define-key global-map (kbd "C-c c") 'org-capture)
+  (define-key global-map (kbd "C-c a") 'org-agenda)
+  (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1))))
+
 ;;;; Flycheck: A modern on-the-fly syntax checking extension, and a modern alternative to Flymake.
 ;; https://www.flycheck.org/en/latest/
 (use-package flycheck)
