@@ -45,8 +45,7 @@
          (car (loop for p in (directory-files package-user-dir)
                     when (string-match (concat package "-*") p)
                     collect p))))
-    (concat package-user-dir "/" dname))
-  )
+    (concat package-user-dir "/" dname)))
 
 ;;;;; Insert timestamp
 (setq system-time-locale "C")
@@ -64,8 +63,7 @@ Note the weekly scope of the command's precision.")
 Uses `current-date-time-format' for the formatting the date/time."
   (interactive)
   ;; (insert "==========\n")
-  (insert (format-time-string current-date-time-format (current-time)))
-  )
+  (insert (format-time-string current-date-time-format (current-time))))
 
 ;; Insert current time
 (defun insert-current-time ()
@@ -188,11 +186,9 @@ Uses `current-date-time-format' for the formatting the date/time."
     (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
     (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
     (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン
-    (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
-    )
+    (set-fontset-font nil '(#x0370 . #x03FF) fontspec))  ; ギリシャ文字
   ;; define aspect ratio
-  (dolist (elt '((".*Noto Sans Mono CJK JP.*" . 1.0)
-                 ))
+  (dolist (elt '((".*Noto Sans Mono CJK JP.*" . 1.0)))
     (add-to-list 'face-font-rescale-alist elt)))
 
 ;;;;; Windows
@@ -208,12 +204,10 @@ Uses `current-date-time-format' for the formatting the date/time."
     (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
     (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
     (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン
-    (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
-    )
+    (set-fontset-font nil '(#x0370 . #x03FF) fontspec)) ; ギリシャ文字
   ;; define aspect ratio
   (dolist (elt '((".*Consolas.*" . 1.0)
-                 (".*MeiryoKe_Console.*" . 1.0)
-                 ))
+                 (".*MeiryoKe_Console.*" . 1.0)))
     (add-to-list 'face-font-rescale-alist elt)))
 
 ;;;;; Linux
@@ -229,12 +223,10 @@ Uses `current-date-time-format' for the formatting the date/time."
     (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
     (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
     (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン
-    (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
-    )
+    (set-fontset-font nil '(#x0370 . #x03FF) fontspec)) ; ギリシャ文字
   ;; define aspect ratio
   (dolist (elt '((".*MigMix1M.*" . 1.0)
-                 (".*Ricty.*" . 1.1)
-                 ))
+                 (".*Ricty.*" . 1.1)))
     (add-to-list 'face-font-rescale-alist elt)))
 
 ;;;; Faces
@@ -248,11 +240,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 (menu-bar-mode 0)
 (column-number-mode 1)
 (setq default-frame-alist
-      '((width . 120)
-        (height . 51)
-        ;; (top . 0)
-        ;; (left . 0)
-        ))
+      '((width . 120) (height . 51)))
 
 ;;;;; Show absolute path on title bar
 (setq frame-title-format
@@ -324,38 +312,19 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;;;; Whitespace mode
 (use-package whitespace
   :bind (("C-x w" . global-whitespace-mode))
+  :custom
+  (whitespace-style '(face trailing tabs spaces empty tab-mark space-mark))
+  (whitespace-display-mappings
+   '((space-mark ?\u3000 [?\u25a1])
+     (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])))
+  (whitespace-space-regexp "\\( +\\|\u3000+\\)")
   :config
-  (setq whitespace-style '(face
-                           trailing
-                           tabs
-                           spaces
-                           empty
-                           tab-mark
-                           space-mark
-                           ))
-
-  (setq whitespace-display-mappings
-        '((space-mark ?\u3000 [?\u25a1])
-          (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])))
-  (setq whitespace-space-regexp "\\( +\\|\u3000+\\)")
   (global-whitespace-mode 1)
-
   (defvar my/bg-color "#2d3743")
-  (set-face-attribute 'whitespace-trailing nil
-                      :background my/bg-color
-                      :foreground "DeepPink"
-                      :underline t)
-  (set-face-attribute 'whitespace-tab nil
-                      :background my/bg-color
-                      :foreground "LightSkyBlue"
-                      :underline t)
-  (set-face-attribute 'whitespace-space nil
-                      :background my/bg-color
-                      :foreground "GreenYellow"
-                      :weight 'bold)
-  (set-face-attribute 'whitespace-empty nil
-                      :background my/bg-color
-                      ))
+  (set-face-attribute 'whitespace-trailing nil :background my/bg-color :foreground "DeepPink" :underline t)
+  (set-face-attribute 'whitespace-tab nil :background my/bg-color :foreground "LightSkyBlue" :underline t)
+  (set-face-attribute 'whitespace-space nil :background my/bg-color :foreground "GreenYellow" :weight 'bold)
+  (set-face-attribute 'whitespace-empty nil :background my/bg-color))
 
 ;;;; Color-Theme
 ;;;;; doom-themes
@@ -385,9 +354,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   (column-number-mode 0)
   (doom-modeline-def-modeline 'main
     '(bar workspace-number window-number evil-state god-state ryo-modal xah-fly-keys matches buffer-info remote-host buffer-position parrot selection-info)
-    '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker)
-    )
-  )
+    '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker)))
 
 ;;;; Neotree: A emacs tree plugin like NERD tree for Vim.
 ;; https://github.com/jaypei/emacs-neotree
@@ -403,9 +370,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   (setq neo-smart-open t)
   (setq neo-window-width 45)
   ;; Disable line numbers minor mode for neotree
-  (add-hook 'neo-after-create-hook
-            (lambda (&rest _) (display-line-numbers-mode -1)))
-  )
+  (add-hook 'neo-after-create-hook (lambda (&rest _) (display-line-numbers-mode -1))))
 
 ;;;; Miscellaneous settings
 
@@ -454,8 +419,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   :bind (("C->" . mc/mark-next-like-this)
          ("C-M->" . mc/skip-to-next-like-this)
          ("C-<" . mc/mark-previous-like-this)
-         ("C-c C-<" . mc/skip-all-like-this))
-  )
+         ("C-c C-<" . mc/skip-all-like-this)))
 
 ;;;; Org-mode
 (use-package org
@@ -500,8 +464,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;; https://github.com/syohex/emacs-anzu
 (use-package anzu
   :config
-  (global-anzu-mode +1)
-  )
+  (global-anzu-mode +1))
 
 ;;;; LSP -- language server protorol mode
 ;;;;; lsp-mode
@@ -547,8 +510,7 @@ Uses `current-date-time-format' for the formatting the date/time."
         ("C-c i" . lsp-ui-peed-find-implementation)
         ("C-c m" . lsp-ui-imenu)
         ("C-c s" . lsp-ui-sideline-mode))
-  :hook
-  (lsp-mode . lsp-ui-mode))
+  :hook (lsp-mode . lsp-ui-mode))
 
 ;;;;; company-lsp
 (use-package company-lsp
@@ -562,21 +524,20 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;;; Company: Modular in-buffer completion framework for Emacs
 ;; https://company-mode.github.io/
 (use-package company
+  :custom
+  (company-idle-delay 0)  ; default: 0.5
+  (company-minimum-prefix-length 3)  ; default: 4
+  (company-selection-wrap-around t)
+  (completion-ignore-case t)
   :config
   (global-company-mode)
-  (setq company-idle-delay 0)  ; default: 0.5
-  (setq company-minimum-prefix-length 3)  ; default: 4
-  (setq company-selection-wrap-around t)
-  (setq completion-ignore-case t)
   (push 'company-lsp company-backends)  ; add company-lsp as backend
-
   (global-set-key (kbd "C-M-i") 'company-complete)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   (define-key company-active-map (kbd "C-s") 'company-filter-candidates)  ;; filter by C-s
   (define-key company-active-map (kbd "C-i") 'company-complete-selection)
-  (define-key company-active-map [tab] 'company-complete-selection)
-  )
+  (define-key company-active-map [tab] 'company-complete-selection))
 
 ;;;;; company-box
 (use-package company-box
@@ -590,15 +551,14 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;   Swiper, an Ivy-enhanced alternative to isearch.
 (use-package counsel
   :ensure t
+  :custom
+  (ivy-use-virtual-buffers t)
+  (enable-recursive-minibuffers t)
+  (ivy-height 30)  ;; extends minibuffer size (important!)
+  (ivy-extra-directories nil)
+  (ivy-re-builders-alist '((t . ivy--regex-plus)))
   :config
   (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  (setq ivy-height 30)  ;; extends minibuffer size (important!)
-  (setq ivy-extra-directories nil)
-  (setq ivy-re-builders-alist
-        '((t . ivy--regex-plus)))
-
   (counsel-mode 1)
   (global-set-key "\C-s" 'swiper)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
@@ -609,8 +569,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   (global-set-key (kbd "C-c j") 'counsel-git-grep)
   (global-set-key (kbd "C-c k") 'counsel-ag)
   (global-set-key (kbd "C-x l") 'counsel-locate)
-  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-  )
+  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox))
 
 ;;;; ivy-rich
 (use-package ivy-rich
@@ -631,41 +590,35 @@ Uses `current-date-time-format' for the formatting the date/time."
   (setq dumb-jump-use-visible-window nil)
 
   (define-key global-map [(super d)] 'dumb-jump-go)  ;; go-to-definition
-  (define-key global-map [(super shift d)] 'dumb-jump-back)
-  )
+  (define-key global-map [(super shift d)] 'dumb-jump-back))
 
 ;;;; Migemo: Japanese increment search with 'Romanization of Japanese'(ローマ字).
 ;; https://github.com/emacs-jp/migemo
 (use-package migemo
   :if (executable-find "cmigemo")
-  :config
-  (setq migemo-command "cmigemo")
-  (setq migemo-user-dictionary nil)
-  (setq migemo-regex-dictionary nil)
+  :custom
+  (migemo-command "cmigemo")
+  (migemo-user-dictionary nil)
+  (migemo-regex-dictionary nil)
   ;; cache setting
-  (setq migemo-use-pattern-alist t)
-  (setq migemo-use-frequent-pattern-alist t)
-  (setq migemo-pattern-alist-length 1000)
-  (setq migemo-coding-system 'utf-8-unix)
-
+  (migemo-use-pattern-alist t)
+  (migemo-use-frequent-pattern-alist t)
+  (migemo-pattern-alist-length 1000)
+  (migemo-coding-system 'utf-8-unix)
+  :config
   (cond
    ((eq system-type 'darwin)
     (setq migemo-options '("-q" "--emacs"))
-    (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
-    )
+    (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict"))
    ((eq system-type 'gnu/linux)
     (setq migemo-options '("-q" "--emacs" "-i" "\a"))
-    (setq migemo-dictionary "/usr/share/migemo/migemo-dict")
-    ))
-
-  (migemo-init)
-  )
+    (setq migemo-dictionary "/usr/share/migemo/migemo-dict")))
+  (migemo-init))
 
 ;;;; Magit: an interface to the version control system Git.
 ;; https://github.com/magit/magit
 (use-package git
-  :bind (("C-c C-g" . magit-status))
-  )
+  :bind (("C-c C-g" . magit-status)))
 
 (use-package git-gutter
   :custom
@@ -704,8 +657,7 @@ Uses `current-date-time-format' for the formatting the date/time."
                (use-package auto-completion)
                (use-package perl-completion)
                (add-to-list 'ac-source 'ac-source-perl-completion)
-               (perl-completion-mode t)
-               )))
+               (perl-completion-mode t))))
 
 ;;;;; perltidy
 (defmacro mark-active ()
@@ -775,29 +727,25 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;; https://github.com/porterjamesj/virtualenvwrapper.el
 (use-package virtualenvwrapper
   :config
-  (setq venv-location "~/.virtualenvs")
-  )
+  (setq venv-location "~/.virtualenvs"))
 
 ;;;; JavaScript
 
 ;;;;; js2-mode
 (use-package js2-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.js\\(_t\\)\\'" . js2-mode))
-  )
+  (add-to-list 'auto-mode-alist '("\\.js\\(_t\\)\\'" . js2-mode)))
 
 ;;;;; React jsx-mode
 (use-package rjsx-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
-  )
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode)))
 
 ;;;; TypeScript
 ;; https://github.com/emacs-typescript/typescript.el
 (use-package typescript-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
-  )
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode)))
 
 ;;;; Common Lisp
 ;; Setup load-path, autoloads and your Lisp system.
@@ -833,14 +781,12 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;;; CSS
 (use-package css-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.css\\(_t\\)\\'" . css-mode))
-  )
+  (add-to-list 'auto-mode-alist '("\\.css\\(_t\\)\\'" . css-mode)))
 
 ;;;; YAML
 (use-package yaml-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
-  )
+  (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode)))
 
 ;;;; Markdown
 (use-package markdown-mode
@@ -854,14 +800,12 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;;; reStructuredtext
 (use-package rst
   :config
-  (add-to-list 'auto-mode-alist '("\\.rse?t$" . rst-mode))
-  )
+  (add-to-list 'auto-mode-alist '("\\.rse?t$" . rst-mode)))
 
 ;;;; PO file (from gettext)
 (use-package po-mode
   :config
-  (setq auto-mode-alist (cons '("\\.po\\'\\|\\.po\\." . po-mode) auto-mode-alist))
-  )
+  (setq auto-mode-alist (cons '("\\.po\\'\\|\\.po\\." . po-mode) auto-mode-alist)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
