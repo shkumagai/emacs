@@ -39,7 +39,18 @@
  '(safe-local-variable-values (quote ((syntax . elisp))))
  '(show-paren-style (quote mixed))
  '(show-paren-when-point-in-periphery t)
- '(show-paren-when-point-inside-paren t))
+ '(show-paren-when-point-inside-paren t)
+ '(whitespace-display-mappings
+   (quote
+    ((space-mark 12288
+                 [9633])
+     (tab-mark 9
+               [187 9]
+               [92 9]))) t)
+ '(whitespace-space-regexp "\\( +\\|　+\\)" t)
+ '(whitespace-style
+   (quote
+    (face trailing tabs spaces empty tab-mark space-mark)) t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

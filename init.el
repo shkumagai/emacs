@@ -276,6 +276,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   :custom
   (highlight-indent-guides-auto-enable t)
   (highlight-indent-guides-responsive t)
+  (highlight-indent-guides-character ?\|)
   (highlight-indent-guides-method 'character))  ; column
 
 ;;;;; Change background color in region
@@ -467,8 +468,9 @@ Uses `current-date-time-format' for the formatting the date/time."
 
 ;;;; Flycheck: A modern on-the-fly syntax checking extension, and a modern alternative to Flymake.
 ;; https://www.flycheck.org/en/latest/
-(use-package flycheck)
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(use-package flycheck
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
 
 ;;;; Anzu: an Emacs port of anzu.vim
 ;; https://github.com/syohex/emacs-anzu
