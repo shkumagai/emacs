@@ -35,7 +35,7 @@
  '(max-specpdl-size 20000)
  '(package-selected-packages
    (quote
-    (org which-key company-box all-the-icons-ivy ivy-rich git-gutter highlight-indent-guides beacon company-lsp lsp-mode lsp-ui doom-modeline doom-themes yaml-mode web-mode virtualenvwrapper use-package undohist undo-tree typescript-mode tabbar rjsx-mode multiple-cursors neotree migemo markdown-mode magit js2-mode flycheck exec-path-from-shell dumb-jump css-mode counsel company-jedi company anzu)))
+    (org-bullets org which-key company-box all-the-icons-ivy ivy-rich git-gutter highlight-indent-guides beacon company-lsp lsp-mode lsp-ui doom-modeline doom-themes yaml-mode web-mode virtualenvwrapper use-package undohist undo-tree typescript-mode tabbar rjsx-mode multiple-cursors neotree migemo markdown-mode magit js2-mode flycheck exec-path-from-shell dumb-jump css-mode counsel company-jedi company anzu)))
  '(safe-local-variable-values (quote ((syntax . elisp))))
  '(show-paren-style (quote mixed))
  '(show-paren-when-point-in-periphery t)
@@ -49,4 +49,11 @@
  '(git-gutter:added ((t (:background "#50fa7b"))))
  '(git-gutter:deleted ((t (:background "#ff79c6"))))
  '(git-gutter:modified ((t (:background "#f1fa8c"))))
+ '(org-document-title ((t (:foreground "#f1fa8c" :weight bold))))
+ '(org-done ((t (:background "#373844" :foreground "#216933" :strike-through nil :weight bold))))
+ '(org-footnote ((t (:foreground "#76e0f3"))))
+ '(org-link ((t (:foreground "#ebe087" :underline t))))
+ '(org-list-dt ((t (:foreground "#bd93f9"))))
+ '(org-special-keyword ((t (:foreground "#6272a4"))))
+ '(org-todo ((t (:background "#272934" :foreground "#51fa7b" :weight bold))))
  '(show-paren-mode ((nil (:background "#44475a" :foreground "#f1fa8c")))))

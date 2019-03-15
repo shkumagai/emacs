@@ -429,19 +429,27 @@ Uses `current-date-time-format' for the formatting the date/time."
   ; general
   (org-directory "~/Dropbox/Org")
   (org-todo-keywords
-   '((sequence "TODO(t)" "WAIT(w)" "REMIND(r)" "|" "DONE(d)" "BACKLOG(b)")))
+   '((sequence "TODO(t)" "WAITING(w)" "BACKLOG(b)" "|" "DONE(d)" "CANCELED(c@)")))
   (org-log-done 'time)
   (org-tag-alist '(("meeting" . ?m) ("office" . ?o) ("document" . ?d) ("study" . ?s) ("travel" . ?t)))
   ; capture
   (org-capture-templates
-   '(("t" "Todo" entry (file+headline "~/Dropbox/Org/todos.org" "Todos")
+   '(("e" "Event" entry (file+headline "~/Dropbox/Org/events.org" "Events")
+      "* %?\n  Added on %U")
+     ("t" "Todo" entry (file+headline "~/Dropbox/Org/todos.org" "Todos")
       "* TODO %?\n  Added on %U\n %i")
      ("n" "Note" entry (file+headline "~/Dropbox/Org/notes.org" "Notes")
       "* %?\n  Added on %U")))
   ; agenda
   (org-agenda-files (list org-directory))
+  (org-agenda-current-time-string "← now")
+  (org-agenda-time-grid
+   '((daily today require-timed)
+     (0900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400)
+     "-"
+     "----------------"))
   (hl-line-face 'underline)
-  (calendar-holidays nil)  ; 標準の祝日を利用しない
+  (calendar-holidays nil)
   :custom-face
   (org-link ((t (:foreground "#ebe087" :underline t))))
   (org-list-dt ((t (:foreground "#bd93f9"))))
@@ -453,7 +461,9 @@ Uses `current-date-time-format' for the formatting the date/time."
   :config
   (define-key global-map (kbd "C-c c") 'org-capture)
   (define-key global-map (kbd "C-c a") 'org-agenda)
-  (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1))))
+  (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
+  (use-package org-bullets
+    :hook (org-mode . org-bullets-mode)))
 
 ;;;; Flycheck: A modern on-the-fly syntax checking extension, and a modern alternative to Flymake.
 ;; https://www.flycheck.org/en/latest/
