@@ -432,17 +432,22 @@ Uses `current-date-time-format' for the formatting the date/time."
   (org-todo-keywords
    '((sequence "TODO(t)" "WAITING(w)" "BACKLOG(b)" "|" "DONE(d)" "CANCELED(c@)")))
   (org-log-done 'time)
-  (org-tag-alist '(("meeting" . ?m) ("office" . ?o) ("document" . ?d) ("study" . ?s) ("travel" . ?t)))
+  (org-tag-alist '(
+                   ("office" . ?o)    ; Task区分: オフィス
+                   ("private" , ?p)   ; Task区分: 個人, 自宅
+                   ("study" . ?s)     ; Task種別: 勉強, 自習
+                   ("meeting" . ?m)   ; Task種別: ミーティング
+                   ("writing" . ?d)   ; Task種別: ライティング（書き物）
+                   ("travel" . ?t)    ; Task種別: 旅行, 出張等
+                   ))
   ; capture
   (org-capture-templates
    '(("e" "Event" entry (file+headline "~/Dropbox/Org/events.org" "Events")
       "* %?\n  Added on %U")
      ("t" "Todo" entry (file+headline "~/Dropbox/Org/todos.org" "Todos")
-      "* TODO %?\n  Added on %U\n %i")
-     ("n" "Note" entry (file+headline "~/Dropbox/Org/notes.org" "Notes")
-      "* %?\n  Added on %U")))
+      "* TODO %?\n  Added on %U\n %i")))
   ; agenda
-  (org-agenda-files (list org-directory))
+  (org-agenda-files '("~/Dropbox/Org/events.org" "~/Dropbox/Org/todos.org" "~/Dropbox/Org/projects"))
   (org-agenda-current-time-string "← now")
   (org-agenda-time-grid
    '((daily today require-timed)
@@ -451,6 +456,7 @@ Uses `current-date-time-format' for the formatting the date/time."
      "----------------"))
   (hl-line-face 'underline)
   (calendar-holidays nil)
+  (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   :custom-face
   (org-link ((t (:foreground "#ebe087" :underline t))))
   (org-list-dt ((t (:foreground "#bd93f9"))))
