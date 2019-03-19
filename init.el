@@ -442,7 +442,11 @@ Uses `current-date-time-format' for the formatting the date/time."
                    ))
   ; capture
   (org-capture-templates
-   '(("e" "Event" entry (file+headline "~/Dropbox/Org/events.org" "Events")
+   '(("c" "Codereding" entry (file+headline "~/Dropbox/Org/codereading.org" "CodeReading")
+      "* %?\n  %i\n  %a\n  Added on %U")
+     ("k" "Knowledge" entry (file+headline "~/Dropbox/Org/knowledge.org" "Knowledge")
+      "* %?\n  Added on %U")
+     ("e" "Event" entry (file+headline "~/Dropbox/Org/events.org" "Events")
       "* %?\n  Added on %U")
      ("t" "Todo" entry (file+headline "~/Dropbox/Org/todos.org" "Todos")
       "* TODO %?\n  Added on %U\n %i")))
@@ -469,7 +473,13 @@ Uses `current-date-time-format' for the formatting the date/time."
   (define-key global-map (kbd "C-c c") 'org-capture)
   (define-key global-map (kbd "C-c a") 'org-agenda)
   (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
+  ;; Need to install Nerd fonts https://github.com/ryanoasis/nerd-fonts
+  ;; Using Homebrew:
+  ;;   $ brew tap homebrew/cask-fonts
+  ;;   $ brew cask install font-hack-nerd-font-mono
+  ;;
   (use-package org-bullets
+    :custom (org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" ""))
     :hook (org-mode . org-bullets-mode)))
 
 ;;;; Flycheck: A modern on-the-fly syntax checking extension, and a modern alternative to Flymake.
