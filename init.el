@@ -354,7 +354,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   (line-number-mode 0)
   (column-number-mode 0)
   (doom-modeline-def-modeline 'main
-    '(bar workspace-number window-number evil-state god-state ryo-modal xah-fly-keys matches buffer-info remote-host buffer-position parrot selection-info)
+    '(bar window-number matches buffer-info remote-host buffer-position parrot selection-info)
     '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker)))
 
 ;;;; Neotree: A emacs tree plugin like NERD tree for Vim.
