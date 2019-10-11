@@ -428,7 +428,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   :defines org-capture-templates
   :custom
   ; general
-  (org-directory "~/Dropbox/Org")
+  (org-directory "~/Documents/Org")
   (org-todo-keywords
    '((sequence "TODO(t)" "WAITING(w)" "BACKLOG(b)" "|" "DONE(d)" "CANCELED(c@)")))
   (org-log-done 'time)
@@ -442,16 +442,16 @@ Uses `current-date-time-format' for the formatting the date/time."
                    ))
   ; capture
   (org-capture-templates
-   '(("c" "Codereading" entry (file+headline "~/Dropbox/Org/codereading.org" "CodeReading")
+   '(("c" "Codereading" entry (file+headline "~/Documents/Org/codereading.org" "CodeReading")
       "* %?\n  %i\n  %a\n  Added on %U")
-     ("k" "Knowledge" entry (file+headline "~/Dropbox/Org/knowledge.org" "Knowledge")
+     ("k" "Knowledge" entry (file+headline "~/Documents/Org/knowledge.org" "Knowledge")
       "* %?\n  Added on %U")
-     ("e" "Event" entry (file+headline "~/Dropbox/Org/events.org" "Events")
+     ("e" "Event" entry (file+headline "~/Documents/Org/events.org" "Events")
       "* %?\n  Added on %U")
-     ("t" "Todo" entry (file+headline "~/Dropbox/Org/todos.org" "Todos")
+     ("t" "Todo" entry (file+headline "~/Documents/Org/todos.org" "Todos")
       "* TODO %?\n  Added on %U\n %i")))
   ; agenda
-  (org-agenda-files '("~/Dropbox/Org/events.org" "~/Dropbox/Org/todos.org" "~/Dropbox/Org/projects"))
+  (org-agenda-files '("~/Documents/Org/events.org" "~/Documents/Org/todos.org" "~/Documents/Org/projects"))
   (org-agenda-current-time-string "← now")
   (org-agenda-time-grid
    '((daily today require-timed)
