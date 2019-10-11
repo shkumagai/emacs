@@ -442,7 +442,7 @@ Uses `current-date-time-format' for the formatting the date/time."
                    ))
   ; capture
   (org-capture-templates
-   '(("c" "Codereding" entry (file+headline "~/Dropbox/Org/codereading.org" "CodeReading")
+   '(("c" "Codereading" entry (file+headline "~/Dropbox/Org/codereading.org" "CodeReading")
       "* %?\n  %i\n  %a\n  Added on %U")
      ("k" "Knowledge" entry (file+headline "~/Dropbox/Org/knowledge.org" "Knowledge")
       "* %?\n  Added on %U")
