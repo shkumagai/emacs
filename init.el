@@ -828,7 +828,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 ;;;; reStructuredtext
 (use-package rst
   :config
-  (add-to-list 'auto-mode-alist '("\\.rse?t$" . rst-mode)))
+  (add-to-list 'auto-mode-alist '("\\.re?st$" . rst-mode)))
 
 ;;;; PO file (from gettext)
 (use-package po-mode
