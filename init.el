@@ -476,16 +476,19 @@ Uses `current-date-time-format' for the formatting the date/time."
   :ensure
   :custom
   ;; debug
-  (lsp-print-io)
-  (lsp-trace)
-  (lsp-print-performance)
+  (lsp-print-io          . nil)
+  (lsp-trace             . nil)
+  (lsp-print-performance . nil)
   ;; general
-  (lsp-auto-guess-root . t)
+  (lsp-auto-guess-root      . t)
   (lsp-document-sync-method . 'incremental) ;; always send incremental document
-  (lsp-response-timeout . t)
-  (lsp-prefer-flymake . 'flymake)
-  :hook
-  (python-mode-hook . #'lsp)
+  (lsp-response-timeout     . t)
+  ;; (lsp-prefer-flymake       . 'flymake)
+  ;; completion backend
+  (lsp-prefer-capf . t)
+  :commands lsp
+  :hook ((python-mode-hook . lsp)
+	 (lsp-mode-hook . lsp-enable-which-key-integration))
   :bind
   (:lsp-mode-map
    ("C-c r" . lsp-rename))
@@ -496,31 +499,31 @@ Uses `current-date-time-format' for the formatting the date/time."
     :after lsp-mode
     :custom
     ;; lsp-ui-doc
-    (lsp-ui-doc-enable . t)
-    (lsp-ui-doc-header . t)
+    (lsp-ui-doc-enable            . t)
+    (lsp-ui-doc-header            . t)
     (lsp-ui-doc-include-signature . t)
-    (lsp-ui-doc-position . 'top) ;; top, bottom or at-point
-    (lsp-ui-doc-max-width . 150)
-    (lsp-ui-doc-max-height . 30)
-    (lsp-ui-doc-use-childframe . t)
-    (lsp-ui-doc-use-webkit . t)
+    (lsp-ui-doc-position          . 'top) ;; top, bottom or at-point
+    (lsp-ui-doc-max-width         . 150)
+    (lsp-ui-doc-max-height        . 30)
+    (lsp-ui-doc-use-childframe    . t)
+    (lsp-ui-doc-use-webkit        . t)
     ;; lsp-ui-flycheck
     (lsp-ui-flycheck-enable)
     ;; lsp-ui-sideline
-    (lsp-ui-sideline-enable)
+    (lsp-ui-sideline-enable           . t)
     (lsp-ui-sideline-ignore-duplicate . t)
-    (lsp-ui-sideline-show-symbol . t)
-    (lsp-ui-sideline-show-hover . t)
+    (lsp-ui-sideline-show-symbol      . t)
+    (lsp-ui-sideline-show-hover       . t)
     (lsp-ui-sideline-show-diagnostics)
     (lsp-ui-sideline-show-code-actions)
     ;; lsp-ui-imenu
-    (lsp-ui-imenu-enable)
+    (lsp-ui-imenu-enable        . t)
     (lsp-ui-imenu-kind-position . 'top)
     ;; lsp-ui-peek
-    (lsp-ui-peek-enable . t)
+    (lsp-ui-peek-enable      . t)
     (lsp-ui-peek-peek-height . 20)
-    (lsp-ui-peek-list-width . 50)
-    (lsp-ui-peek-fontify . 'on-demand) ;; never, on-demand
+    (lsp-ui-peek-list-width  . 50)
+    (lsp-ui-peek-fontify     . 'on-demand) ;; never, on-demand
     :bind
     (:lsp-mode-map
      ("C-c C-r" . lsp-ui-peek-find-references)
@@ -529,16 +532,7 @@ Uses `current-date-time-format' for the formatting the date/time."
      ("C-c m"   . lsp-ui-imenu)
      ("C-c s"   . lsp-ui-sideline-mode))
     :hook
-    (lsp-mode . lsp-ui-mode))
-  ;; LSP completion
-  (leaf company-lsp
-    :ensure t
-    :after company
-    :custom
-    (company-lsp-cache-candidates . t) ;; always using cache
-    (company-lsp-async . t)
-    (company-lsp-enable-recompletion . nil))
-  )
+    (lsp-mode-hook . lsp-ui-mode)))
 
 
 (leaf company
