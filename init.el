@@ -722,20 +722,16 @@ Uses `current-date-time-format' for the formatting the date/time."
     (setq migemo-dictionary "/usr/share/migemo/migemo-dict")))
   (migemo-init))
 
-;; Programming languages
-;; Python
-(setq auto-mode-alist (cons '("\\.py\\'" . python-mode) auto-mode-alist))
-(setq interpreter-mode-alist (cons '("python" . python-mode)
-                                   interpreter-mode-alist))
 
-(leaf lsp-python-ms
-  :doc "lsp-mode client leveraging Microsoft's python-language-server"
-  :url "https://github.com/emacs-lsp/lsp-python-ms"
+;; Programming languages
+(leaf python
+  :doc "mejor mode for Python"
+  :mode "\\.py\\'"
+  :interpreter "python")
+
+(leaf auto-virtualenv
   :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
-                         (lsp))))
+  :hook (python-mode-hook . auto-virtualenv-set-virtualenv))
 
 
 ;; Javascript/Typescript
