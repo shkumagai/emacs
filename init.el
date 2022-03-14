@@ -76,16 +76,17 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 
-;; Start the server in Emacs session
 (leaf server
+  :doc "Start the server in Emacs session"
   :require t
   :config
   (unless (server-running-p)
     (server-start)))
 
 
-;; exec-path-from-shell
 (leaf exec-path-from-shell
+  :doc "ensure environment variable inside Emacs looks"
+  :url "https://github.com/purcell/exec-path-from-shell"
   :ensure t
   :when (memq window-system '(mac ns x))
   :hook (emacs-startup-hook . exec-path-from-shell-initialize)
