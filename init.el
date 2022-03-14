@@ -90,6 +90,8 @@
   :ensure t
   :when (memq window-system '(mac ns x))
   :hook (emacs-startup-hook . exec-path-from-shell-initialize)
+  :custom
+  (exec-path-from-shell-arguments . '("-l")) ; default: ("-l" "-i")
   :config
   (setq exec-path-from-shell-check-startup-files nil))
 
