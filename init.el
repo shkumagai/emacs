@@ -195,8 +195,8 @@
 (when (eq window-system 'ns)
   (let* ((size 12)
          (h (* size 12))
-         (asciifont "Noto Sans Mono CJK JP")
-         (jpfont "Noto Sans Mono CJK JP")
+         (asciifont "Noto Sans Mono")
+         (jpfont "Noto Sans JP")
          (fontspec (font-spec :family asciifont))
          (jp-fontspec (font-spec :family jpfont)))
     (set-face-attribute 'default nil :family asciifont :height h)
@@ -205,7 +205,7 @@
     (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
     (set-fontset-font nil '(#x0080 . #x024f) fontspec) ; 分音符付きラテン
     (set-fontset-font nil '(#x0370 . #x03ff) fontspec)) ; ギリシャ文字
-  (dolist (elt '((".*Noto Sans Mono CJK JP.*" . 1.0)))
+  (dolist (elt '((".*Noto Sans.*" . 1.0)))
     (add-to-list 'face-font-rescale-alist elt)))
 
 ;; for Windows
