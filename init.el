@@ -448,7 +448,7 @@ Uses `current-date-time-format' for the formatting the date/time."
     (set-face-attribute 'whitespace-empty nil :background my/bg-color)))
 
 
-(leaf git
+(leaf magit
   :doc "an interface to the version control system Git."
   :url "https://github.com/magit/magit"
   :ensure t
