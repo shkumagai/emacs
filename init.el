@@ -322,6 +322,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 (leaf beacon
   :doc ""
   :url "https://github.com/Malabarba/beacon"
+  :ensure t
   :custom ((beacon-size . 60)
            (beacon-color . "yellow")
            (beacon-blink-delay . 0.5)
@@ -415,6 +416,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 (leaf highlight-indent-guides
   :doc "Indent highlighting."
   :url "https://github.com/DarthFennec/highlight-indent-guides"
+  :ensure t
   :hook (prog-mode-hook)
   :custom ((highlight-indent-guides-auto-enable . t)
            (highlight-indent-guides-responsive . t)
