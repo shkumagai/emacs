@@ -698,6 +698,7 @@ Uses `current-date-time-format' for the formatting the date/time."
   :doc "Japanese increment search with 'Romanization of Japanese'(ローマ字)."
   :url "https://github.com/emacs-jp/migemo"
   :when (executable-find "cmigemo")
+  :ensure t
   :custom ((migemo-command . "cmigemo")
            (migemo-user-dictionary)
            (migemo-regex-dictionary)
@@ -705,7 +706,6 @@ Uses `current-date-time-format' for the formatting the date/time."
            (migemo-use-frequent-pattern-alist . t)
            (migemo-pattern-alist-length . 1000)
            (migemo-coding-system quote utf-8-unix))
-  :require t
   :config
   (cond
    ((eq system-type 'darwin)
