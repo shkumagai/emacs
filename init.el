@@ -1,24 +1,10 @@
-;;; init.el --- My Emacs configuration file  -*- lexical-binding: t -*-
-
-;; Filename: init.el
-;; Description: My Emacs configuration file
-;; Package-Requires: ((Emacs "27.1"))
-;; Author: KUMAGAI, Shoji <take.this.t.your.grave_at_gmail.com>
-;; Created: Nov 17, 2011
-;; Modified: Mar 13, 2022 Sun 22:38:51
-;; URL: https://github.com/shkumagai/emacs/init.el
-
+;;; init.el --- My init.el -*- lexical-binding: t; -*-
+;;; Copyright (C) Shoji KUMAGAI
 ;;; Commentary:
-
-;;;;; External dependency installation
-;;
-;; - C/Migemo
-;;   % brew install migemo
-;;
-;; - gettext
-;;   % brew install gettext
-
 ;;; Code:
+
+;; this enables this running method
+;;   emacs -q -l ~/.debug.emacs.d/{{pkg}}/init.el
 
 (eval-and-compile
   (when (or load-file-name byte-compile-current-file)
@@ -26,6 +12,7 @@
           (expand-file-name
            (file-name-directory (or load-file-name byte-compile-current-file))))))
 
+;; Inithialize package manager for compile time
 (eval-and-compile
   (customize-set-variable
    'package-archives '(("org"   . "https://orgmode.org/elpa/")
@@ -36,877 +23,1099 @@
     (package-refresh-contents)
     (package-install 'leaf))
 
+  ;; Leaf keywords
   (leaf leaf-keywords
+    :doc "Use leaf as a package manager"
+    :url "https://github.com/conao3/leaf.el"
     :ensure t
     :init
-    ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
+    (leaf el-get
+      :ensure t
+      :custom
+      (el-get-notify-type       . 'message)
+      (el-get-git-shallow-clone . t))
     (leaf hydra :ensure t)
-    (leaf el-get :ensure t)
-    (leaf blackout :ensure t)
-    (leaf bind-key :ensure t)
-
     :config
-    ;; initialize leaf-keywords.el
     (leaf-keywords-init)))
 
-
-;; Quiet startup
-(when window-system
-  (scroll-bar-mode 0)
-  (tool-bar-mode 0))
-(menu-bar-mode 0)
-(blink-cursor-mode t)
-(column-number-mode 1)
-
-(setq inhibit-splash-screen t)
-(setq inhibit-startup-screen t)
-(setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message t)
-(setq initial-scratch-message nil)
-(setq frame-title-format nil)
-(setq ring-bell-function 'ignore)
-
-(setq delete-by-moving-to-trash t)
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-(setq set-mark-command-repeat-pop t)
-(setq track-eol t)
-(setq line-move-visual t)
-(setq indent-tabs-mode nil)
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-
-(leaf server
-  :doc "Start the server in Emacs session"
-  :require t
+(leaf leaf
   :config
-  (unless (server-running-p)
-    (server-start)))
+  (leaf leaf-convert
+    :ensure t
+    :config (leaf use-package :ensure t))
+  (leaf leaf-tree
+    :ensure t
+    :custom ((imenu-list-size . 30)
+             (imenu-list-position . 'left))))
 
+;; Compile
+(eval-and-compile
+  (leaf *byte-compile
+    :custom
+    (byte-compile-warnings . '(not free-vars))
+    (debug-on-error        . nil)))
+(leaf *native-compile
+  :doc "Native Compile by gccemacs"
+  :url "https://www.emacswiki.org/emacs/GccEmacs"
+  :if (and (fboundp 'native-comp-available-p)
+           (native-comp-available-p))
+  :custom
+  (comp-deferred-compilation . nil)
+  (comp-speed                . 5)
+  (comp-num-cpus             . 4)
+  :config
+  (native-compile-async "~/.emacs.d/init.el" 4 t)
+  (native-compile-async "~/.emacs.d/elpa" 4 t)
+  (native-compile-async "~/.emacs.d/el-get" 4 t))
+
+;; --------------------------------------------------------------------------------
+;;
+;; Generic Configurations
+;;
+;; --------------------------------------------------------------------------------
+
+(leaf no-littering
+  :doc "Help keeping ~/.config/emacs clean"
+  :req "emacs-25.1" "compat-29.1.4.2"
+  :tag "convenience" "emacs>=25.1"
+  :url "https://github.com/emacscollective/no-littering"
+  :added "2023-12-08"
+  :emacs>= 25.1
+  :ensure t
+  :after compat)
+(leaf *to-be-quiet
+  :doc "Quiet annoying messages"
+  :preface
+  (defun display-startup-echo-area-message ()
+    "no startup message"
+    (message ""))
+  :config
+  (defalias 'yes-or-no-p #'y-or-n-p))
+
+(leaf *encoding
+  :doc "It's time to use UTF-8"
+  :config
+  (set-locale-environment "en_US.UTF-8")
+  (prefer-coding-system 'utf-8-unix)
+  (set-default-coding-systems 'utf-8-unix)
+  (set-selection-coding-system 'utf-8-unix)
+  (set-buffer-file-coding-system 'utf-8-unix))
+
+(leaf *formatting
+  :custom
+  (truncate-lines        . nil)
+  (require-final-newline . t)
+  (tab-width             . 2)
+  (indent-tabs-mode      . nil))
+
+;; --------------------------------------------------------------------------------
+;;
+;; Window System
+;;
+;; --------------------------------------------------------------------------------
+
+(leaf *adjust-frame-position
+  :doc "Place frame on the right side of the screen"
+  :if (window-system)
+  :config
+  (set-frame-position nil (/ (display-pixel-width) 2) 0)
+  (if (< (display-pixel-width) 1800)
+      (set-frame-size nil 100 63)))
+
+;; Font Size checker
+;;
+;; |∞≤≥∏∑∫ ×±⊆⊇|
+;; |αβγδεζ ηθικλμ|
+;; |abcdef ghijkl|
+;; |ABCDEF GHIJKL|
+;; |'";:-+ =/\~`?|
+;; |日本語 の美観|
+;; |あいう えおか|
+;; |アイウ エオカ|
+;; |ｱｲｳｴｵｶ ｷｸｹｺｻｼ|
+;;
+;; | hoge                 | hogeghoe | age               |
+;; |----------------------+----------+-------------------|
+;; | 今日もいい天気ですね | お、     | 等幅になった :+1: |
+
+(leaf font-for-gui
+  :doc "Adjust font size"
+  :if (window-system)
+  :preface
+  (defun set-jpfonts (family)
+    (set-fontset-font t 'japanese-jisx0208 (font-spec :family family :size 16))
+    (set-fontset-font t 'japanese-jisx0212 (font-spec :family family :size 16))
+    (set-fontset-font t 'jisx0201          (font-spec :family family :size 16))
+    (set-fontset-font t 'kana              (font-spec :family family :size 16)))
+  (defun set-asciifonts (family)
+    (set-fontset-font t 'latin  (font-spec :family family :widthtype "ExtraCondensed"))
+    (set-fontset-font t 'greek  (font-spec :family family :widthtype "ExtraCondensed"))
+    (set-fontset-font t 'arabic (font-spec :family family :widthtype "ExtraCondensed"))
+    (set-fontset-font t 'symbol (font-spec :family family :widthtype "ExtraCondensed")))
+  :custom
+  (use-default-font-for-symbols   . nil)
+  (inhibit-compacting-font-caches . t)
+  (asciifont . "Noto Sans Mono")
+  (jpfont . "Noto Sans JP")
+  :config
+  (set-face-attribute 'default nil :family asciifont :height 140)
+  (set-jpfonts jpfont)
+  (set-asciifonts asciifont))
+
+(leaf mouse
+  :if (window-system)
+  :custom
+  (mouse-wheel-scroll-amount     . '(1 ((shift) . 1)))
+  (mouse-wheel-progressive-speed . nil)
+  ;; pixel-scroll-mode has a bug around GC, so it stop to use it.
+  (scroll-step           . 1)
+  (scroll-margin         . 0)
+  (scroll-conservatively . 100000))
+
+;; --------------------------------------------------------------------------------
+;;
+;; MacOS
+;;
+;; --------------------------------------------------------------------------------
+
+(leaf *pbcopy-and-pbpaste
+  :if (equal system-type 'darwin)
+  :preface
+  (defun copy-from-osx ()
+    (shell-command-to-string "pbpaste"))
+  (defun paste-to-osx (text)
+    (let ((process-connection-type nil))
+      (let ((proc (start-process "pbcopy" "*Message*" "pbcopy")))
+        (process-send-string proc text)
+        (process-send-eof proc))))
+  :custom
+  (mac-option-modifier         . 'super)
+  (mac-command-modifier        . 'meta)
+  (interprogram-cut-function   . 'paste-to-osx)
+  (interprogram-paste-function . 'copy-from-osx))
 
 (leaf exec-path-from-shell
-  :doc "ensure environment variable inside Emacs looks"
+  :doc "Get environment variables such as $PATH from the shell"
+  :req "emacs-24.1" "cl-lib-0.6"
+  :tag "environment" "unix" "emacs>=24.1"
   :url "https://github.com/purcell/exec-path-from-shell"
+  :added "2023-12-08"
+  :emacs>= 24.1
   :ensure t
-  :when (memq window-system '(mac ns x))
-  :hook (emacs-startup-hook . exec-path-from-shell-initialize)
   :custom
-  (exec-path-from-shell-arguments . '("-l")) ; default: ("-l" "-i")
+  (exec-path-from-shell-check-startup-files . nil)
+  (exec-path-from-shell-variables . '("PATH" "GOPATH" "LC_LANG" "LANG"))
   :config
-  (setq exec-path-from-shell-check-startup-files nil))
+  (exec-path-from-shell-initialize))
 
 
-;; Local elisp
-(add-to-list 'load-path (expand-file-name
-			 (concat user-emacs-directory "elisp")))
+;; --------------------------------------------------------------------------------
+;;
+;; Brackets Guide
+;;
+;; --------------------------------------------------------------------------------
 
-
-;; Change background color in region
-(set-face-background 'region "darkgreen")
-(setq frame-background-mode 'dark)
-
-
-;; frame-transparency
-(set-frame-parameter (selected-frame) 'alpha '(90 . 75))
-
-
-;; Remove trailing whitespace on file save
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-
-;; Key bindings
-(bind-key "C-x C-h" 'help global-map)
-(bind-key "C-h" 'describe-bindings global-map)
-
-
-;; Tab stops
-(defvar default-tab-width nil)
-(defun gen-tab-stop (&optional width max)
-  "Return a sequence suitable for `tab-stop-list' based on WIDTH and MAX."
-  (let* ((max-column (or max 200))
-         (tag-width (or width tab-width))
-         (count (/ max-column tab-width)))
-    (number-sequence tab-width (* tab-width count) tab-width)))
-
-;; (set-default tab-width 4)
-(setq default-tab-width 4)
-(setq tab-stop-list (gen-tab-stop))
-
-
-;; Line numbers
-(when (version<= "26.0.50" emacs-version)
-  (global-display-line-numbers-mode))
-
-
-;; Default encodings
-(set-language-environment "Japanese")
-(set-locale-environment "en_US.UTF-8")
-
-(define-coding-system-alias 'UTF-8 'utf-8-unix)
-(prefer-coding-system 'utf-8-unix)
-(set-default-coding-systems 'utf-8-unix)
-(set-selection-coding-system 'utf-8-unix)
-(set-buffer-file-coding-system 'utf-8-unix)
-(set-clipboard-coding-system 'utf-8-unix)
-(set-keyboard-coding-system 'utf-8-unix)
-(set-terminal-coding-system 'utf-8-unix)
-
-(setq buffer-file-coding-system 'utf-8)
-(setq save-buffer-coding-system 'utf-8-unix)
-(setq process-coding-system-alist
-      (cons '("grep" utf-8 . utf-8) process-coding-system-alist))
-
-
-;; MacOSX
-(when (eq window-system 'ns)
-  (require 'ucs-normalize)
-  (setq file-name-coding-system 'utf-8-hfs)
-  (setq locale-coding-system 'utf-8-hfs))
-
-;; Windows
-(when (eq window-system 'w32)
-  (defvar w32-ime-mode-line-state-indicator-list nil)
-  (setq default-input-method "W32-IME")
-
-  (setq-default w32-ime-mode-line-state-indicator "[--]")
-  (setq w32-ime-mode-line-state-indicator-list '("[--]" "[あ]" "[--]"))
-  (w32-ime-initialize)
-  (global-set-key [M-kanji] 'ignore)
-
-  (setq file-name-coding-system 'cp932)
-  (setq keyboard-coding-system 'cp932)
-  (setq locale-coding-system 'cp932))
-
-;; Linux and Other XWindow System (ex. xBSD)
-(when (eq window-system 'x)
-  (defvar mozc-candidate-style nil)
-  (leaf mozc
-    :ensure t
-    :require t)
-  (setq default-input-method "japanese-mozc")
-  (setq mozc-candidate-style 'echo-area)
-
-  (setq file-name-coding-system 'utf-8)
-  (setq locale-coding-system 'utf-8))
-
-
-;; Fonts
-;; for MacOS
-(when (eq window-system 'ns)
-  (let* ((size 12)
-         (h (* size 12))
-         (asciifont "Noto Sans Mono")
-         (jpfont "Noto Sans JP")
-         (fontspec (font-spec :family asciifont))
-         (jp-fontspec (font-spec :family jpfont)))
-    (set-face-attribute 'default nil :family asciifont :height h)
-    (set-fontset-font nil 'japanese-jisx0213.2004-1 jp-fontspec)
-    (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
-    (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
-    (set-fontset-font nil '(#x0080 . #x024f) fontspec) ; 分音符付きラテン
-    (set-fontset-font nil '(#x0370 . #x03ff) fontspec)) ; ギリシャ文字
-  (dolist (elt '((".*Noto Sans.*" . 1.0)))
-    (add-to-list 'face-font-rescale-alist elt)))
-
-;; for Windows
-(when (eq window-system 'w32)
-  (let* ((size 11)
-         (h (* size 10))
-         (asciifont "Consolas")
-         (jpfont "MeiryoKe_Console")
-         (fontspec (font-spec :family asciifont))
-         (jp-fontspec (font-spec :family jpfont)))
-    (set-face-attribute 'default nil :family asciifont :height h)
-    (set-fontset-font nil 'japanese-jisx0213.2004-1 jp-fontspec)
-    (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
-    (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
-    (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン
-    (set-fontset-font nil '(#x0370 . #x03FF) fontspec)) ; ギリシャ文字
-  ;; define aspect ratio
-  (dolist (elt '((".*Consolas.*" . 1.0)
-                 (".*MeiryoKe_Console.*" . 1.0)))
-    (add-to-list 'face-font-rescale-alist elt)))
-
-;; for Linux
-(when (eq window-system 'x)
-  (let* ((size 10)
-         (h (* size 10))
-         (asciifont "MigMix1M")
-         (jpfont "Ricty")
-         (fontspec (font-spec :family asciifont))
-         (jp-fontspec (font-spec :family jpfont)))
-    (set-face-attribute 'default nil :family asciifont :height h)
-    (set-fontset-font nil 'japanese-jisx0213.2004-1 jp-fontspec)
-    (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
-    (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
-    (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン
-    (set-fontset-font nil '(#x0370 . #x03FF) fontspec)) ; ギリシャ文字
-  ;; define aspect ratio
-  (dolist (elt '((".*MigMix1M.*" . 1.0)
-                 (".*Ricty.*" . 1.1)))
-    (add-to-list 'face-font-rescale-alist elt)))
-
-
-;; Locale
-(setq system-time-locale "C")
-
-
-;; Insert timestamp formats
-(defvar current-date-time-format "%b %d, %Y %a %T"
-  "Format of date to insert `insert-current-date-time' function.
-See help of `format-time-string' for possible replacement")
-
-
-(defvar current-time-format "%T"
-  "Format of date to insert with `insert-current-time' func.
-Note the weekly scope of the command's precision.")
-
-
-;; Insert current date and time
-(defun insert-current-date-time ()
-  "Insert current date and time into current buffer.
-Uses `current-date-time-format' for the formatting the date/time."
-  (interactive)
-  ;; (insert "==========\n")
-  (insert (format-time-string current-date-time-format (current-time))))
-
-
-;; Insert current time
-(defun insert-current-time ()
-  "Insert current time (1-week scope) into the current buffer."
-  (interactive)
-  (insert (format-time-string current-time-format (current-time))))
-
-
-;; Add key bindings
-(global-set-key (kbd "C-c D") 'insert-current-date-time)
-(global-set-key (kbd "C-c T") 'insert-current-time)
-
-
-;; Create new temporary buffer named "*temp*"
-;; reference url:
-;; - http://d.hatena.ne.jp/noqisofon/20101102/1288647885
-(defun create-temporary-buffer ()
-  "Create and show new temporary buffer."
-  (interactive)
-  (switch-to-buffer (generate-new-buffer "*temp*"))
-  (setq buffer-offer-save nil))
-
-(global-set-key (kbd "C-c C-c t") 'create-temporary-buffer)
-
-
-;; Extentions
-(leaf which-key
-  :doc "Display available keybindings in popup"
-  :url "https://github.com/justbur/emacs-which-key"
+(leaf smartparens
   :ensure t
-  :hook (after-init-hook . which-key-mode))
-
-
-(leaf anzu
-  :doc "an Emacs port of anzu.vim"
-  :url "https://github.com/syohex/emacs-anzu"
-  :ensure t
-  :require t
+  :require smartparens-config
+  :global-minor-mode smartparens-global-mode
+  :bind
+  (:smartparens-mode-map
+   ("M-<DEL>" . sp-backward-unwrap-sexp)
+   ("M-]"     . sp-up-sexp)
+   ("M-["     . sp-down-sexp)
+   ("C-("     . sp-beginning-of-sexp)
+   ("C-)"     . sp-end-of-sexp)
+   ("C-M-f"   . sp-forward-sexp)
+   ("C-M-b"   . sp-backward-sexp)
+   ("C-M-n"   . sp-next-sexp)
+   ("C-M-p"   . sp-previous-sexp))
   :config
-  (global-anzu-mode 1))
+  (sp-local-pair 'org-mode "*" "*")
+  (sp-local-pair 'org-mode "=" "=")
+  (sp-local-pair 'org-mode "~" "~")
+  (sp-local-pair 'org-mode "+" "+"))
 
+;; --------------------------------------------------------------------------------
+;;
+;; Custom Functions
+;;
+;; --------------------------------------------------------------------------------
 
-(leaf multiple-cursors
-  :url "https://github.com/magnars/multiple-cursors.el"
+;; TBD
+
+;; --------------------------------------------------------------------------------
+;;
+;; Cursor
+;;
+;; --------------------------------------------------------------------------------
+
+(leaf *general-cursor-options
+  :custom
+  (kill-whole-line  . t)
+  (track-eol        . t)
+  (line-move-visual . nil))
+
+(leaf avy
+  :doc "Jump to arbitrary positions in visible text and select text quickly."
+  :req "emacs-24.1" "cl-lib-0.5"
+  :tag "location" "point" "emacs>=24.1"
+  :url "https://github.com/abo-abo/avy"
+  :added "2023-12-08"
+  :emacs>= 24.1
+  :ensure t)
+
+(leaf avy-zap
+  :doc "Zap to char using `avy'"
+  :req "avy-0.2.0"
+  :tag "extensions"
+  :url "https://github.com/cute-jumper/avy-zap"
+  :added "2023-12-08"
   :ensure t
-  :bind (("C->" . mc/mark-next-like-this)
-         ("C-M->" . mc/skip-to-next-like-this)
-         ("C-<" . mc/mark-previous-like-this)
-         ("C-c C-<" . mc/skip-all-like-this)))
+  :after avy)
 
+;; --------------------------------------------------------------------------------
+;;
+;; Window Layout
+;;
+;; --------------------------------------------------------------------------------
 
-(leaf beacon
-  :doc ""
-  :url "https://github.com/Malabarba/beacon"
+(leaf ace-window
+  :doc "Quickly switch windows."
+  :req "avy-0.5.0"
+  :tag "location" "window"
+  :url "https://github.com/abo-abo/ace-window"
+  :added "2023-12-08"
   :ensure t
-  :custom ((beacon-size . 60)
-           (beacon-color . "yellow")
-           (beacon-blink-delay . 0.5)
-           (beacon-blink-dulation . 0.5))
-  :require t
-  :config (beacon-mode 1))
+  :after avy
+  :bind
+  ("C-o" . ace-window)
+  :custom-face
+  (aw-leading-char-face . '((t (:height 4.0 :foregroud "#f1fa8c")))))
 
+(leaf *window-maximizer
+  :doc "Maximize current window"
+  :if (window-system)
+  :custom
+  (is-window-maximized . nil)
+  :preface
+  (defun toggle-window-maximize ()
+    (interactive)
+    (progn
+      (if is-window-maxmized
+          (balance-windows)
+        (maximize-window))
+      (setq is-window-maximized
+            (not is-window-maximized)))))
 
-(leaf undo-tree
-  :doc "visualize undo branches"
-  :url "https://www.emacswiki.org/emacs/UndoTree"
+(leaf *window-transparency
+  :doc "Set window transparecy level"
+  :if (window-system)
+  :hook (after-init-hook . toggle-window-transparency)
+  :custom
+  (window-transparency . 88)
+  :preface
+  (defun toggle-window-transparency ()
+    "Cycle the frame transparency from default to transparent."
+    (interactive)
+    (let ((transparency window-transparency)
+          (opacity 100))
+      (if (and (not (eq (frame-parameter nil 'alpha) nil))
+               (< (frame-parameter nil 'alpha) opacity))
+          (set-frame-parameter nil 'alpha opacity)
+        (set-frame-parameter nil 'alpha transparency)))))
+
+;; --------------------------------------------------------------------------------
+;;
+;; Error Checker
+;;
+;; --------------------------------------------------------------------------------
+
+(leaf flycheck
+  :doc "On-the-fly syntax checking"
+  :req "emacs-25.1" "dash-2.12.1" "pkg-info-0.4" "let-alist-1.0.4" "seq-1.11"
+  :tag "tools" "languages" "convenience" "emacs>=25.1"
+  :url "http://www.flycheck.org"
+  :added "2023-12-08"
+  :emacs>= 25.1
   :ensure t
-  :require t
-  :config
-  (global-undo-tree-mode))
+  :global-minor-mode global-flycheck-mode
+  :custom
+  (flycheck-dispaly-errors-delay . 0))
 
+;; --------------------------------------------------------------------------------
+;;
+;; Completion
+;;
+;; --------------------------------------------------------------------------------
 
-(leaf undohist
-  :doc "enable undo on closed buffer."
-  :url "https://github.com/emacsmirror/undohist"
+(leaf company
+  :doc "Modular text completion framework"
+  :req "emacs-25.1"
+  :tag "matching" "convenience" "abbrev" "emacs>=25.1"
+  :url "http://company-mode.github.io/"
+  :added "2023-12-08"
+  :emacs>= 25.1
   :ensure t
-  :require t
-  :config
-  (undohist-initialize))
+  :hook (prog-mode-hook . company-mode)
+  :bind
+  ((:company-active-map
+    ("C-n" . company-select-next)
+    ("C-p" . company-select-previous)
+    ("<tab>" . company-complete-common-or-cycle))
+   (:company-search-map
+    ("C-n" . company-select-next)
+    ("C-p" . company-select-previous)))
+  :custom
+  (company-idle-delay  . 0) ; 補完の遅延なし
+  (company-echo-delay  . 0)
+  (company-ignore-case . t)
+  (company-selection-wrap-around . t)
+  (company-minimum-prefix-length . 1) ; 1文字から補完開始
+  :custom-face
+  (company-tooltip          . '((t (:background "#323445"))))
+  (company-template-field   . '((t (:background "#ff79c6")))))
 
+;; --------------------------------------------------------------------------------
+;;
+;; Tools
+;;
+;; --------------------------------------------------------------------------------
+
+;; Docker -------------------------------------------------------------------------
+
+;; (leaf docker
+;;   :doc "Interface to Docker"
+;;   :req "aio-1.0" "dash-2.19.1" "emacs-26.1" "s-1.13.0" "tablist-1.1" "transient-0.4.3"
+;;   :tag "convenience" "filename" "emacs>=26.1"
+;;   :url "https://github.com/Silex/docker.el"
+;;   :added "2023-12-08"
+;;   :emacs>= 26.1
+;;   :ensure t
+;;   :after aio tablist)
+
+(leaf macrostep
+  :ensure t
+  :bind (("C-c e" . macrostep-expand)))
+
+;; Git ----------------------------------------------------------------------------
+
+(leaf *git-commit-mode
+  :doc "Mode for git commit message editing"
+  :mode "\\COMMIT_EDITMSG?")
+
+(leaf git-modes
+  :doc "Major modes for editing Git configuration files"
+  :req "emacs-25.1" "compat-29.1.4.1"
+  :tag "git" "vc" "convenience" "emacs>=25.1"
+  :url "https://github.com/magit/git-modes"
+  :added "2023-12-08"
+  :emacs>= 25.1
+  :ensure t
+  :after compat)
+
+(leaf magit
+  :doc "A Git porcelain inside Emacs."
+  :req "emacs-25.1" "compat-29.1.4.4" "dash-20221013" "git-commit-20231030" "magit-section-20231202" "seq-2.24" "transient-20231204" "with-editor-20230917"
+  :tag "vc" "tools" "git" "emacs>=25.1"
+  :url "https://github.com/magit/magit"
+  :added "2023-12-07"
+  :emacs>= 25.1
+  :ensure t
+  :after compat git-commit magit-section with-editor
+  :bind (("C-c C-g" . magit-status)))
+
+(leaf git-gutter
+  :doc "Port of Sublime Text plugin GitGutter"
+  :req "emacs-25.1"
+  :tag "emacs>=25.1"
+  :url "https://github.com/emacsorphanage/git-gutter"
+  :added "2023-12-09"
+  :emacs>= 25.1
+  :ensure t
+  :global-minor-mode global-git-gutter-mode
+  :custom
+  (git-gutter:modified-sign . "~")
+  (git-gutter:added-sign    . "+")
+  (git-gutter:deleted-sign  . "-")
+  :custom-face
+  (git-gutter:modified . '((t (:background "#f1fa8c"))))
+  (git-gutter:added    . '((t (:background "#50fa7b"))))
+  (git-gutter:deleted  . '((t (:background "#ff79c6")))))
+
+;; --------------------------------------------------------------------------------
+;;
+;; Programming Mode
+;;
+;; --------------------------------------------------------------------------------
+
+(leaf lsp-mode
+  :doc "LSP mode"
+  :req "emacs-27.1" "dash-2.18.0" "f-0.20.0" "ht-2.3" "spinner-1.7.3" "markdown-mode-2.3" "lv-0" "eldoc-1.11"
+  :tag "languages" "emacs>=27.1"
+  :url "https://github.com/emacs-lsp/lsp-mode"
+  :added "2023-12-08"
+  :emacs>= 27.1
+  :ensure t
+  :after spinner markdown-mode lv eldoc
+  :custom
+  ;; General settings
+  (lsp-auto-guess-root              . t)
+  (lsp-modline-diagnostics-enable   . t)
+  (lsp-headerline-breadcrumb-enable . nil)
+  ;; Performance tuning
+  (lsp-log-io               . nil)
+  (lsp-print-performance    . nil)
+  (lsp-completion-provider  . :none)
+  (lsp-enable-file-watchers . nil)
+  (lsp-idle-delay           . 0.500)
+  (gc-cons-threshold        . 100000000)
+  (read-process-output-max  . 1048576)
+  :bind
+  (:lsp-mode-map
+   ("C-c r"   . lsp-rename)
+   ("C-c C-c" . lsp-execute-code-action))
+  :hook
+  (lsp-mode-hook
+   . (lambda ()
+       (setq-local company-backends '((company-yasnippet company-capf :separate))))))
+
+(leaf lsp-ui
+  :doc "UI modules for lsp-mode"
+  :req "emacs-27.1" "dash-2.18.0" "lsp-mode-6.0" "markdown-mode-2.3"
+  :tag "tools" "languages" "emacs>=27.1"
+  :url "https://github.com/emacs-lsp/lsp-ui"
+  :added "2023-12-08"
+  :emacs>= 27.1
+  :ensure t
+  :after lsp-mode markdown-mode
+  :hook (lsp-mode-hook . lsp-ui-mode)
+  :custom
+  (lsp-ui-flycheck-enable     . t)
+  (lsp-ui-sideline-enable     . t)
+  (lsp-ui-sideline-show-hover . nil)
+  (lsp-ui-imenu-enable        . nil)
+  (lsp-ui-peek-fontify        . 'on-demand)
+  (lsp-ui-peek-enable         . t)
+  (lsp-ui-doc-enable          . nil)
+  (lsp-ui-doc-max-height      . 12)
+  (lsp-ui-doc-max-width       . 56)
+  (lsp-ui-doc-position        . 'at-point)
+  (lsp-ui-doc-border          . "#323445")
+  :custom-face
+  (lsp-ui-doc-background . '((t (:background "#282a36"))))
+  (lsp-ui-doc-header     . '((t (:background "#76e0f3" :weight bold))))
+  (lsp-ui-doc-url        . '((t (:background "#6272a4"))))
+  :bind
+  ((:lsp-mode-map
+    ("C-c C-r"   . lsp-ui-peek-find-references)
+    ("C-c C-j"   . lsp-ui-peek-find-definitions)
+    ("C-c C-M-j" . xref-find-definitions-other-window)
+    ("C-c i"     . lsp-ui-peek-find-implementation)
+    ("C-c m"     . counsel-imenu)
+    ("C-c M"     . lsp-ui-imenu)
+    ("C-c s"     . toggle-lsp-ui-sideline)
+    ("C-c d"     . toggle-lsp-ui-doc))
+   (:lsp-ui-doc-mode-map
+    ("q"         . toggle-lsp-ui-doc)
+    ("C-i"       . lsp-ui-doc-focus-frame)))
+  :init
+  (defun toggle-lsp-ui-sideline ()
+    (interactive)
+    (if lsp-ui-sideline-show-hover
+        (progn
+          (setq lsp-ui-sideline-show-hover nil)
+          (message "sideline-hover disabled :P"))
+      (progn
+        (setq lsp-ui-sideline-show-hover t)
+        (message "sideline-hover enabled :)"))))
+  (defun toggle-lsp-ui-doc ()
+    (interactive)
+    (if lsp-ui-doc-mode
+        (progn
+          (lsp-ui-doc-mode -1)
+          (lsp-ui-doc--hide-frame)
+          (message "lsp-ui-doc disabled :P"))
+      (progn
+        (lsp-ui-doc-mode 1)
+        (message "lsp-ui-doc enabled :)")))))
+
+;; Python -------------------------------------------------------------------------
+
+(leaf python
+  :doc "Python's flying circus support for Emacs"
+  :tag "builtin"
+  :added "2023-12-08"
+  :mode ("\\.py\\'" . python-mode)
+  :hook
+  (python-mode-hook
+   . (lambda ()
+       (lsp-deferred)
+       (add-hook 'before-save-hook #'lsp-organize-imports t t))))
+
+(leaf lsp-pyright
+  :doc "Python LSP client using Pyright"
+  :req "emacs-26.1" "lsp-mode-7.0" "dash-2.18.0" "ht-2.0"
+  :tag "lsp" "tools" "languages" "emacs>=26.1"
+  :url "https://github.com/emacs-lsp/lsp-pyright"
+  :added "2023-12-08"
+  :emacs>= 26.1
+  :ensure t
+  :after lsp-mode
+  :custom
+  (python-shell-interpreter          . "python3")
+  (lsp-pyright-python-executable-cmd . "python3")
+  :require lsp-pyright)
+
+;; JavaScript/TypeScript ----------------------------------------------------------
+
+(leaf js2-mode
+  :doc "Improved JavaScript editing mode"
+  :req "emacs-24.1" "cl-lib-0.5"
+  :tag "javascript" "languages" "emacs>=24.1"
+  :url "https://github.com/mooz/js2-mode/"
+  :added "2023-12-08"
+  :emacs>= 24.1
+  :ensure t
+  :mode "\\.js\\'")
+
+(leaf typescript-mode
+  :doc "Major mode for editing typescript"
+  :req "emacs-24.3"
+  :tag "languages" "typescript" "emacs>=24.3"
+  :url "http://github.com/ananthakumaran/typescript.el"
+  :added "2023-12-08"
+  :emacs>= 24.3
+  :ensure t
+  :mode "\\.ts\\'")
+
+;; --------------------------------------------------------------------------------
+;;
+;; Configuration Languages
+;;
+;; --------------------------------------------------------------------------------
+
+;; YAML ---------------------------------------------------------------------------
+
+(leaf yaml-mode
+  :doc "Major mode for editing YAML files"
+  :req "emacs-24.1"
+  :tag "yaml" "data" "emacs>=24.1"
+  :url "https://github.com/yoshiki/yaml-mode"
+  :added "2023-12-08"
+  :emacs>= 24.1
+  :ensure t
+  :mode "\\.ya?ml?"
+  :defvar yaml-file-threshold
+  :custom
+  (yaml-file-threshold . 100000))
+
+;; Dockerfile ---------------------------------------------------------------------
+
+(leaf dockerfile-mode
+  :doc "Major mode for editing Docker's Dockerfiles"
+  :req "emacs-24"
+  :tag "tools" "processes" "languages" "docker" "emacs>=24"
+  :url "https://github.com/spotify/dockerfile-mode"
+  :added "2023-12-08"
+  :emacs>= 24
+  :ensure t
+  :mode "\\Dockerfile\\'")
+
+;; Terraform ----------------------------------------------------------------------
+
+(leaf terraform-mode
+  :doc "Major mode for terraform configuration file"
+  :req "emacs-24.3" "hcl-mode-0.3" "dash-2.17.0"
+  :tag "emacs>=24.3"
+  :url "https://github.com/syohex/emacs-terraform-mode"
+  :added "2023-12-08"
+  :emacs>= 24.3
+  :ensure t
+  :after hcl-mode
+  :mode "\\.tf\\'")
+
+;; Markdown -----------------------------------------------------------------------
+
+(leaf markdown-mode
+  :doc "Major mode for Markdown-formatted text"
+  :req "emacs-27.1"
+  :tag "itex" "github flavored markdown" "markdown" "emacs>=27.1"
+  :url "https://jblevins.org/projects/markdown-mode/"
+  :added "2023-12-08"
+  :emacs>= 27.1
+  :ensure t
+  :mode
+  (("README\\.md\\'" . gfm-mode)
+   ("\\.md\\'"       . markdown-mode))
+  :bind
+  ((:markdown-mode-map
+    ("M-t u" . markdown-toggle-url-hiding)
+    ("M-t m" . markfown-toggle-markup-hidng)))
+  :custom
+  (markdown-hide-urls         . nil)
+  (markdown-hide-markup       . nil)
+  (markdown-list-item-bullets . '("・"))
+  (markdown-fontify-code-blocks-natively . t)
+  :custom-face
+  (markdown-header-face-1         . '((t (:inherit outline-1 :weight bold   :height 1.5))))
+  (markdown-header-face-2         . '((t (:inherit outline-1 :weight normal :height 1.2))))
+  (markdown-header-face-3         . '((t (:inherit outline-1 :weight normal :height 1.1))))
+  (markdown-header-face-4         . '((t (:inherit outline-1 :weight normal))))
+  (markdown-bold-face             . '((t (:foreground "#f8f8f2" :weight bold))))
+  (markdown-italic-face           . '((t (:foreground "#f8f8f2" :slant italic))))
+  (markdown-header-delimiter-face . '((t (:foreground "#6272a4" :weight normal))))
+  (markdown-link-face             . '((t (:foreground "#f1fa8c"))))
+  (markdown-url-face              . '((t (:foreground "#6272a4"))))
+  (markdown-list-face             . '((t (:foreground "#6272a4"))))
+  (markdown-gfm-checkbox-face     . '((t (:foreground "#6272a4"))))
+  (markdown-metadata-value-face   . '((t (:foreground "#8995ba"))))
+  (markdown-metadata-key-face     . '((t (:foreground "#6272a4"))))
+  (markdown-pre-face              . '((t (:foreground "#8be9fd")))))
+
+
+;; --------------------------------------------------------------------------------
+;;
+;; Theme
+;;
+;; --------------------------------------------------------------------------------
 
 (leaf doom-themes
-  :doc "A theme megapack for GNU Emacs, inspired by community favorites."
+  :doc "an opinionated pack of modern color-themes"
+  :req "emacs-25.1" "cl-lib-0.5"
+  :tag "faces" "themes" "emacs>=25.1"
   :url "https://github.com/doomemacs/themes"
+  :added "2023-12-07"
+  :emacs>= 25.1
   :ensure t
-  :custom ((doom-themes-enable-bold . t)
-           (doom-themes-enable-italic . t))
-  :custom-face ((doom-modeline-bar quote ((t (:background "#6272a4")))))
-  :require t
+  :defer-config
+  (let ((display-table (or standard-display-table (make-display-table))))
+    (set-display-table-slot display-table 'vertical-border (make-glyph-code ?|))
+    (setq standard-display-table display-table))
   :config
   (load-theme 'doom-dracula t)
   (doom-themes-neotree-config)
   (doom-themes-org-config))
 
+(leaf doom-theme-for-term
+  :doc "Show repository root in NetTree"
+  :unless (window-system)
+  :preface
+  (defun doom-themes-neotree-insert-root-for-term (node)
+    ;; insert icon and project name
+    (insert
+     (propertize
+      (concat (propertize "" 'face 'net-root-dir-face)
+              (or (neo-path--file-short-name node) "-")
+              "\n")
+      'face `(:inherit ,(append (if doom-themes-neotree-enable-variable-pitch '(variable-pitch))
+                                '(neo-root-dir-face))))))
+  :advice
+  (:override doom-themes-neotree-insert-root doom-themes-neotree-insert-root-for-term))
 
-(leaf doom-modeline
-  :doc "A fancy and fast modeline inspired by minimalism design."
-  :url "https://github.com/seagle0128/doom-modeline"
+(leaf nano-modeline
+  :doc "N Λ N O modeline"
+  :req "emacs-27.1"
+  :tag "header-line" "mode-line" "convenience" "emacs>=27.1"
+  :url "https://github.com/rougier/nano-modeline"
+  :added "2023-12-09"
+  :emacs>= 27.1
   :ensure t
-  :hook (after-init-hook)
-  :custom ((doom-modeline-buffer-file-name-style quote truncate-with-project)
-           (doom-modeline-icon . t)
-           (doom-modeline-major-mode-icon . t)
-           (doom-modeline-minor-modes . t))
-  :config
-  (with-eval-after-load 'doom-modeline
-    (line-number-mode 0)
-    (column-number-mode 0)
-    (doom-modeline-def-modeline 'main
-      '(bar window-number matches buffer-info remote-host buffer-position parrot selection-info)
-      '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker))))
+  :custom
+  (frame-background-mode . 'dark)
+  (nano-color-foreground . "#f8f8f2")
+  (nano-color-background . "#282a36")
+  (nano-color-highlight  . "#373844")
+  (nano-color-critical   . "#bd93f9")
+  (nano-color-salient    . "#0189cc")
+  (nano-color-strong     . "#e2e2dc")
+  (nano-color-popout     . "#f8f8f2")
+  (nano-color-subtle     . "#44475a")
+  (nano-color-faded      . "#6272a4")
+  :custom-face
+  (hl-line                   . '((t (:background "#3B4252" :extend t))))
+  (vertical-border           . '((t (:background "#282A36" :foreground "#1E2029"))))
+  (mode-line                 . '((t (:background "#282A36"))))
+  (mode-line-inactive        . '((t (:background "#282A36"))))
+  (nano-face-header-salient  . '((t (:foreground "#282A36" :background "#0189CC"))))
+  (nano-face-header-popout   . '((t (:foreground "#282A36" :background "#F1FA8C"))))
+  (nano-face-header-critical . '((t (:foreground "#282A36" :background "#BD93F9"))))
+  (nano-face-header-faded    . '((t (:foreground "#282A36" :background "#6272A4"))))
+  (nano-face-subtle          . '((t (:foreground "#282A36" :background "#44475A"))))
+  (nano-face-header-default  . '((t (:foreground "#b0b8d1" :background "#44475A"))))
+  (nano-face-header-strong   . '((t (:foreground "#f8f8f2" :background "#44475A" :weight bold)))))
 
+
+;; --------------------------------------------------------------------------------
+;;
+;; Widgets
+;;
+;; --------------------------------------------------------------------------------
+
+(leaf all-the-icons
+  :doc "A library for inserting Developer icons"
+  :req "emacs-24.3"
+  :tag "lisp" "convenient" "emacs>=24.3"
+  :url "https://github.com/domtronn/all-the-icons.el"
+  :added "2023-12-09"
+  :emacs>= 24.3
+  :ensure t)
 
 (leaf neotree
-  :doc "A emacs tree plugin like NERD tree for Vim."
+  :doc "A tree plugin like NerdTree for Vim"
+  :req "cl-lib-0.5"
   :url "https://github.com/jaypei/emacs-neotree"
+  :added "2023-12-09"
   :ensure t
-  :defvar neo-persist-show
-  :bind (("<f8>" . neotree-toggle))
+  :bind
+  ("<f9>" . neotree-projectile-toggle)
+  :custom
+  (neo-theme             . 'nerd)
+  (neo-cwd-line-style    . 'button)
+  (neo-autorefresh       . t)
+  (neo-show-hidden-files . t)
+  (neo-mode-line-type    . nil)
+  (neo-window-fixed-size . nil)
+  :hook (neotree-mode-hook . neo-hide-nano-header)
+  :preface
+  (defun neo-hide-nano-header ()
+    "Hide nano header"
+    (interactive)
+    (setq header-line-format ""))
+  (defun neotree-projectile-toggle ()
+    "Toggle function for projectile."
+    (interactive)
+    (let ((project-dir
+           (ignore-errors
+             (projectile-project-root)))
+          (file-name (buffer-file-name)))
+      (if (and (fboundp 'neo-global--window-exists-p)
+               (neo-global--window-exists-p))
+          (neotree-hide)
+        (progn
+          (neotree-show)
+          (if project-dir
+              (neotree-dir project-dir))
+          (if file-name
+              (neotree-find file-name))))))
   :config
-  (with-eval-after-load 'neotree
-    (setq neo-theme (if (display-graphic-p)
-                        'icons 'arrows))
-    (setq neo-persist-show t)
-    (setq neo-mode-line-type 'none)
-    (setq neo-smart-open t)
-    (setq neo-window-width 45)
-    (add-hook 'neo-after-create-hook
-              (lambda (&rest _)
-                (display-line-numbers-mode -1)))))
+  ;; Use nerd font in terminal.
+  (unless (window-system)
+    (advice-add
+     'neo-buffer--insert-fold-symbol
+     :override
+     (lambda (name &optional node-name)
+       (let ((n-insert-symbol (lambda (n)
+                                (neo-buffer--insert-with-face
+                                 n 'neo-expand-btn-face))))
+         (or (and (equal name 'open)  (funcall n-insert-symbol ""))
+             (and (equal name 'close) (funcall n-insert-symbol ""))
+             (and (equal name 'leaf)  (funcall n-insert-symbol ""))))))))
 
+
+;; --------------------------------------------------------------------------------
+;;
+;; Accessibility
+;;
+;; --------------------------------------------------------------------------------
+
+(leaf which-key
+  :doc "Display available keybindings in popup"
+  :req "emacs-24.4"
+  :tag "emacs>=24.4"
+  :url "https://github.com/justbur/emacs-which-key"
+  :added "2023-12-07"
+  :emacs>= 24.4
+  :ensure t
+  :global-minor-mode which-key-mode)
+
+(leaf amx
+  :doc "Alternative M-x with extra features."
+  :req "emacs-24.4" "s-0"
+  :tag "completion" "usability" "convenience" "emacs>=24.4"
+  :url "http://github.com/DarwinAwardWinner/amx/"
+  :added "2023-12-07"
+  :emacs>= 24.4
+  :ensure t
+  :hook (after-init-hook))
+
+(leaf editorconfig
+  :doc "EditorConfig Emacs Plugin"
+  :req "emacs-26.1" "nadvice-0.3"
+  :tag "editorconfig" "convenience" "emacs>=26.1"
+  :url "https://github.com/editorconfig/editorconfig-emacs#readme"
+  :added "2023-12-07"
+  :emacs>= 26.1
+  :ensure t
+  :after nadvice)
+
+(leaf display-line-numbers
+  :doc "Display line number"
+  :req "emacs-26.0.5"
+  :tag "builtin" "emacs>=26.0.5"
+  :url "https://www.emacssiki.org/emacs/LineNumbers"
+  :hook (terraform-mode-mock . display-line-numbers-mode))
+
+(leaf display-fill-column-indicator
+  :doc "Indicate maximum column"
+  :req "emacs-27.0"
+  :tag "builtin"
+  :url "https://www.emacswiki.org/emacs/FillColumnIndicator"
+  :hook ((markdown-mode-hook, git-commit-mode-hook) . display-fill-column-indicator-mode))
+
+
+;; --------------------------------------------------------------------------------
+;;
+;; Highligiting
+;;
+;; --------------------------------------------------------------------------------
 
 (leaf paren
-  :doc "highlight matching parenthesis"
-  :ensure nil
-  :commands show-paren-mode
-  :hook ((after-init-hook . show-paren-mode))
-  :custom ((show-paren-style quote mixed)
-           (show-paren-when-point-inside-paren . t)
-           (show-paren-when-point-in-periphery . t))
-  :custom-face ((show-paren-mode quote
-                                 ((nil
-                                   (:background "#44475a" :foreground "#f1fa8c"))))))
-
-
-(leaf highlight-indent-guides
-  :doc "Indent highlighting."
-  :url "https://github.com/DarthFennec/highlight-indent-guides"
-  :ensure t
-  :hook (prog-mode-hook)
-  :custom ((highlight-indent-guides-auto-enable . t)
-           (highlight-indent-guides-responsive . t)
-           (highlight-indent-guides-character . 124)
-           (highlight-indent-guides-method quote character))
-  :config
-  (with-eval-after-load 'highlight-indent-guides
-    (if (fboundp 'diminish)
-        (diminish 'highlight-indent-guides-mode))))  ; column
-
+  :doc "Highlight paired parens and brackets"
+  :url "https://www.emacswiki.org/emacs/ShowParenMode"
+  :global-minor-mode show-paren-mode
+  :custom
+  (show-paren-style . 'mixed)
+  (show-paren-when-point-inside-paren . t)
+  (show-paren-when-point-in-periphery . t)
+  :custom-face
+  (show-paren-match . '((t (:background "#44475a" :foreground "#f1fa8c")))))
 
 (leaf whitespace
-  :doc "indicate whitespaces"
+  :doc "minor mode to visualize TAB, (HARD) SPACE, NEWLINE"
+  :req "emacs-24.4"
+  :tag "builtin"
+  :added "2023-12-07"
   :ensure t
-  :bind (("C-x w" . global-whitespace-mode))
+  :bind (("C-c w" . global-whitespace-mode))
   :custom ((whitespace-style . '(face trailing tabs spaces empty tab-mark space-mark))
-           (whitespace-display-mappings . '((space-mark 12288 [9633])
+           (whitespace-display mappings . '((space-mark 12288 [9633])
                                             (tab-mark 9 [187 9] [92 9])))
-           (whitespace-space-regexp . "\\( +\\|　+\\)"))
+           (whitespace-space-regexp . "\\( +\\|+\\)"))
   :config
   (with-eval-after-load 'whitespace
     (global-whitespace-mode 1)
     (defvar my/bg-color "#2d3743")
-    (set-face-attribute 'whitespace-trailing nil :background my/bg-color :foreground "DeepPink" :underline t)
-    (set-face-attribute 'whitespace-tab nil :background my/bg-color :foreground "LightSkyBlue" :underline t)
-    (set-face-attribute 'whitespace-space nil :background my/bg-color :foreground "GreenYellow" :weight 'bold)
-    (set-face-attribute 'whitespace-empty nil :background my/bg-color)))
+    (set-face-attribute 'whitespace-trailing nil :background my/bg-color :foreground "DeepPink"     :underline t)
+    (set-face-attribute 'whitespace-tab      nil :background my/bg-color :foreground "LightSyeBlue" :underline t)
+    (set-face-attribute 'whitespace-space    nil :background my/bg-color :foreground "GreenYellow"  :underline t)
+    (set-face-attribute 'whitespace-empty    nil :background my/bg-color)))
 
-
-(leaf magit
-  :doc "an interface to the version control system Git."
-  :url "https://github.com/magit/magit"
-  :ensure t
-  :bind (("C-c C-g" . magit-status)))
-
-
-(leaf git-gutter
-  :doc "show git diff marker"
-  :url "https://github.com/emacsorphanage/git-gutter"
-  :ensure t
-  :custom ((git-gutter:modified-sign . "~")
-           (git-gutter:added-sign    . "+")
-           (git-gutter:deleted-sign  . "-"))
-  :custom-face ((git-gutter:modified . '((t (:background "#f1fa8c"))))
-                (git-gutter:added    . '((t (:background "#50fa7b"))))
-                (git-gutter:deleted  . '((t (:background "#ff79c6")))))
-  :require t
-  :config
-  (global-git-gutter-mode 1))
-
-
-(leaf lsp-mode
-  :doc ""
-  :url "https://github.com/emasc-lsp/lsp-mode"
-  :ensure
-  :custom
-  ;; debug
-  (lsp-print-io          . nil)
-  (lsp-trace             . nil)
-  (lsp-print-performance . nil)
-  ;; general
-  (lsp-auto-guess-root      . t)
-  (lsp-document-sync-method . 'incremental) ;; always send incremental document
-  (lsp-response-timeout     . t)
-  ;; (lsp-prefer-flymake       . 'flymake)
-  ;; completion backend
-  (lsp-prefer-capf . t)
-  :commands lsp
-  :hook ((python-mode-hook . lsp)
-	 (lsp-mode-hook . lsp-enable-which-key-integration))
-  :bind
-  (:lsp-mode-map
-   ("C-c r" . lsp-rename))
-  :init
-  ;; LSP UI tools
-  (leaf lsp-ui
-    :ensure t
-    :after lsp-mode
-    :custom
-    ;; lsp-ui-doc
-    (lsp-ui-doc-enable            . t)
-    (lsp-ui-doc-header            . t)
-    (lsp-ui-doc-include-signature . t)
-    (lsp-ui-doc-position          . 'top) ;; top, bottom or at-point
-    (lsp-ui-doc-max-width         . 150)
-    (lsp-ui-doc-max-height        . 30)
-    (lsp-ui-doc-use-childframe    . t)
-    (lsp-ui-doc-use-webkit        . t)
-    ;; lsp-ui-flycheck
-    (lsp-ui-flycheck-enable)
-    ;; lsp-ui-sideline
-    (lsp-ui-sideline-enable           . t)
-    (lsp-ui-sideline-ignore-duplicate . t)
-    (lsp-ui-sideline-show-symbol      . t)
-    (lsp-ui-sideline-show-hover       . t)
-    (lsp-ui-sideline-show-diagnostics)
-    (lsp-ui-sideline-show-code-actions)
-    ;; lsp-ui-imenu
-    (lsp-ui-imenu-enable        . t)
-    (lsp-ui-imenu-kind-position . 'top)
-    ;; lsp-ui-peek
-    (lsp-ui-peek-enable      . t)
-    (lsp-ui-peek-peek-height . 20)
-    (lsp-ui-peek-list-width  . 50)
-    (lsp-ui-peek-fontify     . 'on-demand) ;; never, on-demand
-    :bind
-    (:lsp-mode-map
-     ("C-c C-r" . lsp-ui-peek-find-references)
-     ("C-c C-j" . lsp-ui-peek-find-deninitions)
-     ("C-c i"   . lsp-ui-peek-find-implementation)
-     ("C-c m"   . lsp-ui-imenu)
-     ("C-c s"   . lsp-ui-sideline-mode))
-    :hook
-    (lsp-mode-hook . lsp-ui-mode)))
-
-
-(leaf company
-  :doc "Modular text completion framework"
-  :req "emacs-24.3"
-  :tag "matching" "convenience" "abbrev" "emacs>=24.3"
-  :url "http://company-mode.github.io/"
-  :emacs>= 24.3
-  :ensure t
-  :blackout t
-  :leaf-defer nil
-  :bind ((company-active-map
-          ("M-n" . nil)
-          ("M-p" . nil)
-          ("C-s" . company-filter-candidates)
-          ("C-n" . company-select-next)
-          ("C-p" . company-select-previous)
-          ("<tab>" . company-complete-selection))
-         (company-search-map
-          ("C-n" . company-select-next)
-          ("C-p" . company-select-previous)))
-  :custom ((company-idle-delay . 0)
-           (company-minimum-prefix-length . 1)
-           (company-transformers . '(company-sort-by-occurrence)))
-  :global-minor-mode global-company-mode)
-
-
-(leaf company-box
-  :url "https://github.com/sebastiencs/company-box"
-  :ensure t
-  :hook (company-mode-hook))
-
-
-(leaf company-c-headers
-  :doc "Company mode backend for C/C++ header files"
-  :req "emacs-24.1" "company-0.8"
-  :tag "company" "development" "emacs>=24.1"
-  :added "2020-03-25"
+(leaf highlight-indent-guides
+  :doc "Minor mode to highlight indentation"
+  :req "emacs-24.1"
+  :tag "emacs>=24.1"
+  :url "https://github.com/DarthFennec/highlight-indent-guides"
+  :added "2023-12-09"
   :emacs>= 24.1
   :ensure t
-  :after company
-  :defvar company-backends
+  :hook (prog-mode-hook . highlight-indent-guides-mode)
+  :custom
+  (highlight-indent-guides-auto-enabled . t)
+  (highlight-indent-guides-responsive   . t)
+  (highlight-indent-guides-method . 'bitmap)
   :config
-  (add-to-list 'company-backends 'company-c-headers))
+  (highlight-indent-guides-auto-set-faces))
 
-
-(leaf ivy
-  :doc "Ivy, a generic completion mechanism for Emacs."
-  :req "emacs-24.5"
-  :tag "matching" "emacs>=24.5"
-  :url "https://github.com/abo-abo/swiper"
-  :emacs>= 24.5
-  :ensure t
-  :blackout t
-  :leaf-defer nil
-  :custom ((ivy-initial-inputs-alist . nil)
-           (ivy-use-selectable-prompt . t))
-  :global-minor-mode t
-  :config
-  (leaf swiper
-    :doc "Swiper, an Ivy-enhanced alternative to Isearch."
-    :req "emacs-24.5" "ivy-0.13.0"
-    :tag "matching" "emacs>=24.5"
-    :url "https://github.com/abo-abo/swiper"
-    :emacs>= 24.5
-    :ensure t
-    :bind (("C-s" . swiper)))
-  (leaf counsel
-    :doc "Counsel, a collection of Ivy-enhanced versions of common Emacs commands."
-    :req "emacs-24.5" "swiper-0.13.0"
-    :tag "tools" "matching" "convenience" "emacs>=24.5"
-    :url "https://github.com/abo-abo/swiper"
-    :emacs>= 24.5
-    :ensure t
-    :blackout t
-    :bind (("C-S-s" . counsel-imenu)
-           ("C-x C-r" . counsel-recentf))
-    :custom `((counsel-yank-pop-separator . "\n----------\n")
-              (counsel-find-file-ignore-regexp . ,(rx-to-string '(or "./" "../") 'no-group)))
-    :global-minor-mode t))
-
-
-(leaf prescient
-  :doc "Better sorting and filtering"
+(leaf beacon
+  :doc "Highlight the cursor whenever the window scrolls"
   :req "emacs-25.1"
-  :tag "extensions" "emacs>=25.1"
-  :url "https://github.com/raxod502/prescient.el"
+  :tag "convenience" "emacs>=25.1"
+  :url "https://github.com/Malabarba/beacon"
+  :added "2023-12-09"
   :emacs>= 25.1
   :ensure t
-  :custom ((prescient-aggressive-file-save . t))
-  :global-minor-mode prescient-persist-mode)
+  :custom (beacon-color . "#f1fa8c"))
 
 
-(leaf ivy-prescient
-  :doc "prescient.el + Ivy"
-  :req "emacs-25.1" "prescient-4.0" "ivy-0.11.0"
-  :tag "extensions" "emacs>=25.1"
-  :url "https://github.com/raxod502/prescient.el"
+;; --------------------------------------------------------------------------------
+;;
+;; Search Interface
+;;
+;; --------------------------------------------------------------------------------
+
+(leaf anzu
+  :doc "Show number of matches in mode-line while searching"
+  :req "emacs-25.1"
+  :tag "emacs>=25.1"
+  :url "https://github.com/emacsorphanage/anzu"
+  :added "2023-12-09"
   :emacs>= 25.1
   :ensure t
-  :after prescient ivy
-  :custom ((ivy-prescient-retain-classic-highlighting . t))
-  :global-minor-mode t)
-
-
-(leaf ivy-rich
-  :doc "More friendly interface for Ivy"
-  :url "https://github.com/Yevgnen/ivy-rich"
-  :ensure t
-  :after ivy
-  :require t
   :config
-  (ivy-rich-mode 1))
+  (global-anzu-mode 1))
 
-
-(leaf all-the-icons-ivy
-  :doc "Ivy/Counsel integration for all-the-icons.el"
-  :url "https://github.com/asok/all-the-icons-ivy"
+(leaf projectile
+  :doc "Manage and navigate projects in Emacs easily"
+  :req "emacs-25.1"
+  :tag "convenience" "project" "emacs>=25.1"
+  :url "https://github.com/bbatsov/projectile"
+  :added "2023-12-09"
+  :emacs>= 25.1
   :ensure t
-  :require t
-  :config
-  (all-the-icons-ivy-setup))
+  :global-minor-mode projectile-mode)
 
+;; Vertico ------------------------------------------------------------------------
 
-(leaf cus-edit
-  :doc "tools for customizing Emacs and Lisp packages"
-  :tag "builtin" "faces" "help"
-  :custom `((custom-file . ,(locate-user-emacs-file "custom.el"))))
-
-
-(leaf autorevert
-  :doc "revert buffers when files on disk change"
-  :tag "builtin"
-  :custom ((auto-revert-interval . 1))
-  :global-minor-mode global-auto-revert-mode)
-
-
-(leaf flycheck
-  :doc "On-the-fly syntax checking"
-  :req "dash-2.12.1" "pkg-info-0.4" "let-alist-1.0.4" "seq-1.11" "emacs-24.3"
-  :tag "minor-mode" "tools" "languages" "convenience" "emacs>=24.3"
-  :url "http://www.flycheck.org"
-  :emacs>= 24.3
+(leaf vertico
+  :doc "VERTical Interactive COmpletion"
+  :req "emacs-27.1" "compat-29.1.4.4"
+  :tag "completion" "matching" "files" "convenience" "emacs>=27.1"
+  :url "https://github.com/minad/vertico"
+  :added "2023-12-10"
+  :emacs>= 27.1
   :ensure t
-  :bind (("M-n" . flycheck-next-error)
-         ("M-p" . flycheck-previous-error))
-  :global-minor-mode global-flycheck-mode)
+  :after compat
+  :global-minor-mode vertico-mode
+  :custom
+  (vertico-cycle . t)
+  (vertico-count . 18))
 
-
-(leaf dumb-jump
-  :doc "jump to definition for multiple languages without configuration."
-  :url "https://github.com/jacktasia/dumb-jump"
+(leaf vertico-posframe
+  :doc "Using posframe to show Vertico"
+  :req "emacs-26.0" "posframe-1.4.0" "vertico-1.1"
+  :tag "vertico" "matching" "convenience" "abbrev" "emacs>=26.0"
+  :url "https://github.com/tumashu/vertico-posframe"
+  :added "2023-12-10"
+  :emacs>= 26.0
   :ensure t
-  :bind (([(super d)]       . dumb-jump-go)
-         ([(super shift d)] . dumb-jump-back))
-  :require t
-  :setq ((dumb-jump-mode . t)
-         (dumb-jump-selector quote ivy)
-         (dumb-jump-use-visible-window)))
+  :after posframe vertico
+  :global-minor-mode vertico-posframe-mode
+  :custom
+  (vertico-posframe-border-width . 5)
+  (vertico-posframe-parameters
+   . '((left-fringe . 8)
+       (right-fringe . 8)))
+  :custom-face
+  (vertico-posframe-border . '((t (:background "#323445")))))
 
-
-(leaf migemo
-  :doc "Japanese increment search with 'Romanization of Japanese'(ローマ字)."
-  :url "https://github.com/emacs-jp/migemo"
-  :when (executable-find "cmigemo")
+(leaf consult
+  :doc "Consulting completing-read"
+  :req "emacs-27.1" "compat-29.1.4.1"
+  :tag "completion" "files" "matching" "emacs>=27.1"
+  :url "https://github.com/minad/consult"
+  :added "2023-12-10"
+  :emacs>= 27.1
   :ensure t
-  :custom ((migemo-command . "cmigemo")
-           (migemo-user-dictionary)
-           (migemo-regex-dictionary)
-           (migemo-use-pattern-alist . t)
-           (migemo-use-frequent-pattern-alist . t)
-           (migemo-pattern-alist-length . 1000)
-           (migemo-coding-system quote utf-8-unix))
-  :config
-  (cond
-   ((eq system-type 'darwin)
-    (setq migemo-options '("-q" "--emacs"))
-    (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict"))
-   ((eq system-type 'gnu/linux)
-    (setq migemo-options '("-q" "--emacs" "-i" ""))
-    (setq migemo-dictionary "/usr/share/migemo/migemo-dict")))
-  (migemo-init))
+  :after compat
+  :bind
+  ("M-y"   . consult-yank-pop)
+  ("C-M-s" . consult-line)
+  :custom (consult-async-min-input . 1))
 
-
-;; Programming languages
-(leaf python
-  :doc "mejor mode for Python"
-  :mode "\\.py\\'"
-  :interpreter "python")
-
-(leaf auto-virtualenv
+(leaf consult-flycheck
+  :doc "Provides the command `consult-flycheck'"
+  :req "emacs-27.1" "consult-1.0" "flycheck-32"
+  :tag "completion" "tools" "languages" "emacs>=27.1"
+  :url "https://github.com/minad/consult"
+  :added "2023-12-10"
+  :emacs>= 27.1
   :ensure t
-  :hook (python-mode-hook . auto-virtualenv-set-virtualenv))
+  :after consult flycheck)
 
-
-;; Javascript/Typescript
-(leaf js2-mode
-  :doc ""
-  :url ""
+(leaf affe
+  :doc "Asynchronous Fuzzy Finder for Emacs"
+  :req "emacs-27.1" "consult-1.0"
+  :tag "completion" "files" "matching" "emacs>=27.1"
+  :url "https://github.com/minad/affe"
+  :added "2023-12-10"
+  :emacs>= 27.1
   :ensure t
-  :mode ("\\.js\\(_t\\)\\'")
-  :require t)
+  :after consult)
 
-(leaf rjsx-mode
-  :doc ""
-  :url ""
+(leaf marginalia
+  :doc "Enrich existing commands with completion annotations"
+  :req "emacs-27.1" "compat-29.1.4.0"
+  :tag "completion" "matching" "help" "docs" "emacs>=27.1"
+  :url "https://github.com/minad/marginalia"
+  :added "2023-12-10"
+  :emacs>= 27.1
   :ensure t
-  :mode ("\\.jsx\\'")
-  :require t)
+  :after compat
+  :global-minor-mode marginalia-mode
+  :custom-face
+  (marginalia-documentaion . '((t (:foreground "#6272a4")))))
 
-(leaf typescript-mode
-  :doc ""
-  :url ""
-  :ensure t
-  :mode ("\\.ts\\'")
-  :require t)
-
-
-;; Perl
-(defalias 'perl-mode 'cperl-mode)
-(setq auto-mode-alist
-      (cons '("\\.t$" . cperl-mode) auto-mode-alist))
-(custom-set-variables '(cperl-indent-level 4)
-                      '(cperl-continuted-statement-offset 4)
-                      '(cperl-close-paren-offset -4)
-                      '(cperl-level-offset -4)
-                      '(cperl-comment-column 40)
-                      '(cperl-highlight-variables-indiscriminaly t)
-                      '(cperl-indent-parens-as-block t)
-                      '(cperl-tab-always-indent nil)
-                      '(cperl-font-lock t))
-(add-hook 'cperl-mode-hook
-          '(lambda ()
-             (progn
-               (setq indent-tabs-mode nil)
-               (setq tab-width nil)
-               (cperl-set-style "PerlStyle")
-
-               ;; perl completion
-               (use-package auto-completion)
-               (use-package perl-completion)
-               (add-to-list 'ac-source 'ac-source-perl-completion)
-               (perl-completion-mode t))))
-
-;;;;; perltidy
-(defmacro mark-active ()
-  "XEmacs/Emacs compatibility macro."
-  (if (boundp 'mark-active)
-      'mark-active
-    '(mark)))
-
-(defun perltidy ()
-  "Run perltidy on the current region or buffer."
-  (interactive)
-  ;; Inexplicably. save-excursion doesn't work here.
-  (let ((orig-point (point)))
-    (unless (mark-active) (mark-defun))
-    (shell-command-on-region (point) (mark) "perltidy -q" nil t)
-    (goto-char orig-point)))
-
-(global-set-key (kbd "C-c t") 'perltidy)
-
-(defvar perltidy-mode nil
-  "Automatically 'perltidy' when saving.")
-(make-variable-buffer-local 'perltidy-mode)
-(defun perltidy-write-hook ()
-  "Perltidy a buffer during 'write-file-hooks' for 'perltidy-mode'."
-  (if perltidy-mode
-      (save-excursion
-        (widen)
-        (mark-whole-buffer)
-        (not (perltidy)))
-    nil))
-(defun perltidy-mode (&optional arg)
-  "Perltidy minor mode with ARG."
-  (interactive "P")
-  (setq perltidy-mode
-        (if (null arg)
-            (not perltidy-mode)
-          (> (prefix-numeric-value-arg) 0)))
-  (mark-local-hook 'write-file-hooks)
-  (if perltidy-mode
-      (add-hook 'write-file-hooks 'perltidy-write-hook)
-    (remove-hook 'write-file-hooks 'perltidy-write-hook)))
-(if (not (assq 'perltidy-mode minor-mode-alist))
-    (setq minor-mode-alist
-          (cons '(perltidy-mode " Perltidy")
-                minor-mode-alist)))
-(eval-after-load "cperl-mode"
-  '(add-hook 'cperl-mode-hook 'perltidy-mode))
-
-
-;; EmacsLisp
-(defun lisp-mode-hooks ()
-  "'lisp-mode-hooks'."
-  (leaf eldoc
-    :ensure t
-    :require t
-    :setq ((eldoc-idle-delay . 0.2)
-           (eldoc-echo-area-use-multiline-p . t))
-    :config
-    (turn-on-eldoc-mode)))
-
-(add-hook 'emacs-lisp-mode-hook 'lisp-mode-hooks)
-(add-hook 'lisp-interaction-mode-hook 'lisp-mode-hooks)
-(add-hook 'ielm-mode-hook 'lisp-mode-hooks)
-
-
-;; Common Lisp
-;; Setup load-path, autoloads and your Lisp system.
-;; (add-to-list 'load-path "~/.emacs.d/elisp/slime")
-;; (use-package slime-autoloads
-;;   :config
-;;   (setq inferior-lisp-program "sbcl")
-;;   (setq slime-net-coding-system 'utf-8-unix)
-;;   (slime-setup '(slime-repl slime-fancy slime-banner slime-indentation slime-company))
-;;   )
-
-
-;; HTML templates
-(leaf web-mode
-  :doc "emacs major mode for editing web templates"
-  :url "https://github.com/fxbois/web-mode"
+(leaf orderless
+  :doc "Completion style for matching regexps in any order"
+  :req "emacs-26.1"
+  :tag "extensions" "emacs>=26.1"
+  :url "https://github.com/oantolin/orderless"
+  :added "2023-12-10"
+  :emacs>= 26.1
   :ensure t
   :preface
-  (defun web-mode-hook nil
-    "Hooks for Web mode."
-    (setq web-mode-markup-indent-offset 2)
-    (setq web-mode-css-indent-offset 2)
-    (setq web-mode-code-indent-offset 4))
+  (defun flex-if-apostrophe (pattern _index _total)
+    (when (string-suffix-p "'" pattern)
+      `(orderless-flex . ,(substring pattern 0 -1))))
+  (defun without-if-bang (pattern _index _total)
+    (cond
+     ((equal "!" pattern)
+      '(orderless-literal . ""))
+     ((string-prefix-p "!" pattern)
+      `(orderless-without-literal . ,(substring pattern 1)))))
+  :custom
+  (completion-styles           . '(orderless))
+  (orderless-style-dispatchers . '(flex-if-apostrophe
+                                   without-if-bang)))
 
-  :mode ("\\.phtml$" "\\.tpl\\.php$" "\\.jsp$" "\\.as[cp]x$" "\\.erb$" "\\.html?$" "\\.tsx$")
-  :hook ((web-mode-hook . web-mode-hook))
-  :require t
-  :config
-  (when (< emacs-major-version 24)
-    (defalias 'prog-mode 'fundamental-mode)))
-
-
-;; Text formats
-(leaf markdown-mode
-  :doc "emacs major mode for editing Markdown-formatted text"
-  :url "https://github.com/jrblevin/markdown-mode"
+(leaf embark
+  :doc "Conveniently act on minibuffer completions"
+  :req "emacs-27.1" "compat-29.1.4.0"
+  :tag "convenience" "emacs>=27.1"
+  :url "https://github.com/oantolin/embark"
+  :added "2023-12-10"
+  :emacs>= 27.1
   :ensure t
-  :mode (("README\\.md\\'" . gfm-mode)
-         "\\.md\\'" "\\.markdown\\'")
-  :setq ((markdown-command . "multimarkdown")))
+  :after compat
+  :bind*
+  ("M-a" . embark-act)
+  :custom
+  (prefix-help-command . #'embark-prefix-help-command)
+  :config
+  (setq embark-action-indicator
+        (lambda (map _target)
+          (which-key--show-keymap "Embark" map nil nil 'no-paging)
+          #'which-key--hide-popup-ignore-command)
+        embark-become-indicator embark-action-indicator))
 
 
-(leaf rst
-  :doc "Emacs support for editing reStructuredText text document."
-  :url "https://docutils.sourceforge.io/docs/user/emacs.html"
-  :mode ("\\.re?st\\$"))
+;; --------------------------------------------------------------------------------
+;;
+;; Global Bindings
+;;
+;; --------------------------------------------------------------------------------
 
 
-(leaf yaml
-  :doc "Simple major mode to edit YAML file for emacs"
-  :url "https://github.com/yoshiki/yaml-mode"
-  :emacs>= 24
-  :mode ("\\.yam?l$"))
 
+;;; Behaviors
+;; remove trailing whitespace on save
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(leaf po-mode
-  :doc ""
-  :url ""
-  :mode ("\\.po//'" "\\.po\\.")
-  :emacs>= 22)
+;; ;; Key bindings
+;; (bind-key "C-x C-h" 'help global-map)
+;; (bind-key "C-h" 'describe-bindings global-map)
 
+;; put here
 
 (provide 'init)
 
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages '(blackout el-get hydra leaf-keywords leaf)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
 ;; Local Variables:
-;; no-byte-compile: t
+;; indent-tabs-mode: nil
 ;; End:
 
 ;;; init.el ends here
