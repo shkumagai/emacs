@@ -151,8 +151,19 @@
     :config
 
     (leaf *背景を透過する-----------------------------------------------------
+      :doc "背景が少し透けてるくらいの方がカッコいい"
       :config
       (set-frame-parameter (selected-frame) 'alpha '(90 . 75)))
+
+    (leaf *スクロールバー非表示-----------------------------------------------
+      :doc "邪魔なので消す"
+      :config
+      (scroll-bar-mode 0))
+
+    (leaf *タブバー使うよ-----------------------------------------------------
+      :doc "Tabバーを使ってみる。とりあえず表示できるだけ"
+      :config
+      (tab-bar-mode 1))
 
     (leaf *絵文字のサイズを設定-----------------------------------------------
       :doc "Noto Emoji（モノクロ版）を使用。サイズ調整が効くので幅・高さが崩れにくい"
@@ -190,15 +201,21 @@
   (leaf *一般表示系設定=======================================================
     :config
 
-    ;; (leaf *カラーテーマ設定---------------------------------------------------
-    ;;   :doc "カラーテーマを設定する"
-    ;;   :url "https://conao3.com/blog/2020-13fc-43ec/"
-    ;;   :config
-    ;;   (leaf modus-themes
-    ;;     :config
-    ;;     (require-theme 'modus-themes)
-    ;;     (load-theme 'modus-vivendi))
-    ;;   )
+    (leaf *カラーテーマ設定---------------------------------------------------
+      :doc "カラーテーマを設定する"
+      :url "https://conao3.com/blog/2020-13fc-43ec/"
+      :config
+      (leaf solarized-theme
+        :url "https://github.com/bbatsov/solarized-emacs"
+        :ensure t
+        :require t
+        :custom
+        ;; テーマファイルをetc/themes/に保存
+        (solarized-theme-dir . "~/.config/emacs/etc/themes/")
+        :config
+        (load-theme 'solarized-dark t)
+        )
+      )
 
     (leaf *カラーコードに色を付ける-------------------------------------------
       :config
@@ -218,7 +235,7 @@
           :doc "Fallback"
           :unless (member "Symbolx Nerd Font Mono" (font-family-list))
           :custom (nerd-icons-font-family . "NotoSansM Nerd Font Mono")
-	  )
+          )
         ))
 
     (leaf *括弧の表示をわかりやすくする---------------------------------------
@@ -597,10 +614,6 @@
         :ensure t
         :custom
         (treemacs-no-png-images . t)
-        ;; :init
-        ;; ;; GUIのみテキストサイズを小さく
-        ;; (when (display-graphic-p)
-        ;;   (setq treemacs-text-scale -1))
         :config
         (treemacs-follow-mode t)                   ; 追従させる
         (treemacs-project-follow-mode t)           ; projectileと連動
@@ -609,6 +622,8 @@
         (treemacs-hide-gitignored-files-mode nil)  ; git ignore指定されていても表示
         :hook
         (treemacs-mode-hook . (lambda () (display-line-numbers-mode 0)))
+        :bind (("s-b" . treemacs)                                 ; Cmd+b で表示トグル
+               ([mouse-1] . treemacs-single-click-expand-action)) ; シングルクリックでファイルオープン
         )
       (leaf treemacs-nerd-icons
         :url "https://github.com/rainstormstudio/treemacs-nerd-icons"
