@@ -161,9 +161,24 @@
       (scroll-bar-mode 0))
 
     (leaf *タブバー使うよ-----------------------------------------------------
-      :doc "Tabバーを使ってみる。とりあえず表示できるだけ"
+      :doc "Tabバーを使ってみる。centaur-tabs で小洒落たタブを目指す"
       :config
-      (tab-bar-mode 1))
+      (leaf centaur-tabs
+        :url "https://github.com/ema2159/centaur-tabs"
+        :ensure t
+        :after projectile
+        :config
+        (setq centaur-tabs-style "bar"
+              centaur-tabs-height 32
+              centaur-tabs-set-icons t
+              centaur-tabs-icon-type 'nerd-icons
+              centaur-tabs-set-modified-marker t
+              centaur-tabs-show-count nil
+              centaur-tabs-set-bar 'under
+              x-underline-at-descent-line t)
+        (centaur-tabs-mode t)
+        )
+      )
 
     (leaf *絵文字のサイズを設定-----------------------------------------------
       :doc "Noto Emoji（モノクロ版）を使用。サイズ調整が効くので幅・高さが崩れにくい"
@@ -205,16 +220,23 @@
       :doc "カラーテーマを設定する"
       :url "https://conao3.com/blog/2020-13fc-43ec/"
       :config
-      (leaf solarized-theme
-        :url "https://github.com/bbatsov/solarized-emacs"
+      (leaf doom-themes
+        :url "https://github.com/doomemacs/themes"
         :ensure t
         :require t
-        :custom
-        ;; テーマファイルをetc/themes/に保存
-        (solarized-theme-dir . "~/.config/emacs/etc/themes/")
         :config
-        (load-theme 'solarized-dark t)
+        (load-theme 'doom-dark+ t)
         )
+      ;; (leaf solarized-theme
+      ;;   :url "https://github.com/bbatsov/solarized-emacs"
+      ;;   :ensure t
+      ;;   :require t
+      ;;   :custom
+      ;;   ;; テーマファイルをetc/themes/に保存
+      ;;   (solarized-theme-dir . "~/.config/emacs/etc/themes/")
+      ;;   :config
+      ;;   (load-theme 'solarized-dark t)
+      ;;   )
       )
 
     (leaf *カラーコードに色を付ける-------------------------------------------
