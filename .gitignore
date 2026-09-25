@@ -1,6 +1,7 @@
 *.elc
 *.orig
 Makefile
+eln-cache/*
 elpa/*
 elisp/*
 
@@ -13,5 +14,6 @@ transient/
 tree-sitter/
 undohist/
 url/
+var/eln-cache/*
 var/elpa/*
 var/etc/*
