@@ -170,7 +170,7 @@
       :config
       ;; 絵文字範囲にNoto Emojiを設定（フォールバックとしてApple Color Emoji/Segoe UI Emoji）
       (let ((emoji-font (cond
-                         ((member "Noto Emoji" (font-family-list)) "Noto Emoji")
+                         ((member "NotoSansM Nerd Mono" (font-family-list)) "NotoSansM Nerd Mono")
                          ((eq system-type 'darwin) "Apple Color Emoji")
                          ((eq system-type 'windows-nt) "Segoe UI Emoji")
                          (t nil))))
@@ -205,15 +205,22 @@
       :doc "カラーテーマを設定する"
       :url "https://conao3.com/blog/2020-13fc-43ec/"
       :config
-      (leaf solarized-theme
-        :url "https://github.com/bbatsov/solarized-emacs"
+      ;; (leaf solarized-theme
+      ;;   :url "https://github.com/bbatsov/solarized-emacs"
+      ;;   :ensure t
+      ;;   :require t
+      ;;   :custom
+      ;;   ;; テーマファイルをetc/themes/に保存
+      ;;   (solarized-theme-dir . "~/.config/emacs/etc/themes/")
+      ;;   :config
+      ;;   (load-theme 'solarized-dark t)
+      ;;   )
+      (leaf base16-theme
+        :url "https://github.com/tinted-theming/base16-emacs"
         :ensure t
         :require t
-        :custom
-        ;; テーマファイルをetc/themes/に保存
-        (solarized-theme-dir . "~/.config/emacs/etc/themes/")
         :config
-        (load-theme 'solarized-dark t)
+        (load-theme 'base16-everforest-dark-medium t)
         )
       )
 
@@ -233,7 +240,7 @@
         :config
         (leaf *SymbolsNerdFontMonoが入っていなければNotoSansMNerdFontMonoを使う*
           :doc "Fallback"
-          :unless (member "Symbolx Nerd Font Mono" (font-family-list))
+          :unless (member "Symbols Nerd Font Mono" (font-family-list))
           :custom (nerd-icons-font-family . "NotoSansM Nerd Font Mono")
           )
         ))
@@ -368,28 +375,28 @@
       :config
       (leaf vundo
         :url "https://github.com/casouri/vundo"
-        :doc " 操作方法:                                                                      "
-        :doc "                                                                                "
-        :doc " f   : 前の状態に進む                                                           "
-        :doc " b   : 前の状態に戻る                                                           "
-        :doc "                                                                                "
-        :doc " n   : 分岐点で下のノードに移動                                                 "
-        :doc " p   : 上のノードに移動                                                         "
-        :doc "                                                                                "
-        :doc " a   : 前の分岐点に戻る                                                         "
-        :doc " w   : 次の分岐点に進む                                                         "
-        :doc " e   : 現在のブランチの末端（最後のノード）に進む                               "
-        :doc " l   : 最後に保存されたノードに移動                                             "
-        :doc " r   : 次に保存されたノードに移動                                               "
-        :doc "                                                                                "
-        :doc " m   : 現在のノードを差分表示用にマークする                                     "
-        :doc " u   : マークされたノードのマークを解除                                         "
+        :doc " 操作方法:                                                             "
+        :doc "                                                                      "
+        :doc " f   : 前の状態に進む                                                   "
+        :doc " b   : 前の状態に戻る                                                   "
+        :doc "                                                                      "
+        :doc " n   : 分岐点で下のノードに移動                                           "
+        :doc " p   : 上のノードに移動                                                 "
+        :doc "                                                                      "
+        :doc " a   : 前の分岐点に戻る                                                 "
+        :doc " w   : 次の分岐点に進む                                                 "
+        :doc " e   : 現在のブランチの末端（最後のノード）に進む                           "
+        :doc " l   : 最後に保存されたノードに移動                                       "
+        :doc " r   : 次に保存されたノードに移動                                         "
+        :doc "                                                                      "
+        :doc " m   : 現在のノードを差分表示用にマークする                                "
+        :doc " u   : マークされたノードのマークを解除                                    "
         :doc " d   : マークされたノード（または親ノード）と現在のノードの間で差分を表示する   "
-        :doc "                                                                                "
-        :doc " q   : 終了する（または C-g で終了）                                            "
-        :doc "                                                                                "
-        :doc " C-c C-s（または save-buffer に割り当てられたショートカットキー）:              "
-        :doc "       現在の undo 状態でバッファを保存する                                     "
+        :doc "                                                                      "
+        :doc " q   : 終了する（または C-g で終了）                                      "
+        :doc "                                                                       "
+        :doc " C-c C-s（または save-buffer に割り当てられたショートカットキー）:           "
+        :doc "       現在の undo 状態でバッファを保存する                                "
         :ensure t
         :custom
         ((vundo-compact-display . t))) ; ツリーをコンパクトに表示
