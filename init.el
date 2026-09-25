@@ -31,26 +31,32 @@
       :when (eq system-type 'darwin)
       :custom
       (setq file-name-coding-system 'utf-8-hfs)
-      (setq locale-coding-system 'utf-8-hfs))
+      (setq locale-coding-system 'utf-8-hfs)
+      )
 
     (leaf *ビープ音を無効にする-----------------------------------------------
       :doc "ビープ音&画像の表示を無効にする"
-      :custom (ring-bell-function . 'ignore))
+      :custom (ring-bell-function . 'ignore)
+      )
 
     (leaf *yes-or-noをy-or-nに変更--------------------------------------------
-      :custom (use-short-answers . t))
+      :custom (use-short-answers . t)
+      )
 
     (leaf *C-x C-c誤操作防止--------------------------------------------------
       :doc "C-x C-cでEmacs終了する前に確認を求める"
-      :custom (confirm-kill-emacs . 'yes-or-no-p))
+      :custom (confirm-kill-emacs . 'yes-or-no-p)
+      )
 
     (leaf *拡張子の大文字小文字を無視-----------------------------------------
       :doc "auto-mode-alistのマッチングで.PDFと.pdfを同一視する"
-      :custom (auto-mode-case-fold . t))
+      :custom (auto-mode-case-fold . t)
+      )
 
     (leaf *バッファ境界の表示-------------------------------------------------
       :doc "fringeにバッファの先頭・末尾を矢印で表示"
-      :custom (indicate-buffer-boundaries . 'left))
+      :custom (indicate-buffer-boundaries . 'left)
+      )
 
     (leaf *バックアップファイルをよしなに設定---------------------------------
       :doc "http://yohshiy.blog.fc2.com/blog-entry-319.html"
@@ -66,7 +72,8 @@
       ;; 自動保存ファイル設定
       (auto-save-default . t)
       ;; ロックファイル設定
-      (create-lockfile . nil))
+      (create-lockfile . nil)
+      )
 
     (leaf *自動でできるファイルを散らかさない---------------------------------
       :doc "自動で作られる設定ファイルやキャッシュをまとめておく"
@@ -83,23 +90,29 @@
         (setq auto-save-list-file-prefix (no-littering-expand-var-file-name "auto-save-list/.saves-"))
         ;; カスタムテーマディレクトリを etc/ 配下に配置
         (setq custom-theme-directory (no-littering-expand-etc-file-name "themes/"))
-        (make-directory custom-theme-directory t)))
+        (make-directory custom-theme-directory t)
+        )
+      )
 
     (leaf *ファイルをデフォルトでは読み取り専用で開く-------------------------
       :doc "view-modeで開く。編集したい場合は e または C-x C-q で切り替え"
       :doc "q でバッファを閉じる"
-      :hook (find-file-hook . view-mode))
+      :hook (find-file-hook . view-mode)
+      )
 
     (leaf *自動revert設定-----------------------------------------------------
       :doc "他でファイル編集があった際の再読み込み"
       :custom (auto-revert-interval . 1)
-      :global-minor-mode global-auto-revert-mode)
+      :global-minor-mode global-auto-revert-mode
+      )
 
     (leaf *ファイル削除をゴミ箱移動に-----------------------------------------
-      :custom (delete-by-moving-to-trash . t))
+      :custom (delete-by-moving-to-trash . t)
+      )
 
     (leaf *カレントディレクトリの変更-----------------------------------------
-      :config (cd "~/"))
+      :config (cd "~/")
+      )
 
     (leaf *MacでGUI起動時に環境変数を読んでくれない問題-----------------------
       :doc "MacでGUIな時に環境変数読むよ"
@@ -107,18 +120,20 @@
       :when (eq system-type 'darwin)
       :config
       (leaf exec-path-from-shell
-      :ensure t
-      :defun (exec-path-from-shell-initialize)
-      :custom
-      ((exec-path-from-shell-check-startup-files . nil)
-       (exec-path-from-shell-arguments . nil)
-       (exec-path-from-shell-variables
-       . '(
-           "PATH"
-           "SHELL"
-           )))
-      :config
-      (exec-path-from-shell-initialize)))
+        :ensure t
+        :defun (exec-path-from-shell-initialize)
+        :custom
+        ((exec-path-from-shell-check-startup-files . nil)
+         (exec-path-from-shell-arguments . nil)
+         (exec-path-from-shell-variables
+          . '(
+              "PATH"
+              "SHELL"
+              )))
+        :config
+        (exec-path-from-shell-initialize)
+        )
+      )
 
     ) ; end of 一般設定
 
@@ -153,24 +168,27 @@
     (leaf *背景を透過する-----------------------------------------------------
       :doc "背景が少し透けてるくらいの方がカッコいい"
       :config
-      (set-frame-parameter (selected-frame) 'alpha '(90 . 75)))
+      (set-frame-parameter (selected-frame) 'alpha '(90 . 75))
+      )
 
     (leaf *スクロールバー非表示-----------------------------------------------
       :doc "邪魔なので消す"
       :config
-      (scroll-bar-mode 0))
+      (scroll-bar-mode 0)
+      )
 
     (leaf *タブバー使うよ-----------------------------------------------------
       :doc "Tabバーを使ってみる。とりあえず表示できるだけ"
       :config
-      (tab-bar-mode 1))
+      (tab-bar-mode 1)
+      )
 
     (leaf *絵文字のサイズを設定-----------------------------------------------
       :doc "Noto Emoji（モノクロ版）を使用。サイズ調整が効くので幅・高さが崩れにくい"
       :config
       ;; 絵文字範囲にNoto Emojiを設定（フォールバックとしてApple Color Emoji/Segoe UI Emoji）
       (let ((emoji-font (cond
-                         ((member "NotoSansM Nerd Mono" (font-family-list)) "NotoSansM Nerd Mono")
+                         ((member "Noto Emoji" (font-family-list)) "Noto Emoji")
                          ((eq system-type 'darwin) "Apple Color Emoji")
                          ((eq system-type 'windows-nt) "Segoe UI Emoji")
                          (t nil))))
@@ -189,12 +207,15 @@
                             (font-spec :family emoji-font :size 11) nil 'prepend)
           ;; Miscellaneous Symbols and Pictographs
           (set-fontset-font t '(#x1F300 . #x1F5FF)
-                            (font-spec :family emoji-font :size 11) nil 'prepend))))
+                            (font-spec :family emoji-font :size 11) nil 'prepend))
+        )
+      )
 
     (leaf *カーソルを好みの形に-----------------------------------------------
       :url "https://qiita.com/tadsan/items/f23d6db8efc0fcdcd225"
       :doc "↑の説明が分かりやすい"
-      :config (add-to-list 'default-frame-alist '(cursor-type . bar)))
+      :config (add-to-list 'default-frame-alist '(cursor-type . bar))
+      )
 
     ) ; end of GUI表示設定
 
@@ -213,8 +234,7 @@
       ;;   ;; テーマファイルをetc/themes/に保存
       ;;   (solarized-theme-dir . "~/.config/emacs/etc/themes/")
       ;;   :config
-      ;;   (load-theme 'solarized-dark t)
-      ;;   )
+      ;;   (load-theme 'solarized-dark t))
       (leaf base16-theme
         :url "https://github.com/tinted-theming/base16-emacs"
         :ensure t
@@ -230,7 +250,9 @@
         :url "https://github.com/DevelopmentCool2449/colorful-mode"
         :ensure t
         :custom ((colorful-use-prefix . t)
-                 (colorful-prefix-string . "🎨 "))))
+                 (colorful-prefix-string . "🎨 "))
+        )
+      )
 
     (leaf *Nerd Fontsアイコンを利用する---------------------------------------
       :config
@@ -243,7 +265,8 @@
           :unless (member "Symbols Nerd Font Mono" (font-family-list))
           :custom (nerd-icons-font-family . "NotoSansM Nerd Font Mono")
           )
-        ))
+        )
+      )
 
     (leaf *括弧の表示をわかりやすくする---------------------------------------
       :doc "括弧の対応を異なる色付けで表示する"
@@ -251,7 +274,9 @@
       (leaf rainbow-delimiters
         :url "https://github.com/Fanael/rainbow-delimiters"
         :ensure t
-        :hook (prog-mode-hook . rainbow-delimiters-mode)))
+        :hook (prog-mode-hook . rainbow-delimiters-mode)
+        )
+      )
 
     (leaf *インデントを色付けする-------------------------------------------
       :doc "インデントをハイライト表示する"
@@ -267,7 +292,8 @@
         :config
         (with-eval-after-load 'highlight-indent-guides
           (if (fboundp 'diminish)
-              (diminish 'highlight-indent-guides-mode)))) ; column
+              (diminish 'highlight-indent-guides-mode))) ; column
+        )
       )
 
     (leaf *カーソルを見失わない-----------------------------------------------
@@ -281,7 +307,9 @@
                  (beacon-blink-delay . 0.5)
                  (beacon-blink-dulation . 0.5))
         :config
-        (beacon-mode 1)))
+        (beacon-mode 1)
+        )
+      )
 
     (leaf *tree-sitter使うよ--------------------------------------------------
       :config
@@ -313,7 +341,8 @@
                 (unless (treesit-language-available-p lang nil)
                   (treesit-install-language-grammar lang)))
               (mapcar #'car treesit-language-source-alist))
-        ))
+        )
+      )
 
     ) ; end if 一般表示系設定
 
@@ -339,7 +368,8 @@
         (doom-modeline-indent-info . t)         ;; 現在のインデント情報を表示するかどうか
         (doom-modeline-total-line-number . t)   ;; 総行数を表示する（例: L:100/250）
         (doom-modeline-position-column-line-format . '("C:%c L:%l")) ;; 列番号&行番号の表示フォーマット（総行数は行の後ろに追加される）
-        ))
+        )
+      )
 
     (leaf *ニャンするぞ-------------------------------------------------------
       :config
@@ -348,7 +378,9 @@
         :ensure t
         :init (nyan-mode t)
         :custom ((nyan-animate-nyancat . t)
-                 (nyan-cat-face-number . 3))))
+                 (nyan-cat-face-number . 3))
+        )
+      )
 
     ) ; end of モードライン設定
 
@@ -365,10 +397,12 @@
       )
 
     (leaf *リージョン選択中に入力すると、選択範囲を消して入力-----------------
-      :global-minor-mode delete-selection-mode)
+      :global-minor-mode delete-selection-mode
+      )
 
     (leaf *以前開いたファイルを再度開いた時に元のカーソル位置を復元-----------
-      :global-minor-mode save-place-mode)
+      :global-minor-mode save-place-mode
+      )
 
     (leaf *undoやredoを便利に-------------------------------------------------
       :doc "vundoを利用"
@@ -399,7 +433,8 @@
         :doc "       現在の undo 状態でバッファを保存する                                "
         :ensure t
         :custom
-        ((vundo-compact-display . t))) ; ツリーをコンパクトに表示
+        ((vundo-compact-display . t)) ; ツリーをコンパクトに表示
+        )
       )
 
     (leaf *操作にハイライトを-------------------------------------------------
@@ -409,7 +444,8 @@
         :url "https://github.com/k-talo/volatile-highlights.el"
         :ensure t
         :config
-        (volatile-highlights-mode t))
+        (volatile-highlights-mode t)
+        )
       )
 
     (leaf *括弧やS式の構造化編集----------------------------------------------
@@ -437,7 +473,8 @@
         :doc "M-(       : puni-syntactic-forward-punct  (次の括弧へ)"
         :doc "M-)       : puni-syntactic-backward-punct (前の括弧へ)"
         :ensure t
-        :global-minor-mode puni-global-mode)
+        :global-minor-mode puni-global-mode
+        )
       )
 
     ) ; end of ファイル編集設定
@@ -470,9 +507,10 @@
           "C-; o C" "Org Clock"
           "C-; p"   "Puni"
           "C-; P"   "Project"
-          "C-; s"   "Search/Navication"
+          "C-; s"   "Search/Navigation"
           "C-; w"   "Window"
-          "C-; w r" "Window resize"))
+          "C-; w r" "Window resize")
+        )
       )
 
     (leaf *最近つかったファイル-----------------------------------------------
@@ -490,7 +528,8 @@
            "*.png"
            "*.jpeg"
            ".org_archive"
-           "/COMMIT_EDITMSG\\'")))
+           "/COMMIT_EDITMSG\\'"))
+      )
 
     (leaf *diredでバッファが増殖しないように----------------------------------
       :doc "ディレクトリ移動時に新しいバッファを作らず、既存のバッファを再利用する"
@@ -498,7 +537,9 @@
       :config
       (leaf dired
         :custom
-        (dired-kill-when-opening-new-dired-buffer . t)))
+        (dired-kill-when-opening-new-dired-buffer . t)
+        )
+      )
 
     (leaf *ミニバッファで補完UI-----------------------------------------------
       :doc "Emacs28から標準添付されるfido-vertical-modeがあったりする"
@@ -530,7 +571,8 @@
         :hook
         (after-init-hook . vertico-mode)
         (after-init-hook . savehist-mode) ; 順番を保存
-        ))
+        )
+      )
 
     (leaf *色々な局面で便利な補完を実行---------------------------------------
       :doc "consult.elをちゃんと設定していく"
@@ -546,19 +588,21 @@
                ("C-x p b" . consult-project-buffer)      ; プロジェクト内バッファ切替
                ("C-x r b" . consult-bookmark)            ; bookmark-jump → ブックマーク
                ([remap yank-pop] . consult-yank-pop)     ; M-y kill-ringをプレビュー選択
-               ([remap goto-line] . consult-goto-line))) ; M-g g: 行番号プレビュー
+               ([remap goto-line] . consult-goto-line))  ; M-g g: 行番号プレビュー
+        )
       (leaf consult-keybinds
         :bind (;; ナビゲーション
-               ("C-; s i" . consult-imenu)                 ; 関数・見出し等へジャンプ
-               ("C-; s o" . consult-outline)               ; アウトラインへジャンプ
-               ("C-; s m" . consult-mark)                  ; マーク履歴へジャンプ
-               ("C-; s k" . consult-global-mark)           ; グローバルマーク履歴へジャンプ
+               ("C-; s i" . consult-imenu)                ; 関数・見出し等へジャンプ
+               ("C-; s o" . consult-outline)              ; アウトラインへジャンプ
+               ("C-; s m" . consult-mark)                 ; マーク履歴へジャンプ
+               ("C-; s k" . consult-global-mark)          ; グローバルマーク履歴へジャンプ
                ;; 検索
-               ("C-; s g" . consult-ripgrep)               ; rgでファイル内容検索
-               ("C-; s d" . consult-fd)                    ; fdでファイル名検索
+               ("C-; s g" . consult-ripgrep)              ; rgでファイル内容検索
+               ("C-; s d" . consult-fd)                   ; fdでファイル名検索
                ;; カスタム
-               ("C-; s f" . consult-flymake)               ; flymakeエラーを一覧
-               ("C-; s y" . consult-yank-from-kill-ring))) ; kill-ringから選んでyank
+               ("C-; s f" . consult-flymake)              ; flymakeエラーを一覧
+               ("C-; s y" . consult-yank-from-kill-ring)) ; kill-ringから選んでyank
+        )
       )
 
     (leaf *補完パネルに追加情報を表示-----------------------------------------
@@ -568,7 +612,8 @@
         :url "https://github.com/minad/marginalia"
         :ensure t
         :custom (marginalia-align . 'right)
-        :hook (after-init-hook . marginalia-mode))
+        :hook (after-init-hook . marginalia-mode)
+        )
       ;; nerdアイコンを付与
       (leaf nerd-icons-completion
         :url "https://github.com/rainstormstudio/nerd-icons-completion"
@@ -592,7 +637,9 @@
         `((completion-stypes . '(orderless))
           (completion-ignore-case . t)
           (orderless-matching-styles
-           . '(orderless-literal)))))
+           . '(orderless-literal)))
+        )
+      )
 
     (leaf *特定ディレクトリ配下をプロジェクトとして扱う-----------------------
       :doc "treemacs君と組み合わせると、tree表示をいい感じにしてくれて便利"
@@ -602,7 +649,8 @@
       (leaf ripgrep
         :doc "projectile-ripgrepの依存パッケージ"
         :url "https://github.com/nlamirault/ripgrep.el"
-        :ensure t)
+        :ensure t
+        )
       (leaf projectile
         :url "https://github.com/bbatsov/projectile"
         :ensure t
@@ -611,7 +659,9 @@
         (projectile-switch-project-action . #'projectile-dired)
         :hook
         (after-init-hook . (lambda ()
-                             (projectile-mode t)))))
+                             (projectile-mode t)))
+        )
+      )
 
     (leaf *ツリービュー設定---------------------------------------------------
       :doc "Neotreeとかもあるけど、他のプラグインと統合しやすそうなTreemacsを選択"
@@ -637,7 +687,8 @@
         :ensure t
         :after treemacs
         :require t
-        :config (treemacs-load-theme "nerd-icons"))
+        :config (treemacs-load-theme "nerd-icons")
+        )
       )
 
     (leaf *編集中にぺろんと補完するやつ---------------------------------------
@@ -674,14 +725,16 @@
           :defer-config
           ;; 無理やりスペースの幅を調整する(20241202.2335の元のコードから。Ambiguous-width characters絡みの問題らしい)
           ;; 元コードを上書きしたいので、customは使わない
-          (setq nerd-icons-corfu--space  "  "))
+          (setq nerd-icons-corfu--space  "  ")
+          )
         ;; CUIで利用できるようにするよ
         (leaf corfu-terminal
           :url "https://codeberg.org/akib/emacs-corfu-terminal"
           :unless (display-graphic-p) ; GUI 環境ではスキップ
           :ensure t
           :config
-          (corfu-terminal-mode 1)))
+          (corfu-terminal-mode 1))
+        )
       ;; 続いてcape
       (leaf cape
         :doc "Emacsの標準補完機能であるcapfsと統合する"
@@ -708,7 +761,8 @@
         (add-to-list 'completion-at-point-functions #'cape-file)
         (add-to-list 'completion-at-point-functions #'cape-dabbrev)
         (with-eval-after-load 'lsp-mode (setq lsp-completion-provider :none))
-        ))
+        )
+      )
 
     (leaf *アクション決めて対象選択、ではなく対象からアクションを実行する-----
       :config
@@ -734,21 +788,26 @@
                          (plist-get (car targets) :type)
                          (embark--truncate-target (plist-get (car targets) :targets))
                          (if (cdr targets) "-" "")))
-               keymap nil nil 'no-paging))))
+               keymap nil nil 'no-paging)))
+          )
         (setq embark-indicators
               '(my/embark-which-key-indicator
                 embark-highlight-indicator
-                embark-isearch-highlight-indicator)))
+                embark-isearch-highlight-indicator)
+              )
+        )
       ;; embark-consultの導入
       (leaf embark-consult
         :ensure t
         :hook
-        (embark-collect-mode . consult-preview-at-point-mode))
+        (embark-collect-mode . consult-preview-at-point-mode)
+        )
       )
 
     (leaf *ediff設定----------------------------------------------------------
       :doc "ediffを1フレーム内で左右分割表示にする（デフォルトの複数フレーム表示を避ける）"
-      :custom (ediff-window-setup-function . 'ediff-setup-windows-plain))
+      :custom (ediff-window-setup-function . 'ediff-setup-windows-plain)
+      )
 
     (leaf *構文チェック-------------------------------------------------------
       :doc "flymakeを使う"
@@ -790,18 +849,22 @@
                               (format "lsof -d cwd 2>/dev/null | awk -v pid=%d '$2 == pid {print $NF}'" pid)))))))
                 (magit-status dir))
             ;; vterm以外: 通常のmagit-status
-            (magit-status)))
+            (magit-status))
+          )
         )
       (leaf forge
         :doc "GitHubのプルリクエストやissueの操作。Gitlabとかも対応しているらしい"
         :url "https://github.com/magit/forge"
         :ensure t
-        :after magit)
+        :after magit
+        )
       (leaf git-gutter
         :doc "gitの差分表示"
         :url ""
         :ensure t
-        :global-minor-mode global-git-gutter-mode))
+        :global-minor-mode global-git-gutter-mode
+        )
+      )
 
     (leaf *Claude Code統合----------------------------------------------------
       :doc "EmacsからClaude Codeを使えるようにする"
@@ -812,31 +875,39 @@
         :vc (:url "https://github.com/manzaltu/claude-code-ide.el")
         :commands (claude-code-ide claude-code-ide-menu claude-code-ide-send-region claude-code-ide-fix-error)
         :config
-        (claude-code-ide-emacs-tools-setup))
+        (claude-code-ide-emacs-tools-setup)
+        )
       (leaf *claude-code-keybinds
         :doc ":commandsによる遅延ロードだと:config内が実行されないため、キーバインドは別ブロックで定義"
         :bind (("C-; a c i" . claude-code-ide)
                ("C-; a c m" . claude-code-ide-menu)
                ("C-; a c s" . claude-code-ide-send-region)
-               ("C-; a c f" . claude-code-ide-fix-error))))
+               ("C-; a c f" . claude-code-ide-fix-error))
+        )
+      )
 
     (leaf *ジャンプ操作を便利に-----------------------------------------------
       :config
       (leaf avy
         :url "https://github.com/abo-abo/any"
         :ensure t
-        :custom (avy-timeout-seconds . 0.5))
+        :custom (avy-timeout-seconds . 0.5)
+        )
       ;; avyジャンプ
       (leaf *avy-keybinds
-        :bind (("C-; j w" . avy-goto-word-1)   ; 単語ジャンプ
-               ("C-; j f" . avy-goto-char)     ; 文字検索
-               ("C-; j j" . avy-goto-line))))  ; 行ジャンプ
+        :bind (("C-; j w" . avy-goto-word-1) ; 単語ジャンプ
+               ("C-; j f" . avy-goto-char)   ; 文字検索
+               ("C-; j j" . avy-goto-line))  ; 行ジャンプ
+        )
+      )
 
     (leaf *バッファとウィンドウを閉じる---------------------------------------
       :doc "標準関数だがC-;リーダーに追加"
       :config
       (leaf *kill-buffer-and-window-keybinds
-        :bind (("C-; w q" . kill-buffer-and-window))))
+        :bind (("C-; w q" . kill-buffer-and-window))
+        )
+      )
 
     ) ; end of 各種便利機能
 
@@ -870,7 +941,8 @@
             "#+OPTIONS: toc:t num:t ^:nil \n"
             "#+PROPERTY: header-args :exports both :eval no-export\n"
             "#+STARTUP: showall indent\n"
-            "\n")))
+            "\n"))
+        )
 
       (leaf org
         :doc "org-mode設定"
@@ -947,7 +1019,8 @@
           (org-journal-time-format . "")
           (org-journal-file-format . "journal-%Y%m.org")
           ;; 新規ジャーナルファイル作成時のヘッダテンプレート
-          (org-journal-file-header . "#+TITLE: Journal %Y-%m\n#+LANGUAGE: ja\n#+OPTIONS: toc:t num:t ^:nil\n#+PROPERTY: header-args :exports both :eval no-export\n#+STARTUP: show2levels indent\n\n"))
+          (org-journal-file-header . "#+TITLE: Journal %Y-%m\n#+LANGUAGE: ja\n#+OPTIONS: toc:t num:t ^:nil\n#+PROPERTY: header-args :exports both :eval no-export\n#+STARTUP: show2levels indent\n\n")
+          )
         )
       (leaf *org-keybinds
         :bind (("C-; o l" . org-store-link)
@@ -963,7 +1036,8 @@
                ("C-; o C o" . org-clock-out)
                ("C-; o C d" . org-clock-display)
                ("C-; o C c" . org-clock-cancel)
-               ("C-; o C r" . org-clock-report)))
+               ("C-; o C r" . org-clock-report))
+        )
       )
 
     (leaf *Markdownを扱うよ---------------------------------------------------
@@ -971,7 +1045,8 @@
       (leaf markdown-mode
         :url "https://github.com/jrblevin/markdown-mode"
         :ensure t
-        :mode ("\\.md\\'" "\\.markdown\\'"))
+        :mode ("\\.md\\'" "\\.markdown\\'")
+        )
       )
 
     (leaf *テーブルをピクセル単位で整列---------------------------------------
@@ -981,7 +1056,8 @@
         :url "https://github.com/casouri/valign"
         :ensure t
         :hook ((org-mode-hook . valign-mode)
-               (markdown-mode-hook . valign-mode)))
+               (markdown-mode-hook . valign-mode))
+        )
       )
 
     (leaf *lspモード----------------------------------------------------------
@@ -999,13 +1075,15 @@
         :init
         ;; LSPの大きなJSONレスポンスを効率よく読むために1MBに拡張（デフォルト: 4KB）
         (setq read-process-output-max (* 1024 1024))
-        :hook (lsp-mode-hook . lsp-enable-which-key-integration))
+        :hook (lsp-mode-hook . lsp-enable-which-key-integration)
+        )
       (leaf lsp-ui
         :doc "ハイレベルなUIを提供してくれるらしい。が、まだちゃんと分かってない"
         :doc "https://qiita.com/Ladicle/items/feb5f9dce9adf89652cf#emacs26の機能をフル活用したモダンなui----lsp-ui を参考にすると良いかもしれない"
         :url "https://github.com/emacs-lsp/lsp-ui"
         :ensure t
-        :hook ((lsp-mode-hook . lsp-ui-mode)))
+        :hook ((lsp-mode-hook . lsp-ui-mode))
+        )
       (leaf lsp-treemacs
         :doc "treemacsを使ってシンボル一覧を出したり階層出したり色々やる"
         :url "https://github.com/emacs-lsp/lsp-treemacs"
@@ -1055,13 +1133,15 @@
                  (tsx-ts-mode-hook . lsp-deferred))
           )
         (leaf json-ts-mode
-          :mode ("\\.json\\'"))
+          :mode ("\\.json\\'")
+          )
         )
 
       (leaf *yaml-----------------------------------------------------------
         :config
         (leaf yaml-ts-mode
-          :mode "\\.yml\\'" "\\.yaml\\'"))
+          :mode "\\.yml\\'" "\\.yaml\\'")
+        )
 
       ) ; end of lspモード
 
@@ -1079,15 +1159,19 @@
       :doc "bash-ts-mode(Emacs29+ビルトイン)を .sh ファイルに対応付ける"
       :config
       (leaf bash-ts-mode
-        :mode "\\.sh\\'")
+        :mode "\\.sh\\'"
+        )
       )
 
     (leaf *CSVを扱うぞ--------------------------------------------------------
       :config
       (leaf csv-mode
-        :mode "\\.csv\\'")
+        :mode "\\.csv\\'"
+        )
       )
+
     ) ; end of メジャーモード設定
+
   ) ; end of *init*
 
 ;; Customに因る自動書き込みを無効にする（init.elへの追記を防ぐ）

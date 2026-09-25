@@ -48,10 +48,10 @@
     (startup-redirect-eln-cache (expand-file-name "var/eln-cache/" user-emacs-directory)))
 (eval-and-compile
   (customize-set-variable
-   'package-archives '(("org"   . "https://orgmode.org/elpa/")
-                       ("melpa" . "https://melpa.org/packages/")
-                       ("gnu"   . "https://elpa.gnu.org/packages/")
-                       ("nongnu"   . "https://elpa.nongnu.org/nongnu/")))
+   'package-archives '(("org"    . "https://orgmode.org/elpa/")
+                       ("melpa"  . "https://melpa.org/packages/")
+                       ("gnu"    . "https://elpa.gnu.org/packages/")
+                       ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
   (package-initialize)
   (unless (package-installed-p 'leaf)
     (package-refresh-contents)
